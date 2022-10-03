@@ -54,4 +54,9 @@ namespace eengine
 	{
 		// Stub
 	}
+
+	void Component::OnDisplay() 
+	{
+		// Stub
+	}
 }
