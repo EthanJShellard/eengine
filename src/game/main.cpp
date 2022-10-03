@@ -1,9 +1,12 @@
 #include <iostream>
-#include "Core.h"
+#include "eengine.h"
 
 int main()
 {
     std::cout << "Hello World" << std::endl;
-    Core::TestFunction();
+    eengine::Core::TestFunction();
+
+    shared<eengine::Core> core = eengine::Core::Initialise();
+
     return 0;
 }
