@@ -20,7 +20,7 @@ namespace eengine
 		weak<Input> input;
 	public:
 		// Public functions
-		shared<Entity> GetEntity();
+		shared<Entity> GetParent();
 		shared<Core> GetCore();
 		shared<Input> GetInput();
 	protected:

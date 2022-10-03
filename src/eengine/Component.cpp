@@ -2,42 +2,19 @@
 
 namespace eengine
 {
-	shared<Entity> Component::GetEntity()
+	shared<Entity> Component::GetParent()
 	{
-		if (auto sharedEntity = parent.lock())
-		{
-			return sharedEntity;
-		}
-		else
-		{
-			// For now!
-			throw std::exception();
-		}
+		return parent.lock();
 	}
 
 	shared<Core> Component::GetCore() 
 	{
-		if (auto sharedCore = core.lock()) 
-		{
-			return sharedCore;
-		}
-		else 
-		{
-			// For now!
-			throw std::exception();
-		}
+		return core.lock();
 	}
 
 	shared<Input> Component::GetInput() 
 	{
-		if (auto sharedInput = input.lock()) 
-		{
-			return sharedInput;
-		}
-		else 
-		{
-			throw std::exception();
-		}
+		return input.lock();
 	}
 
 	void Component::OnInit() 
