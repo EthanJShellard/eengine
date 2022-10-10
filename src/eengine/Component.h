@@ -13,13 +13,11 @@ namespace eengine
 	class Component
 	{
 	private:
-		// Private members
 		// Cache references to prevent having to repeatedly climb the hierarchy
 		weak<Entity> parent;
 		weak<Core> core;
 		weak<Input> input;
 	public:
-		// Public functions
 		shared<Entity> GetParent();
 		shared<Core> GetCore();
 		shared<Input> GetInput();

@@ -18,6 +18,9 @@ namespace eengine
 		std::vector<shared<Component>> components;
 		weak<Core> core;
 	public:
+		shared<Core> GetCore();
+		void Tick();
+		void Display();
 	};
 }
 #endif // !EENGINE_ENTITY
