@@ -21,6 +21,15 @@ namespace eengine
 		shared<Core> GetCore();
 		void Tick();
 		void Display();
+
+		template<class T >
+		shared<T> AddComponent();
+		template<class T, class A>
+		shared<T> AddComponent(A _a);
+		template<class T, class A, class B>
+		shared<T> AddComponent(A _a, B _b);
+		template<class T, class A, class B, class C>
+		shared<T> AddComponent(A _a, B _b, C _c);
 	};
 }
 #endif // !EENGINE_ENTITY
