@@ -6,13 +6,13 @@
 #include "eengine_defines.h"
 #include "Entity.h"
 
-// Forward Declarations
-class Environment;
-class Input;
-class Entity;
-
 namespace eengine
 {
+	// Engine Forward Declarations
+	class Environment;
+	class Input;
+	class Entity;
+
 	class Core
 	{
 	private:

@@ -3,25 +3,40 @@
 
 namespace eengine 
 {
-	shared<Core> Entity::GetCore() 
+	Entity::Entity() 
 	{
-		return m_core.lock();
+		m_destroyed = false;
 	}
 
-	void Entity::Tick() 
+	void Entity::Tick()
 	{
-		for (shared<Component> c : m_components) 
+		for (shared<Component> c : m_components)
 		{
 			c->OnTick();
 		}
 	}
 
-	void Entity::Display() 
+	void Entity::Display()
 	{
-		for (shared<Component> c : m_components) 
+		for (shared<Component> c : m_components)
 		{
 			c->OnDisplay();
 		}
+	}
+
+	shared<Core> Entity::GetCore() const 
+	{
+		return m_core.lock();
+	}
+
+	void Entity::Destroy() 
+	{
+		m_destroyed = true;
+	}
+
+	bool Entity::IsDestroyed() const
+	{
+		return m_destroyed;
 	}
 
 	template<typename T>

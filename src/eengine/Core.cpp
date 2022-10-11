@@ -31,6 +31,22 @@ namespace eengine
 		while (m_running) 
 		{
 			// MAIN ENGINE LOOP
+
+			// Clean up destroyed entities
+			auto itr = m_entities.begin();
+			while (itr != m_entities.end()) 
+			{
+				if ((*itr)->IsDestroyed()) 
+				{
+					itr = m_entities.erase(itr);
+				}
+				else 
+				{
+					itr++;
+				}
+			}
+			// Only here for testing while we don't have a real engine loop.
+			if (m_entities.empty()) m_running = false;
 		}
 	}
 
@@ -41,7 +57,7 @@ namespace eengine
 
 	shared<Entity> Core::AddEntity() 
 	{
-		shared<Entity> rtn = std::make_shared<Entity>();
+		shared<Entity> rtn = shared<Entity>(new Entity());
 
 		rtn->m_core = m_self;
 		rtn->m_self = rtn;

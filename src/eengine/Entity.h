@@ -15,14 +15,20 @@ namespace eengine
 	{
 		friend class Core;
 	private:
+		Entity();
+
 		void Tick();
 		void Display();
 
 		std::vector<shared<Component>> m_components;
 		weak<Core> m_core;
 		weak<Entity> m_self;
+
+		bool m_destroyed;
 	public:
-		shared<Core> GetCore();
+		shared<Core> GetCore() const;
+		void Destroy();
+		bool IsDestroyed() const;
 
 		template<typename T >
 		shared<T> AddComponent();
