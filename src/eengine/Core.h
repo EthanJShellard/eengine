@@ -16,12 +16,12 @@ namespace eengine
 	class Core
 	{
 	private:
-		// Private Functions
 		Core();
-		// Private Members
+
 		shared<Environment> environment;
 		std::vector<shared<Entity>> entities;
 		shared<Input> input;
+		weak<Core> self;
 
 		bool m_running;
 	public:

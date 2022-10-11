@@ -16,9 +16,10 @@ namespace eengine
 
 	shared<Core> Core::Initialise() 
 	{
-		// STUB
-		// std::make_shared cannot access private constructor
-		return shared<Core>(new Core());
+		// std::make_shared cannot access private constructor, so call it manually
+		shared<Core> rtn = shared<Core>(new Core());
+		rtn->self = rtn;
+		return rtn;
 	}
 
 	void Core::Start() 

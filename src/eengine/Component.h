@@ -12,7 +12,6 @@ namespace eengine
 {
 	class Component
 	{
-		friend class Core;
 	private:
 		virtual void OnInit();
 		virtual void OnBegin();
