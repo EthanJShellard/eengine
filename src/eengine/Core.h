@@ -1,7 +1,7 @@
 #ifndef EENGINE_CORE
 #define EENGINE_CORE
 
-#include <vector>
+#include <list>
 
 #include "eengine_defines.h"
 #include "Entity.h"
@@ -19,7 +19,7 @@ namespace eengine
 		Core();
 
 		shared<Environment> environment;
-		std::vector<shared<Entity>> entities;
+		std::list<shared<Entity>> entities;
 		shared<Input> input;
 		weak<Core> self;
 
