@@ -32,6 +32,12 @@ namespace eengine
 		{
 			// MAIN ENGINE LOOP
 
+			// Update each entity
+			for (shared<Entity> entity : m_entities) 
+			{
+				entity->Tick();
+			}
+
 			// Clean up destroyed entities
 			auto itr = m_entities.begin();
 			while (itr != m_entities.end()) 
