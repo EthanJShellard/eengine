@@ -18,8 +18,8 @@ namespace eengine
 		void Tick();
 		void Display();
 
-		std::vector<shared<Component>> components;
-		weak<Core> core;
+		std::vector<shared<Component>> m_components;
+		weak<Core> m_core;
 	public:
 		shared<Core> GetCore();
 

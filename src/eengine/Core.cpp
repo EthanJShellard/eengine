@@ -19,7 +19,7 @@ namespace eengine
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
 
-		rtn->self = rtn;
+		rtn->m_self = rtn;
 
 		return rtn;
 	}
@@ -38,8 +38,8 @@ namespace eengine
 	{
 		shared<Entity> rtn = std::make_shared<Entity>();
 
-		rtn->core = self;
-		entities.push_back(rtn);
+		rtn->m_core = m_self;
+		m_entities.push_back(rtn);
 
 		return rtn;
 	}

@@ -9,7 +9,5 @@ int main()
     shared<eengine::Core> core = eengine::Core::Initialise();
     auto e = core->AddEntity();
 
-    
-
     return 0;
 }

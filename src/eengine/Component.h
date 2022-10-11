@@ -19,9 +19,9 @@ namespace eengine
 		virtual void OnDisplay();
 
 		// Cache references to prevent having to repeatedly climb the hierarchy
-		weak<Entity> parent;
-		weak<Core> core;
-		weak<Input> input;
+		weak<Entity> m_parent;
+		weak<Core> m_core;
+		weak<Input> m_input;
 	public:
 		shared<Entity> GetParent();
 		shared<Core> GetCore();

@@ -4,7 +4,7 @@ namespace eengine
 {
 	shared<Core> Entity::GetCore() 
 	{
-		return core.lock();
+		return m_core.lock();
 	}
 
 	void Entity::Tick() 

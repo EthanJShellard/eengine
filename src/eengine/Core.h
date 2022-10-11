@@ -18,10 +18,10 @@ namespace eengine
 	private:
 		Core();
 
-		shared<Environment> environment;
-		std::list<shared<Entity>> entities;
-		shared<Input> input;
-		weak<Core> self;
+		shared<Environment> m_environment;
+		std::list<shared<Entity>> m_entities;
+		shared<Input> m_input;
+		weak<Core> m_self;
 
 		bool m_running;
 	public:

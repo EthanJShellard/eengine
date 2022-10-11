@@ -4,17 +4,17 @@ namespace eengine
 {
 	shared<Entity> Component::GetParent()
 	{
-		return parent.lock();
+		return m_parent.lock();
 	}
 
 	shared<Core> Component::GetCore() 
 	{
-		return core.lock();
+		return m_core.lock();
 	}
 
 	shared<Input> Component::GetInput() 
 	{
-		return input.lock();
+		return m_input.lock();
 	}
 
 	void Component::OnInit() 
