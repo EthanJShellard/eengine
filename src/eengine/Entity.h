@@ -15,12 +15,13 @@ namespace eengine
 	{
 		friend class Core;
 	private:
+		void Tick();
+		void Display();
+
 		std::vector<shared<Component>> components;
 		weak<Core> core;
 	public:
 		shared<Core> GetCore();
-		void Tick();
-		void Display();
 
 		template<typename T >
 		shared<T> AddComponent();
