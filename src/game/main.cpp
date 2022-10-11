@@ -10,10 +10,9 @@ int main()
 
     shared<eengine::Core> core = eengine::Core::Initialise();
     auto e = core->AddEntity();
-    auto e2 = core->AddEntity();
     
     e->Destroy();
-    e2->AddComponent<Suicider>();
+    core->AddEntity()->AddComponent<Suicider>();
 
     core->Start();
 
