@@ -22,13 +22,13 @@ namespace eengine
 		void Tick();
 		void Display();
 
-		template<class T >
+		template<typename T >
 		shared<T> AddComponent();
-		template<class T, class A>
+		template<typename T, typename A>
 		shared<T> AddComponent(A _a);
-		template<class T, class A, class B>
+		template<typename T, typename A, typename B>
 		shared<T> AddComponent(A _a, B _b);
-		template<class T, class A, class B, class C>
+		template<typename T, typename A, typename B, typename C>
 		shared<T> AddComponent(A _a, B _b, C _c);
 	};
 }

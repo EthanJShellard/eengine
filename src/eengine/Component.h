@@ -12,7 +12,13 @@ namespace eengine
 {
 	class Component
 	{
+		friend class Core;
 	private:
+		virtual void OnInit();
+		virtual void OnBegin();
+		virtual void OnTick();
+		virtual void OnDisplay();
+
 		// Cache references to prevent having to repeatedly climb the hierarchy
 		weak<Entity> parent;
 		weak<Core> core;
@@ -21,11 +27,6 @@ namespace eengine
 		shared<Entity> GetParent();
 		shared<Core> GetCore();
 		shared<Input> GetInput();
-	protected:
-		virtual void OnInit();
-		virtual void OnBegin();
-		virtual void OnTick();
-		virtual void OnDisplay();
 	};
 }
 #endif //! EENGINE_COMPONENT

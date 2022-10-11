@@ -17,7 +17,7 @@ namespace eengine
 		// Stub
 	}
 
-	template<class T>
+	template<typename T>
 	shared<T> Entity::AddComponent() 
 	{
 		auto share = std::make_shared<T>();
@@ -25,7 +25,7 @@ namespace eengine
 		return share;
 	}
 
-	template<class T, class A>
+	template<typename T, typename A>
 	shared<T> Entity::AddComponent(A _a) 
 	{
 		auto share = std::make_shared<T>(_a);
@@ -33,7 +33,7 @@ namespace eengine
 		return share;
 	}
 
-	template<class T, class A, class B>
+	template<typename T, typename A, typename B>
 	shared<T> Entity::AddComponent(A _a, B _b) 
 	{
 		auto share = std::make_shared<T>(_a, _b);
@@ -41,7 +41,7 @@ namespace eengine
 		return share;
 	}
 
-	template<class T, class A, class B, class C>
+	template<typename T, typename A, typename B, typename C>
 	shared<T> Entity::AddComponent(A _a, B _b, C _c) 
 	{
 		auto share = std::make_shared<T>(_a, _b, _c);
