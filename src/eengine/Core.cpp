@@ -26,12 +26,17 @@ namespace eengine
 
 	void Core::Start() 
 	{
-		// STUB
+		m_running = true;
+
+		while (m_running) 
+		{
+			// MAIN ENGINE LOOP
+		}
 	}
 
 	void Core::Stop() 
 	{
-		// STUB
+		m_running = false;
 	}
 
 	shared<Entity> Core::AddEntity() 

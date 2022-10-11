@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Component.h"
 
 namespace eengine 
 {
@@ -9,12 +10,18 @@ namespace eengine
 
 	void Entity::Tick() 
 	{
-		// Stub
+		for (shared<Component> c : m_components) 
+		{
+			c->OnTick();
+		}
 	}
 
 	void Entity::Display() 
 	{
-		// Stub
+		for (shared<Component> c : m_components) 
+		{
+			c->OnDisplay();
+		}
 	}
 
 	template<typename T>

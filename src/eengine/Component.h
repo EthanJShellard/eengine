@@ -3,15 +3,16 @@
 
 #include "eengine_defines.h"
 
-// Forward declarations
-class Entity;
-class Core;
-class Input;
-
 namespace eengine
 {
+	//Engine forward declarations
+	class Entity;
+	class Core;
+	class Input;
+
 	class Component
 	{
+		friend class Entity;
 	private:
 		virtual void OnInit();
 		virtual void OnBegin();
