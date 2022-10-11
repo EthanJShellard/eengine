@@ -20,6 +20,7 @@ namespace eengine
 
 		std::vector<shared<Component>> m_components;
 		weak<Core> m_core;
+		weak<Entity> m_self;
 	public:
 		shared<Core> GetCore();
 
