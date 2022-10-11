@@ -30,7 +30,7 @@ namespace eengine
 		void Destroy();
 		bool IsDestroyed() const;
 
-		template<typename T >
+		template<typename T>
 		shared<T> AddComponent();
 		template<typename T, typename A>
 		shared<T> AddComponent(A _a);
@@ -39,5 +39,42 @@ namespace eengine
 		template<typename T, typename A, typename B, typename C>
 		shared<T> AddComponent(A _a, B _b, C _c);
 	};
+
+
+	template<typename T>
+	shared<T> Entity::AddComponent()
+	{
+		auto share = std::make_shared<T>();
+		share->m_parent = m_self;
+		m_components.push_back(share);
+		return share;
+	}
+
+	template<typename T, typename A>
+	shared<T> Entity::AddComponent(A _a)
+	{
+		auto share = std::make_shared<T>(_a);
+		share->m_parent = m_self;
+		m_components.push_back(share);
+		return share;
+	}
+
+	template<typename T, typename A, typename B>
+	shared<T> Entity::AddComponent(A _a, B _b)
+	{
+		auto share = std::make_shared<T>(_a, _b);
+		share->m_parent = m_self;
+		m_components.push_back(share);
+		return share;
+	}
+
+	template<typename T, typename A, typename B, typename C>
+	shared<T> Entity::AddComponent(A _a, B _b, C _c)
+	{
+		auto share = std::make_shared<T>(_a, _b, _c);
+		share->m_parent = m_self;
+		m_components.push_back(share);
+		return share;
+	}
 }
 #endif // !EENGINE_ENTITY

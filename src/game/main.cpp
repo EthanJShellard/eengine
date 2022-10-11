@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "eengine.h"
+#include "components/Suicider.h"
 
 int main()
 {
@@ -11,9 +13,10 @@ int main()
     auto e2 = core->AddEntity();
     
     e->Destroy();
-    e2->Destroy();
+    e2->AddComponent<Suicider>();
 
     core->Start();
 
     return 0;
 }
+// Ask if it is acceptable to ditch header guards

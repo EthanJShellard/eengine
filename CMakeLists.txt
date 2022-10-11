@@ -14,6 +14,8 @@ add_library(eengine
 
 add_executable(game
     src/game/main.cpp
+    src/game/components/Suicider.h
+    src/game/components/Suicider.cpp
 )
 
 include_directories(
