@@ -4,16 +4,16 @@
 #include <vector>
 
 #include "eengine_defines.h"
-#include "Core.h"
-
-// Forward declarations
-class Component;
-class Core;
 
 namespace eengine 
 {
+	// Engine forward declarations
+	class Component;
+	class Core;
+
 	class Entity 
 	{
+		friend class Core;
 	private:
 		std::vector<shared<Component>> components;
 		weak<Core> core;
