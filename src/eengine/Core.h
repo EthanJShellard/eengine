@@ -1,6 +1,3 @@
-#ifndef EENGINE_CORE
-#define EENGINE_CORE
-
 #include <list>
 
 #include "eengine_defines.h"
@@ -34,4 +31,3 @@ namespace eengine
 		shared<Entity> AddEntity();
 	};
 }
-#endif // !EENGINE_CORE

@@ -1,6 +1,3 @@
-#ifndef EENGINE_ENTITY
-#define EENGINE_ENTITY
-
 #include <vector>
 
 #include "eengine_defines.h"
@@ -77,4 +74,3 @@ namespace eengine
 		return share;
 	}
 }
-#endif // !EENGINE_ENTITY

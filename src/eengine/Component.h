@@ -1,6 +1,3 @@
-#ifndef EENGINE_COMPONENT
-#define EENGINE_COMPONENT
-
 #include "eengine_defines.h"
 
 namespace eengine
@@ -29,4 +26,3 @@ namespace eengine
 		shared<Input> GetInput();
 	};
 }
-#endif //! EENGINE_COMPONENT
