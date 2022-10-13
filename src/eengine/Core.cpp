@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Core.h"
+#include "Entity.h"
 
 namespace eengine
 {
