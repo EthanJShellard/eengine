@@ -18,8 +18,20 @@ add_executable(game
     src/game/components/Suicider.cpp
 )
 
-include_directories(
-    src/eengine/
+target_include_directories(eengine
+    PRIVATE include/GLEW-2.1.0/
+    PRIVATE include/SDL2-2.24.1/
+)
+target_include_directories(game
+    PRIVATE src/eengine/
 )
 
-target_link_libraries(game eengine)
+target_link_libraries(eengine
+    ${PROJECT_SOURCE_DIR}/lib/glew-2.1.0-x64/glew32.lib
+    ${PROJECT_SOURCE_DIR}/lib/SDL2-2.24.1/SDL2.lib
+    ${PROJECT_SOURCE_DIR}/lib/SDL2-2.24.1/SDL2main.lib
+
+)
+target_link_libraries(game 
+    eengine
+)

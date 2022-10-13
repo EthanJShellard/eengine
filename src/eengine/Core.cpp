@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <SDL2/SDL.h>
+#include <GL/glew.h>
+
 #include "Core.h"
 #include "Entity.h"
 
@@ -13,6 +16,7 @@ namespace eengine
 	Core::Core() 
 	{
 		m_running = false;
+		m_window = NULL;
 	}
 
 	shared<Core> Core::Initialise() 
@@ -21,6 +25,27 @@ namespace eengine
 		shared<Core> rtn = shared<Core>(new Core());
 
 		rtn->m_self = rtn;
+
+		// START SDL WINDOW TEST
+		if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+		{
+			throw std::exception();
+		}
+
+		rtn->m_window = SDL_CreateWindow("eengine",
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+			600, 400, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+
+		if (!SDL_GL_CreateContext(rtn->m_window)) 
+		{
+			throw std::exception();
+		}
+
+		if (glewInit() != GLEW_OK)
+		{
+			throw std::exception();
+		}
+		// END SDL WINDOW TEST
 
 		return rtn;
 	}

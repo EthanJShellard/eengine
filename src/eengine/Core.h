@@ -2,6 +2,9 @@
 
 #include "eengine_defines.h"
 
+// Forward declarations
+class SDL_Window;
+
 namespace eengine
 {
 	// Engine Forward Declarations
@@ -19,6 +22,7 @@ namespace eengine
 		shared<Input> m_input;
 		weak<Core> m_self;
 
+		SDL_Window* m_window;
 		bool m_running;
 	public:
 		//Public Functions

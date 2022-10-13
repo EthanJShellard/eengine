@@ -12,7 +12,7 @@ int main()
     auto e = core->AddEntity();
     
     e->Destroy();
-    core->AddEntity()->AddComponent<Suicider>(5);
+    core->AddEntity()->AddComponent<Suicider>(5000);
 
     core->Start();
 
