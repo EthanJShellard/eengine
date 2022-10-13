@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "Suicider.h"
-#include "Entity.h"
 
 Suicider::Suicider() 
 {

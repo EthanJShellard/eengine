@@ -1,4 +1,4 @@
-#include "Component.h"
+#include "eengine.h"
 
 class Suicider : public eengine::Component 
 {
