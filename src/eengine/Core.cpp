@@ -52,7 +52,7 @@ namespace eengine
 				}
 			}
 			// Only here for testing while we don't have a real engine loop.
-			if (m_entities.empty()) m_running = false;
+			if (m_entities.empty()) Stop();
 		}
 	}
 
