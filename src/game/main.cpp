@@ -18,4 +18,3 @@ int main()
 
     return 0;
 }
-// Ask if it is acceptable to ditch header guards
