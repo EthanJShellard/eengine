@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <stb_image.h>
 
 #include "Core.h"
 #include "Entity.h"

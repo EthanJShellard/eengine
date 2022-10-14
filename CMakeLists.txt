@@ -21,6 +21,7 @@ add_executable(game
 
 target_include_directories(eengine
     PRIVATE include/Windows-x64
+    PRIVATE include/common
 )
 target_include_directories(game
     PRIVATE src/eengine/
