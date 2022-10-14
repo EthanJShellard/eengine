@@ -27,9 +27,9 @@ target_include_directories(game
 )
 
 target_link_libraries(eengine
-    ${PROJECT_SOURCE_DIR}/lib/glew-2.1.0-x64/glew32.lib
-    ${PROJECT_SOURCE_DIR}/lib/SDL2-2.24.1/SDL2.lib
-    ${PROJECT_SOURCE_DIR}/lib/SDL2-2.24.1/SDL2main.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
 
 )
 target_link_libraries(game 
