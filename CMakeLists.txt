@@ -19,8 +19,7 @@ add_executable(game
 )
 
 target_include_directories(eengine
-    PRIVATE include/GLEW-2.1.0/
-    PRIVATE include/SDL2-2.24.1/
+    PRIVATE include/Windows-x64
 )
 target_include_directories(game
     PRIVATE src/eengine/
