@@ -1,6 +1,7 @@
 #include <vector>
 
 #include "eengine_defines.h"
+#include "NonCopyable.h"
 
 namespace eengine 
 {
@@ -8,7 +9,7 @@ namespace eengine
 	class Component;
 	class Core;
 
-	class Entity 
+	class Entity : private NonCopyable
 	{
 		friend class Core;
 	private:

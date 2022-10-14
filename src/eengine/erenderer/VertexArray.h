@@ -3,11 +3,13 @@
 
 #include <GL/glew.h>
 
+#include "../NonCopyable.h"
+
 //Forward Declaration
 class VertexBuffer;
 
 //Wrapper for vertex array objects. Will bind buffers lazily, when GetID() is called.
-class VertexArray
+class VertexArray : private NonCopyable
 {
 public:
 	/// <summary>

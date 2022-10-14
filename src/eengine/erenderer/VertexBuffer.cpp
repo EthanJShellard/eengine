@@ -67,6 +67,20 @@ void VertexBuffer::Add(glm::vec4 _value)
 	m_dirty = true;
 }
 
+void VertexBuffer::Add(float _x, float _y, float _z, float _w) 
+{
+	if (m_numComponents != 4 && m_numComponents != 0) throw std::exception();
+
+	m_data.push_back(_x);
+	m_data.push_back(_y);
+	m_data.push_back(_z);
+	m_data.push_back(_w);
+
+	m_numComponents = 4;
+	//Data yet to be uploaded
+	m_dirty = true;
+}
+
 void VertexBuffer::Add(GLfloat _value)
 {
 	if (m_numComponents != 1 && m_numComponents != 0) throw std::exception();
