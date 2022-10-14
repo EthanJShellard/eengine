@@ -10,6 +10,7 @@ add_library(eengine
     src/eengine/Component.h
     src/eengine/Component.cpp
     src/eengine/eengine_defines.h
+    src/eengine/NonCopyable.h
 )
 
 add_executable(game

@@ -1,6 +1,7 @@
 #include <list>
 
 #include "eengine_defines.h"
+#include "NonCopyable.h"
 
 // Forward declarations
 class SDL_Window;
@@ -12,7 +13,7 @@ namespace eengine
 	class Input;
 	class Entity;
 
-	class Core
+	class Core : private NonCopyable
 	{
 	private:
 		Core();
