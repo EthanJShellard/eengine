@@ -48,7 +48,6 @@ namespace eengine
 		{
 			throw std::exception();
 		}
-		// END SDL WINDOW TEST
 
 		return rtn;
 	}

@@ -11,6 +11,10 @@ add_library(eengine
     src/eengine/Component.cpp
     src/eengine/eengine_defines.h
     src/eengine/NonCopyable.h
+    src/eengine/erenderer/VertexArray.h
+    src/eengine/erenderer/VertexArray.cpp
+    src/eengine/erenderer/VertexBuffer.h
+    src/eengine/erenderer/VertexBuffer.cpp
 )
 
 add_executable(game
