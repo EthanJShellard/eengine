@@ -1,5 +1,3 @@
-
-
 class NonCopyable
 {
 protected:
