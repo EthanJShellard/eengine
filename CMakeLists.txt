@@ -17,6 +17,8 @@ add_library(eengine
     src/eengine/erenderer/VertexArray.cpp
     src/eengine/erenderer/VertexBuffer.h
     src/eengine/erenderer/VertexBuffer.cpp
+    src/eengine/erenderer/Shader.h
+    src/eengine/erenderer/Shader.cpp
 )
 
 add_executable(game
