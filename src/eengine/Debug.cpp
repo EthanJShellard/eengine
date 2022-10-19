@@ -8,4 +8,9 @@ namespace eengine
 	{
 		std::cout << _str << std::endl;
 	}
+	
+	void Debug::Log(const std::string& _str) 
+	{
+		std::cout << _str << std::endl;
+	}
 }

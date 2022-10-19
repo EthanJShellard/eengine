@@ -19,6 +19,8 @@ add_library(eengine
     src/eengine/Camera.cpp
     src/eengine/Debug.h
     src/eengine/Debug.cpp
+    src/eengine/Environment.h
+    src/eengine/Environment.cpp
     src/eengine/erenderer/VertexArray.h
     src/eengine/erenderer/VertexArray.cpp
     src/eengine/erenderer/VertexBuffer.h

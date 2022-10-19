@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
@@ -10,6 +11,7 @@
 #include "Entity.h"
 #include "Input.h"
 #include "Debug.h"
+#include "Environment.h"
 
 namespace eengine
 {
@@ -32,6 +34,7 @@ namespace eengine
 		shared<Core> rtn = shared<Core>(new Core());
 		// Store self reference
 		rtn->m_self = rtn;
+		rtn->m_environment = shared<Environment>(new Environment());
 
 		Debug::Log("Initialising SDL Video...");
 
@@ -73,6 +76,7 @@ namespace eengine
 		{
 			// MAIN ENGINE LOOP
 			m_input->Update();
+			m_environment->OnFrameStart();
 
 			// Update each entity
 			for (shared<Entity> entity : m_entities) 
@@ -98,6 +102,10 @@ namespace eengine
 			{
 				Stop();
 			}
+
+			std::string str = "deltaTime: ";
+			str.append( std::to_string(m_environment->GetDeltaTime()));
+			Debug::Log(str);
 		}
 	}
 
