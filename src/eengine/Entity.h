@@ -23,9 +23,10 @@ namespace eengine
 		weak<Core> m_core;
 		weak<Entity> m_self;
 
-		Transform transform;
 		bool m_destroyed;
 	public:
+		Transform transform;
+
 		shared<Core> GetCore() const;
 		void Destroy();
 		bool IsDestroyed() const;
