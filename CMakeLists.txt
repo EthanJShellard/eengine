@@ -15,6 +15,8 @@ add_library(eengine
     src/eengine/Input.cpp
     src/eengine/Transform.h
     src/eengine/Transform.cpp
+    src/eengine/Camera.h
+    src/eengine/Camera.cpp
     src/eengine/erenderer/VertexArray.h
     src/eengine/erenderer/VertexArray.cpp
     src/eengine/erenderer/VertexBuffer.h
