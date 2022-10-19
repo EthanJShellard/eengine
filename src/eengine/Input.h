@@ -3,6 +3,8 @@
 #include <SDL2/SDL_keycode.h>
 #include <glm/glm.hpp>
 
+#include "NonCopyable.h"
+
 namespace eengine 
 {
 	// struct to encapsulate keycodes
@@ -155,7 +157,7 @@ namespace eengine
 		tab          = SDLK_TAB
 	};
 
-	class Input 
+	class Input : private NonCopyable
 	{
 	private:
 		glm::vec2 m_mousePreviousPos;
