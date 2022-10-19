@@ -26,7 +26,7 @@ namespace eengine
 		SDL_Window* m_window;
 		bool m_running;
 	public:
-		//Public Functions
+		~Core();
 		static void TestFunction();
 
 		static shared<Core> Initialise();

@@ -22,6 +22,11 @@ namespace eengine
 		m_window = NULL;
 	}
 
+	Core::~Core() 
+	{
+		SDL_DestroyWindow(m_window);
+	}
+
 	shared<Core> Core::Initialise() 
 	{
 		// std::make_shared cannot access private constructor, so call it manually
