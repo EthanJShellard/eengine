@@ -1,3 +1,6 @@
+#ifndef EENGINE_TRANSFORM
+#define EENGINE_TRANSFORM
+
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
@@ -31,3 +34,4 @@ namespace eengine
 		void Scale(glm::vec3 _scaleFactors);
 	};
 }
+#endif // EENGINE_TRANSFORM

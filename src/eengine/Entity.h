@@ -2,6 +2,7 @@
 
 #include "eengine_defines.h"
 #include "NonCopyable.h"
+#include "Transform.h"
 
 namespace eengine 
 {
@@ -22,6 +23,7 @@ namespace eengine
 		weak<Core> m_core;
 		weak<Entity> m_self;
 
+		Transform transform;
 		bool m_destroyed;
 	public:
 		shared<Core> GetCore() const;
