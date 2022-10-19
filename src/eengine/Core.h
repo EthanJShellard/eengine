@@ -4,7 +4,7 @@
 #include "NonCopyable.h"
 
 // Forward declarations
-class SDL_Window;
+struct SDL_Window;
 
 namespace eengine
 {

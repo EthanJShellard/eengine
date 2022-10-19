@@ -11,6 +11,8 @@ add_library(eengine
     src/eengine/Component.cpp
     src/eengine/eengine_defines.h
     src/eengine/NonCopyable.h
+    src/eengine/Input.h
+    src/eengine/Input.cpp
     src/eengine/erenderer/VertexArray.h
     src/eengine/erenderer/VertexArray.cpp
     src/eengine/erenderer/VertexBuffer.h

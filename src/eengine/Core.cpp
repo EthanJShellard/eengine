@@ -8,6 +8,7 @@
 
 #include "Core.h"
 #include "Entity.h"
+#include "Input.h"
 
 namespace eengine
 {
@@ -20,6 +21,8 @@ namespace eengine
 	{
 		m_running = false;
 		m_window = NULL;
+
+		m_input = std::make_shared<Input>();
 	}
 
 	Core::~Core() 
@@ -65,6 +68,7 @@ namespace eengine
 		while (m_running) 
 		{
 			// MAIN ENGINE LOOP
+			m_input->Update();
 
 			// Update each entity
 			for (shared<Entity> entity : m_entities) 
@@ -86,7 +90,10 @@ namespace eengine
 				}
 			}
 			// Only here for testing while we don't have a real engine loop.
-			if (m_entities.empty()) Stop();
+			if (m_input->GetHasQuit()) 
+			{
+				Stop();
+			}
 		}
 	}
 
