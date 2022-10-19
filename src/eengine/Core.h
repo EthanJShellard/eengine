@@ -27,7 +27,6 @@ namespace eengine
 		bool m_running;
 	public:
 		~Core();
-		static void TestFunction();
 
 		static shared<Core> Initialise();
 		void Start();

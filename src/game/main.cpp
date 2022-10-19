@@ -5,14 +5,11 @@
 
 int main()
 {
-    std::cout << "Hello World" << std::endl;
-    eengine::Core::TestFunction();
-
     shared<eengine::Core> core = eengine::Core::Initialise();
     auto e = core->AddEntity();
     
     e->Destroy();
-    core->AddEntity()->AddComponent<Suicider>(5000);
+    core->AddEntity()->AddComponent<Suicider>(10);
 
     core->Start();
 

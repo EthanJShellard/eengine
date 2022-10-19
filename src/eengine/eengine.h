@@ -6,5 +6,6 @@
 #include "Component.h"
 #include "Input.h"
 #include "Transform.h"
+#include "Camera.h"
 
 #endif // !EENGINE

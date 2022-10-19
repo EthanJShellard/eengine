@@ -9,14 +9,10 @@
 #include "Core.h"
 #include "Entity.h"
 #include "Input.h"
+#include "Debug.h"
 
 namespace eengine
 {
-	void Core::TestFunction()
-	{
-		std::cout << "Test Function Success!!" << std::endl;
-	}
-	
 	Core::Core() 
 	{
 		m_running = false;
@@ -34,14 +30,18 @@ namespace eengine
 	{
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
-
+		// Store self reference
 		rtn->m_self = rtn;
 
-		// START SDL WINDOW TEST
+		Debug::Log("Initialising SDL Video...");
+
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) 
 		{
 			throw std::exception();
 		}
+
+		Debug::Log("Done!");
+		Debug::Log("Initiailising SDL Window...");
 
 		rtn->m_window = SDL_CreateWindow("eengine",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -52,11 +52,15 @@ namespace eengine
 			throw std::exception();
 		}
 
+		Debug::Log("Done!");
+		Debug::Log("Initialising GLEW...");
+
 		if (glewInit() != GLEW_OK)
 		{
 			throw std::exception();
 		}
-		// END SDL WINDOW TEST
+
+		Debug::Log("Done!");
 
 		return rtn;
 	}
