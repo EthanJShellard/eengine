@@ -14,6 +14,12 @@ namespace eengine
 		glm::vec3 m_position = glm::vec3(0);
 		glm::quat m_orientation = glm::quat(glm::vec3(0,0,0));
 		glm::vec3 m_scale = glm::vec3(1);
+		glm::mat4 m_modelMatrix;
+		glm::mat4 m_scaleMatrix;
+		glm::mat4 m_rotationMatrix;
+		glm::mat4 m_translationMatrix;
+
+		bool m_dirty = true;
 	public:
 		void SetPosition(glm::vec3 _newPos);
 		void SetPosition(float _x, float _y, float _z);
@@ -34,6 +40,8 @@ namespace eengine
 		void Rotate(float _angle, glm::vec3 _axis);
 		void Translate(glm::vec3 _move);
 		void Scale(glm::vec3 _scaleFactors);
+
+		glm::mat4 GetModelMatrix();
 	};
 }
 #endif // EENGINE_TRANSFORM
