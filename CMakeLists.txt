@@ -31,6 +31,8 @@ add_library(eengine
     src/eengine/erenderer/Texture.cpp
     src/eengine/erenderer/Mesh.h
     src/eengine/erenderer/Mesh.cpp
+    src/eengine/erenderer/Material.h
+    src/eengine/erenderer/Material.cpp
 )
 
 add_executable(game

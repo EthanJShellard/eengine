@@ -4,6 +4,7 @@ namespace eengine
 {
 	class Texture 
 	{
+	public:
 		GLuint m_id;
 		//Create an openGL texture from raw data
 		static GLuint CreateTexture(unsigned char* _data, int _width, int _height);
