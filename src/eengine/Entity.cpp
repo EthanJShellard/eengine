@@ -6,6 +6,7 @@ namespace eengine
 	Entity::Entity() 
 	{
 		m_destroyed = false;
+		m_transform = AddComponent<Transform>();
 	}
 
 	void Entity::Tick()

@@ -25,7 +25,7 @@ namespace eengine
 
 		bool m_destroyed;
 	public:
-		Transform transform;
+		shared<Transform> m_transform;
 
 		shared<Core> GetCore() const;
 		void Destroy();
