@@ -3,65 +3,69 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 
-void VertexArray::SetBuffer(std::shared_ptr<VertexBuffer> _buffer, int _position)
+namespace eengine 
 {
-	if (m_buffers.size() <= _position) m_buffers.resize(_position + 1);
-	m_buffers.at(_position) = _buffer;
-	m_dirty = true; //Data has changed and so needs to be uploaded
-}
-
-GLuint VertexArray::GetID()
-{
-	if (m_dirty)
+	void VertexArray::SetBuffer(std::shared_ptr<VertexBuffer> _buffer, int _position)
 	{
-		glBindVertexArray(m_id);
+		if (m_buffers.size() <= _position) m_buffers.resize(_position + 1);
+		m_buffers.at(_position) = _buffer;
+		m_dirty = true; //Data has changed and so needs to be uploaded
+	}
 
-		for (size_t i = 0; i < m_buffers.size(); i++)
+	GLuint VertexArray::GetID()
+	{
+		if (m_dirty)
 		{
-			if (!m_buffers.at(i)) continue; //If null go to next
+			glBindVertexArray(m_id);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_buffers.at(i)->GetID());
-			glVertexAttribPointer(i, m_buffers.at(i)->GetComponents(), GL_FLOAT, GL_FALSE, 0, (void*)0);
-			glEnableVertexAttribArray(i);
+			for (size_t i = 0; i < m_buffers.size(); i++)
+			{
+				if (!m_buffers.at(i)) continue; //If null go to next
+
+				glBindBuffer(GL_ARRAY_BUFFER, m_buffers.at(i)->GetID());
+				glVertexAttribPointer(i, m_buffers.at(i)->GetComponents(), GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glEnableVertexAttribArray(i);
+			}
+
+			//cleanup
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			m_dirty = false;
 		}
 
-		//cleanup
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		m_dirty = false;
+		return m_id;
 	}
 
-	return m_id;
-}
-
-size_t VertexArray::GetVertCount()
-{
-	return m_vertCount;
-}
-
-void VertexArray::SetVertCount(size_t _count)
-{
-	m_vertCount = _count;
-}
-
-VertexArray::VertexArray()
-{
-	// Create a new VAO on the GPU and bind it
-	glGenVertexArrays(1, &m_id);
-	if (!m_id)
+	size_t VertexArray::GetVertCount()
 	{
-		throw std::exception();
+		return m_vertCount;
 	}
 
-	m_buffers.resize(3); //to save on resizes. Our default size will be 3
+	void VertexArray::SetVertCount(size_t _count)
+	{
+		m_vertCount = _count;
+	}
 
-	m_vertCount = 0;
-	m_dirty = true;
+	VertexArray::VertexArray()
+	{
+		// Create a new VAO on the GPU and bind it
+		glGenVertexArrays(1, &m_id);
+		if (!m_id)
+		{
+			throw std::exception();
+		}
+
+		m_buffers.resize(3); //to save on resizes. Our default size will be 3
+
+		m_vertCount = 0;
+		m_dirty = true;
+	}
+
+	VertexArray::~VertexArray()
+	{
+		//Buffers should delete due to RAII
+		glDeleteVertexArrays(1, &m_id);
+	}
 }
 
-VertexArray::~VertexArray()
-{
-	//Buffers should delete due to RAII
-	glDeleteVertexArrays(1, &m_id);
-}

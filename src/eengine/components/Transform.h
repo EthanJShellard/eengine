@@ -4,9 +4,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
+#include "../Component.h"
+
 namespace eengine 
 {
-	class Transform 
+	class Transform : public Component
 	{
 	private:
 		glm::vec3 m_position = glm::vec3(0);

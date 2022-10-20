@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "Input.h"
-#include "Transform.h"
+#include "components/Transform.h"
 #include "Camera.h"
 
 #endif // !EENGINE

@@ -13,8 +13,8 @@ add_library(eengine
     src/eengine/NonCopyable.h
     src/eengine/Input.h
     src/eengine/Input.cpp
-    src/eengine/Transform.h
-    src/eengine/Transform.cpp
+    src/eengine/components/Transform.h
+    src/eengine/components/Transform.cpp
     src/eengine/Camera.h
     src/eengine/Camera.cpp
     src/eengine/Debug.h
@@ -33,6 +33,8 @@ add_library(eengine
     src/eengine/erenderer/Mesh.cpp
     src/eengine/erenderer/Material.h
     src/eengine/erenderer/Material.cpp
+    src/eengine/erenderer/components/QuadRenderer.h
+    src/eengine/erenderer/components/QuadRenderer.cpp
 )
 
 add_executable(game

@@ -2,7 +2,7 @@
 
 #include "eengine_defines.h"
 #include "NonCopyable.h"
-#include "Transform.h"
+#include "components/Transform.h"
 
 namespace eengine 
 {
