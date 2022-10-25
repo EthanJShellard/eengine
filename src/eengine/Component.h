@@ -9,6 +9,7 @@ namespace eengine
 	class Entity;
 	class Core;
 	class Input;
+	class Transform;
 
 	class Component
 	{
