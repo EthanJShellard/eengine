@@ -2,45 +2,45 @@ cmake_minimum_required(VERSION 3.0)
 project(EENGINE)
 
 add_library(rend
-    src/rend/rend.h
-    src/rend/Animation.h
-    src/rend/Animation.cpp
-    src/rend/Buffer.h
-    src/rend/Buffer.cpp
-    src/rend/Mesh.h
-    src/rend/mesh.cpp
-    src/rend/Model.h
-    src/rend/Model.cpp
-    src/rend/ModelRenderer.h
-    src/rend/ModelRenderer.cpp
-    src/rend/Renderer.h
-    src/rend/Renderer.cpp
-    src/rend/RenderTexture.h
-    src/rend/RenderTexture.cpp
-    src/rend/rendmath.h
-    src/rend/rendmath.cpp
-    src/rend/Shader.h
-    src/rend/Shader.cpp
-    src/rend/stb_image.h
-    src/rend/Texture.h
-    src/rend/Texture.cpp
-    src/rend/sys/Atomic.h
-    src/rend/sys/config.h
-    src/rend/sys/Exception.h
-    src/rend/sys/File.h
-    src/rend/sys/List.h
-    src/rend/sys/Lock.h
-    src/rend/sys/Mutex.h
-    src/rend/sys/panic.h
-    src/rend/sys/Pipe.h
-    src/rend/sys/Private.h
-    src/rend/sys/Ptr.h
-    src/rend/sys/String.h
-    src/rend/sys/ThreadPool.h
-    src/rend/sys/Unique.h
-    src/rend/sys/Vector.h
-    src/rend/sys/Weak.h
-    src/rend/sys/Zero.h
+    include/common/rend/rend.h
+    include/common/rend/Animation.h
+    include/common/rend/Animation.cpp
+    include/common/rend/Buffer.h
+    include/common/rend/Buffer.cpp
+    include/common/rend/Mesh.h
+    include/common/rend/mesh.cpp
+    include/common/rend/Model.h
+    include/common/rend/Model.cpp
+    include/common/rend/ModelRenderer.h
+    include/common/rend/ModelRenderer.cpp
+    include/common/rend/Renderer.h
+    include/common/rend/Renderer.cpp
+    include/common/rend/RenderTexture.h
+    include/common/rend/RenderTexture.cpp
+    include/common/rend/rendmath.h
+    include/common/rend/rendmath.cpp
+    include/common/rend/Shader.h
+    include/common/rend/Shader.cpp
+    include/common/rend/stb_image.h
+    include/common/rend/Texture.h
+    include/common/rend/Texture.cpp
+    include/common/rend/sys/Atomic.h
+    include/common/rend/sys/config.h
+    include/common/rend/sys/Exception.h
+    include/common/rend/sys/File.h
+    include/common/rend/sys/List.h
+    include/common/rend/sys/Lock.h
+    include/common/rend/sys/Mutex.h
+    include/common/rend/sys/panic.h
+    include/common/rend/sys/Pipe.h
+    include/common/rend/sys/Private.h
+    include/common/rend/sys/Ptr.h
+    include/common/rend/sys/String.h
+    include/common/rend/sys/ThreadPool.h
+    include/common/rend/sys/Unique.h
+    include/common/rend/sys/Vector.h
+    include/common/rend/sys/Weak.h
+    include/common/rend/sys/Zero.h
 )
 
 add_library(eengine
@@ -55,14 +55,16 @@ add_library(eengine
     src/eengine/NonCopyable.h
     src/eengine/Input.h
     src/eengine/Input.cpp
-    src/eengine/components/Transform.h
-    src/eengine/components/Transform.cpp
     src/eengine/Camera.h
     src/eengine/Camera.cpp
     src/eengine/Debug.h
     src/eengine/Debug.cpp
     src/eengine/Environment.h
     src/eengine/Environment.cpp
+    src/eengine/components/Transform.h
+    src/eengine/components/Transform.cpp
+    src/eengine/components/QuadRenderer.h
+    src/eengine/components/QuadRenderer.cpp
 )
 
 add_executable(game
