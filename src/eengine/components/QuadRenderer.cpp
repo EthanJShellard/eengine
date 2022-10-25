@@ -1,5 +1,6 @@
 #include "../Core.h"
 #include "../Environment.h"
+#include "../Entity.h"
 // For some reason QuadRenderer needs to be included after Core...... Query this....
 #include "QuadRenderer.h"
 
@@ -21,6 +22,7 @@ namespace eengine
 	{
 		rend::Renderer r(640, 480);
 
+		r.model(GetParent()->m_transform->GetModelMatrix());
 		r.shader(&m_shader);
 		r.mesh(&m_mesh);
 
