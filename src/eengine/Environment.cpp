@@ -22,4 +22,9 @@ namespace eengine
 	{
 		return m_deltaTime;
 	}
+
+	std::string Environment::GetProjectWorkingDirectory() 
+	{
+		return m_projectWorkingDirectory;
+	}
 }

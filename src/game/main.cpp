@@ -3,9 +3,9 @@
 #include "eengine.h"
 #include "components/Suicider.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    shared<eengine::Core> core = eengine::Core::Initialise();
+    shared<eengine::Core> core = eengine::Core::Initialise(argv[0]);
     auto e = core->AddEntity();
     
     //e->AddComponent<eengine::QuadRenderer>();

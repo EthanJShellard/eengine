@@ -28,7 +28,7 @@ namespace eengine
 	public:
 		~Core();
 
-		static shared<Core> Initialise();
+		static shared<Core> Initialise(const char* _projectWorkingDirectory);
 		void Start();
 		void Stop();
 		shared<Entity> AddEntity();

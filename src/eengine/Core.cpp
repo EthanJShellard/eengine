@@ -26,13 +26,14 @@ namespace eengine
 		SDL_DestroyWindow(m_window);
 	}
 
-	shared<Core> Core::Initialise() 
+	shared<Core> Core::Initialise(const char* _projectWorkingDirectory) 
 	{
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
 		// Store self reference
 		rtn->m_self = rtn;
 		rtn->m_environment = shared<Environment>(new Environment());
+		rtn->m_environment->m_projectWorkingDirectory = std::string(_projectWorkingDirectory);
 
 		Debug::Log("Initialising SDL Video...");
 
