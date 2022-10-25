@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Debug.h"
 #include "Environment.h"
+#include "Camera.h"
 
 namespace eengine
 {
@@ -19,6 +20,7 @@ namespace eengine
 		m_window = NULL;
 
 		m_input = std::make_shared<Input>();
+		m_mainCamera = std::make_shared<Camera>();
 	}
 
 	Core::~Core() 
@@ -139,6 +141,11 @@ namespace eengine
 	shared<Environment> Core::GetEnvironment()
 	{
 		return m_environment;
+	}
+
+	shared<Camera> Core::GetMainCamera() 
+	{
+		return m_mainCamera;
 	}
 }
 

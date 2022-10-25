@@ -12,6 +12,7 @@ namespace eengine
 	class Environment;
 	class Input;
 	class Entity;
+	class Camera;
 
 	class Core : private NonCopyable
 	{
@@ -22,6 +23,7 @@ namespace eengine
 		std::list<shared<Entity>> m_entities;
 		shared<Input> m_input;
 		weak<Core> m_self;
+		shared<Camera> m_mainCamera;
 
 		SDL_Window* m_window;
 		bool m_running;
@@ -33,5 +35,6 @@ namespace eengine
 		void Stop();
 		shared<Entity> AddEntity();
 		shared<Environment> GetEnvironment();
+		shared<Camera> GetMainCamera();
 	};
 }
