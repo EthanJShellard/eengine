@@ -6,6 +6,46 @@
 namespace rend
 {
 
+Shader::Shader(const char* _vertPath, const char* _fragPath) :
+    m_projectionLoc(-1),
+    m_viewLoc(-1),
+    m_modelLoc(-1)
+{
+    sys::String line;
+
+    for (sys::File file(_vertPath); file.read_line(line);)
+    {
+        m_vertSrc += line;
+        m_vertSrc += '\n';
+    }
+
+    for (sys::File file(_fragPath); file.read_line(line);)
+    {
+        m_fragSrc += line;
+        m_fragSrc += '\n';
+    }
+}
+
+Shader::Shader(const std::string& _vertPath, const std::string& _fragPath) :
+ m_projectionLoc(-1),
+ m_viewLoc(-1),
+ m_modelLoc(-1)
+{
+    sys::String line;
+
+    for (sys::File file(_vertPath.c_str()); file.read_line(line);)
+    {
+        m_vertSrc += line;
+        m_vertSrc += '\n';
+    }
+
+    for (sys::File file(_fragPath.c_str()); file.read_line(line);)
+    {
+        m_fragSrc += line;
+        m_fragSrc += '\n';
+    }
+}
+
 Shader::Shader(const sys::String& _vertPath, const sys::String& _fragPath) :
   m_projectionLoc(-1),
   m_viewLoc(-1),
