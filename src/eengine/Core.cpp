@@ -130,6 +130,7 @@ namespace eengine
 
 		rtn->m_core = m_self;
 		rtn->m_self = rtn;
+		rtn->m_transform = rtn->AddComponent<Transform>();
 		m_entities.push_back(rtn);
 
 		return rtn;
