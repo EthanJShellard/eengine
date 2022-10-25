@@ -32,5 +32,6 @@ namespace eengine
 		void Start();
 		void Stop();
 		shared<Entity> AddEntity();
+		shared<Environment> GetEnvironment();
 	};
 }

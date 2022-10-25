@@ -18,6 +18,7 @@ namespace eengine
 		virtual void OnBegin();
 		virtual void OnTick();
 		virtual void OnDisplay();
+		virtual void OnInitialise();
 
 		// Cache references to prevent having to repeatedly climb the hierarchy
 		weak<Entity> m_parent;

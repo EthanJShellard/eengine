@@ -26,14 +26,17 @@ namespace eengine
 		SDL_DestroyWindow(m_window);
 	}
 
-	shared<Core> Core::Initialise(const char* _projectWorkingDirectory) 
+	shared<Core> Core::Initialise(const char* _arg0) 
 	{
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
 		// Store self reference
 		rtn->m_self = rtn;
 		rtn->m_environment = shared<Environment>(new Environment());
-		rtn->m_environment->m_projectWorkingDirectory = std::string(_projectWorkingDirectory);
+		// Set up project working directory path
+		std::string pwd = std::string(_arg0);
+		pwd = pwd.substr(0, pwd.find_last_of('\\'));
+		rtn->m_environment->m_projectWorkingDirectory = pwd;
 
 		Debug::Log("Initialising SDL Video...");
 
@@ -83,6 +86,14 @@ namespace eengine
 				entity->Tick();
 			}
 
+			// Draw all that need drawing
+			auto drawItr = m_entities.begin();
+			while (drawItr != m_entities.end()) 
+			{
+				(*drawItr)->Display();
+				drawItr++;
+			}
+
 			// Clean up destroyed entities
 			auto itr = m_entities.begin();
 			while (itr != m_entities.end()) 
@@ -122,6 +133,11 @@ namespace eengine
 		m_entities.push_back(rtn);
 
 		return rtn;
+	}
+
+	shared<Environment> Core::GetEnvironment()
+	{
+		return m_environment;
 	}
 }
 

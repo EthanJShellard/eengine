@@ -14,7 +14,10 @@ struct Shader : sys::EnablePtr
   Shader(const char* _vertPath, const char* _fragPath);
   Shader(const std::string& _vertPath, const std::string& _fragPath);
   Shader(const sys::String& _vertPath, const sys::String& _fragPath);
+  Shader();
   ~Shader();
+
+  void LoadShaders(const char* _vertPath, const char* _fragPath);
 
   GLuint id();
   GLint projectionLoc();

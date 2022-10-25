@@ -66,6 +66,34 @@ Shader::Shader(const sys::String& _vertPath, const sys::String& _fragPath) :
   }
 }
 
+Shader::Shader() 
+{
+
+}
+
+void Shader::LoadShaders(const char* _vertPath, const char* _fragPath)
+{
+    sys::String line;
+
+    if (m_id)
+    {
+        glDeleteProgram(m_id);
+        m_id = 0;
+    }
+
+    for (sys::File file(_vertPath); file.read_line(line);)
+    {
+        m_vertSrc += line;
+        m_vertSrc += '\n';
+    }
+
+    for (sys::File file(_fragPath); file.read_line(line);)
+    {
+        m_fragSrc += line;
+        m_fragSrc += '\n';
+    }
+}
+
 Shader::~Shader()
 {
   if(m_id)

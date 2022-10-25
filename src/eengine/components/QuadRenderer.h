@@ -7,11 +7,15 @@ namespace eengine
 {
 	class QuadRenderer : public Component 
 	{
+		// SURELY THIS ISN'T NECESSARY?!
+		friend class Entity;
+
 	private:
 		rend::Mesh m_mesh;
 		rend::Shader m_shader;
 
 		void OnDisplay();
+		void OnInitialise();
 	public:
 		QuadRenderer();
 	};

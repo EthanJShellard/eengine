@@ -47,7 +47,9 @@ namespace eengine
 	{
 		auto share = std::make_shared<T>();
 		share->m_parent = m_self;
+		share->m_core = m_core;
 		m_components.push_back(share);
+		share->OnInitialise();
 		return share;
 	}
 
@@ -56,7 +58,9 @@ namespace eengine
 	{
 		auto share = std::make_shared<T>(_a);
 		share->m_parent = m_self;
+		share->m_core = m_core;
 		m_components.push_back(share);
+		share->OnInitialise();
 		return share;
 	}
 
@@ -65,7 +69,9 @@ namespace eengine
 	{
 		auto share = std::make_shared<T>(_a, _b);
 		share->m_parent = m_self;
+		share->m_core = m_core;
 		m_components.push_back(share);
+		share->OnInitialise();
 		return share;
 	}
 
@@ -74,7 +80,9 @@ namespace eengine
 	{
 		auto share = std::make_shared<T>(_a, _b, _c);
 		share->m_parent = m_self;
+		share->m_core = m_core;
 		m_components.push_back(share);
+		share->OnInitialise();
 		return share;
 	}
 }
