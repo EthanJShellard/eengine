@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(EENGINE)
 
+find_package(OpenGL REQUIRED)
+
 add_library(rend
     include/common/rend/rend.h
     include/common/rend/Animation.h
@@ -86,6 +88,13 @@ target_include_directories(game
     PRIVATE src/eengine/
 )
 
+target_link_libraries(rend
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
+    opengl32
+)
+
 target_link_libraries(eengine
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
@@ -93,6 +102,6 @@ target_link_libraries(eengine
     rend
 
 )
-target_link_libraries(game 
+target_link_libraries(game
     eengine
 )
