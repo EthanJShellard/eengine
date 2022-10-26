@@ -157,5 +157,10 @@ namespace eengine
 	{
 		return m_mainCamera;
 	}
+
+	shared<Input> Core::GetInput() 
+	{
+		return m_input;
+	}
 }
 

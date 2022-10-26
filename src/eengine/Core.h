@@ -42,5 +42,6 @@ namespace eengine
 		shared<Entity> AddEntity();
 		shared<Environment> GetEnvironment();
 		shared<Camera> GetMainCamera();
+		shared<Input> GetInput();
 	};
 }
