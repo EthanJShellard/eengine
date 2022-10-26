@@ -19,7 +19,7 @@ namespace eengine
 	{
 		friend class Entity;
 	private:
-		/// @brief Called just after component is instantiated and provided with references to its parent, the engine core and engine input.
+		/// @brief Called just after component is instantiated and provided with references to its parent, the engine Core and engine Input.
 		virtual void OnInit();
 		
 		/// @brief Called just before OnTick is called for the first time. 
@@ -41,12 +41,12 @@ namespace eengine
 		/// @return A shared pointer to the Entity which owns this component.
 		shared<Entity> GetParent();
 
-		/// @brief Get a shared pointer to the engine core.
-		/// @return A shared pointer to the engine core.
+		/// @brief Get a shared pointer to the engine Core.
+		/// @return A shared pointer to the engine Core.
 		shared<Core> GetCore();
 
-		/// @brief Get a shared pointer to the engine input object.
-		/// @return A shared pointer to the engine input object.
+		/// @brief Get a shared pointer to the engine Input object.
+		/// @return A shared pointer to the engine Input object.
 		shared<Input> GetInput();
 	};
 }
