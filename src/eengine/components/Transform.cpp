@@ -124,9 +124,7 @@ namespace eengine
 		// Transform properties have changed. We need to regenerate model matrix.
 		if (m_dirty) 
 		{
-			m_modelMatrix = glm::mat4(1.0f);
 			m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
-
 			m_dirty = false;
 		}
 
