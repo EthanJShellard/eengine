@@ -11,16 +11,18 @@ namespace eengine
 	class Transform : public Component
 	{
 	private:
-		glm::vec3 m_position = glm::vec3(0);
-		glm::quat m_orientation = glm::quat(glm::vec3(0,0,0));
-		glm::vec3 m_scale = glm::vec3(1);
+		glm::vec3 m_position;
+		glm::quat m_orientation;
+		glm::vec3 m_scale;
 		glm::mat4 m_modelMatrix;
 		glm::mat4 m_scaleMatrix;
 		glm::mat4 m_rotationMatrix;
 		glm::mat4 m_translationMatrix;
 
-		bool m_dirty = true;
+		bool m_dirty;
 	public:
+		Transform();
+
 		void SetPosition(glm::vec3 _newPos);
 		void SetPosition(float _x, float _y, float _z);
 		void SetRotation(glm::vec3 _newRot);

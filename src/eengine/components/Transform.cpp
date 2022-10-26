@@ -2,6 +2,18 @@
 
 namespace eengine 
 {
+	Transform::Transform() :
+		m_modelMatrix(glm::mat4(1.0f)),
+		m_rotationMatrix(glm::mat4(1.0f)),
+		m_translationMatrix(glm::mat4(1.0f)),
+		m_scaleMatrix(glm::mat4(1.0f)),
+		m_position(glm::vec3(0.0f)),
+		m_scale(glm::vec3(1.0f)),
+		m_orientation(glm::quat(glm::vec3(0.0f,0.0f,0.0f))),
+		m_dirty(true)
+	{
+	}
+
 	void Transform::SetPosition(glm::vec3 _newPos) 
 	{
 		m_position = _newPos;
