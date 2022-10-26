@@ -1,3 +1,5 @@
+#include <rend/Renderer.h>
+
 #include "Entity.h"
 #include "Component.h"
 
@@ -6,7 +8,6 @@ namespace eengine
 	Entity::Entity() 
 	{
 		m_destroyed = false;
-		m_transform = AddComponent<Transform>();
 	}
 
 	void Entity::Tick()
@@ -17,11 +18,11 @@ namespace eengine
 		}
 	}
 
-	void Entity::Display()
+	void Entity::Display(shared<rend::Renderer> _renderer)
 	{
 		for (shared<Component> c : m_components)
 		{
-			c->OnDisplay();
+			c->OnDisplay(_renderer);
 		}
 	}
 
