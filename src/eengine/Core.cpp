@@ -35,7 +35,7 @@ namespace eengine
 		SDL_DestroyWindow(m_window);
 	}
 
-	shared<Core> Core::Initialise(const char* _arg0) 
+	shared<Core> Core::Initialise(const char* _projectWorkingDirectory)
 	{
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
@@ -45,7 +45,7 @@ namespace eengine
 		rtn->m_environment = shared<Environment>(new Environment());
 
 		// Set up project working directory path
-		std::string pwd = std::string(_arg0);
+		std::string pwd = std::string(_projectWorkingDirectory);
 		pwd = pwd.substr(0, pwd.find_last_of('\\'));
 		rtn->m_environment->m_projectWorkingDirectory = pwd;
 
