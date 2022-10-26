@@ -17,7 +17,7 @@ namespace eengine
 
 		void OnTick();
 		void OnDisplay(shared<rend::Renderer> _renderer);
-		void OnInitialise();
+		void OnInit();
 	public:
 		QuadRenderer();
 

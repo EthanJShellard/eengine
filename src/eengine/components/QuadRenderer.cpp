@@ -21,7 +21,7 @@ namespace eengine
 		transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 10.0f, transform->Up());
 	}
 
-	void QuadRenderer::OnInitialise() 
+	void QuadRenderer::OnInit() 
 	{
 		std::string pwd = GetCore()->GetEnvironment()->GetProjectWorkingDirectory();
 		m_shader.LoadShaders((pwd + std::string("\\data\\shaders\\basic.vert")).c_str(), (pwd + std::string("\\data\\shaders\\basic.frag")).c_str());

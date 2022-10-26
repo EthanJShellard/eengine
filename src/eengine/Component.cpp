@@ -36,9 +36,4 @@ namespace eengine
 	{
 		// Stub
 	}
-
-	void Component::OnInitialise() 
-	{
-		// Stub
-	}
 }

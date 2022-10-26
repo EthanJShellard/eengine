@@ -55,7 +55,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
-		share->OnInitialise();
+		share->OnInit();
 		return share;
 	}
 
@@ -67,7 +67,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
-		share->OnInitialise();
+		share->OnInit();
 		return share;
 	}
 
@@ -79,7 +79,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
-		share->OnInitialise();
+		share->OnInit();
 		return share;
 	}
 
@@ -91,7 +91,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
-		share->OnInitialise();
+		share->OnInit();
 		return share;
 	}
 }
