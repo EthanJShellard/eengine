@@ -68,14 +68,6 @@ namespace eengine
 			throw std::exception();
 		}
 
-		//Debug::Log("Done!");
-		//Debug::Log("Initialising GLEW...");
-		//
-		//if (glewInit() != GLEW_OK)
-		//{
-		//	throw std::exception();
-		//}
-
 		Debug::Log("Done!");
 
 		return rtn;
