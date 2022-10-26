@@ -9,7 +9,8 @@
 namespace eengine 
 {
 	QuadRenderer::QuadRenderer() :
-		m_mesh()
+		m_mesh(),
+		m_colour(glm::vec4(1.0f))
 	{
 		m_mesh.loadQuad();
 	}
@@ -31,7 +32,13 @@ namespace eengine
 		_renderer->model(GetParent()->m_transform->GetModelMatrix());
 		_renderer->shader(&m_shader);
 		_renderer->mesh(&m_mesh);
+		_renderer->color(m_colour);
 				 
 		_renderer->render();
+	}
+
+	void QuadRenderer::SetColour(float _r, float _g, float _b, float _a) 
+	{
+		m_colour = glm::vec4(_r,_g,_b,_a);
 	}
 }

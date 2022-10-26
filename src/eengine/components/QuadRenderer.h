@@ -13,11 +13,14 @@ namespace eengine
 	private:
 		rend::Mesh m_mesh;
 		rend::Shader m_shader;
+		glm::vec4 m_colour;
 
 		void OnTick();
 		void OnDisplay(shared<rend::Renderer> _renderer);
 		void OnInitialise();
 	public:
 		QuadRenderer();
+
+		void SetColour(float _r, float _g, float _b, float _a);
 	};
 }
