@@ -4,6 +4,11 @@
 #include "NonCopyable.h"
 #include "components/Transform.h"
 
+namespace rend 
+{
+	struct Renderer;
+}
+
 namespace eengine 
 {
 	// Engine forward declarations
@@ -17,7 +22,7 @@ namespace eengine
 		Entity();
 
 		void Tick();
-		void Display();
+		void Display(shared<rend::Renderer> _renderer);
 
 		std::vector<shared<Component>> m_components;
 		weak<Core> m_core;

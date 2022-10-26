@@ -14,7 +14,8 @@ namespace eengine
 		rend::Mesh m_mesh;
 		rend::Shader m_shader;
 
-		void OnDisplay();
+		void OnTick();
+		void OnDisplay(shared<rend::Renderer> _renderer);
 		void OnInitialise();
 	public:
 		QuadRenderer();

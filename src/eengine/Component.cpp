@@ -32,7 +32,7 @@ namespace eengine
 		// Stub
 	}
 
-	void Component::OnDisplay() 
+	void Component::OnDisplay(shared<rend::Renderer> _renderer) 
 	{
 		// Stub
 	}

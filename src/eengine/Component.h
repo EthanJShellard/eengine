@@ -1,6 +1,8 @@
 #ifndef EENGINE_COMPONENT
 #define EENGINE_COMPONENT
 
+#include <rend/Renderer.h>
+
 #include "eengine_defines.h"
 
 namespace eengine
@@ -18,7 +20,7 @@ namespace eengine
 		virtual void OnInit();
 		virtual void OnBegin();
 		virtual void OnTick();
-		virtual void OnDisplay();
+		virtual void OnDisplay(shared<rend::Renderer> _Renderer);
 		virtual void OnInitialise();
 
 		// Cache references to prevent having to repeatedly climb the hierarchy

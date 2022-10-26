@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <rend/rend.h>
 
 #include "Core.h"
 #include "Entity.h"
@@ -21,6 +22,12 @@ namespace eengine
 
 		m_input = std::make_shared<Input>();
 		m_mainCamera = std::make_shared<Camera>();
+		m_mainRenderer = std::make_shared<rend::Renderer>(600, 400);
+		m_mainRenderer->projection(glm::perspective(glm::radians(45.0f),
+			(float)600 / (float)400, 0.1f, 100.f));
+		m_mainRenderer->backfaceCull(true);
+		m_mainRenderer->blend(true);
+		m_mainRenderer->depthTest(true);
 	}
 
 	Core::~Core() 
@@ -32,9 +39,11 @@ namespace eengine
 	{
 		// std::make_shared cannot access private constructor, so call it manually
 		shared<Core> rtn = shared<Core>(new Core());
+
 		// Store self reference
 		rtn->m_self = rtn;
 		rtn->m_environment = shared<Environment>(new Environment());
+
 		// Set up project working directory path
 		std::string pwd = std::string(_arg0);
 		pwd = pwd.substr(0, pwd.find_last_of('\\'));
@@ -59,13 +68,13 @@ namespace eengine
 			throw std::exception();
 		}
 
-		Debug::Log("Done!");
-		Debug::Log("Initialising GLEW...");
-
-		if (glewInit() != GLEW_OK)
-		{
-			throw std::exception();
-		}
+		//Debug::Log("Done!");
+		//Debug::Log("Initialising GLEW...");
+		//
+		//if (glewInit() != GLEW_OK)
+		//{
+		//	throw std::exception();
+		//}
 
 		Debug::Log("Done!");
 
@@ -88,13 +97,22 @@ namespace eengine
 				entity->Tick();
 			}
 
+			// Update main renderer view matrix using maincamera
+			m_mainRenderer->view(glm::inverse(m_mainCamera->m_transform->GetModelMatrix()));
+
+			// Clear the main render surface
+			m_mainRenderer->clear();
+
 			// Draw all that need drawing
 			auto drawItr = m_entities.begin();
 			while (drawItr != m_entities.end()) 
 			{
-				(*drawItr)->Display();
+				(*drawItr)->Display(m_mainRenderer);
 				drawItr++;
 			}
+
+			// Swap buffers to display rendered content
+			SDL_GL_SwapWindow(m_window);
 
 			// Clean up destroyed entities
 			auto itr = m_entities.begin();

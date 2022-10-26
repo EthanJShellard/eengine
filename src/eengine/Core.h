@@ -6,6 +6,11 @@
 // Forward declarations
 struct SDL_Window;
 
+namespace rend
+{
+	struct Renderer;
+}
+
 namespace eengine
 {
 	// Engine Forward Declarations
@@ -24,6 +29,7 @@ namespace eengine
 		shared<Input> m_input;
 		weak<Core> m_self;
 		shared<Camera> m_mainCamera;
+		shared<rend::Renderer> m_mainRenderer;
 
 		SDL_Window* m_window;
 		bool m_running;

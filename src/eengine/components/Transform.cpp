@@ -17,14 +17,14 @@ namespace eengine
 	void Transform::SetPosition(glm::vec3 _newPos) 
 	{
 		m_position = _newPos;
-		m_translationMatrix = glm::translate(glm::mat4(), m_position);
+		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position);
 		m_dirty = true;
 	}
 
 	void  Transform::SetPosition(float _x, float _y, float _z)
 	{
 		m_position = glm::vec3(_x, _y, _z);
-		m_translationMatrix = glm::translate(glm::mat4(), m_position);
+		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position);
 		m_dirty = true;
 	}
 
@@ -52,14 +52,14 @@ namespace eengine
 	void  Transform::SetScale(glm::vec3 _newScale)
 	{
 		m_scale = _newScale;
-		m_scaleMatrix = glm::scale(glm::mat4(), m_scale);
+		m_scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);
 		m_dirty = true;
 	}
 
 	void  Transform::SetScale(float _x, float _y, float _z)
 	{
 		m_scale = glm::vec3(_x, _y, _z);
-		m_scaleMatrix = glm::scale(glm::mat4(), m_scale);
+		m_scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);
 		m_dirty = true;
 	}
 
@@ -73,14 +73,14 @@ namespace eengine
 	void  Transform::Translate(glm::vec3 _move)
 	{
 		m_position += _move;
-		m_translationMatrix = glm::translate(glm::mat4(), m_position);
+		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position);
 		m_dirty = true;
 	}
 
 	void Transform::Scale(glm::vec3 _scaleFactors) 
 	{
 		m_scale *= _scaleFactors;
-		m_scaleMatrix = glm::scale(glm::mat4(), m_scale);
+		m_scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);
 		m_dirty = true;
 	}
 
