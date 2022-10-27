@@ -157,6 +157,28 @@ namespace eengine
 		tab          = SDLK_TAB
 	};
 
+	/// @brief Simple information on the state of a key, including whether it's currently down and the last time it was updated.
+	struct KeyState 
+	{
+		KeyState(bool _down, uint64_t _updateID) :
+			down(_down)
+		{
+			if (_down) 
+			{
+				lastUpdatePressed = _updateID;
+			}
+			else 
+			{
+				lastUpdateReleased = _updateID;
+			}
+		}
+
+		bool down = false;
+		// The last update in which this key was pressed down
+		uint64_t lastUpdatePressed = 0;
+		uint64_t lastUpdateReleased = 0;
+	};
+
 	/// @brief Class which encapsulates input handling for the keyboard and mouse.
 	class Input : private NonCopyable
 	{
@@ -172,8 +194,9 @@ namespace eengine
 		bool m_mouse3Pressed;
 		bool m_quit;
 		float m_mouseSensitivity;
+		uint64_t m_updateCount;
 
-		std::unordered_map<int, bool> m_keys;
+		std::unordered_map<int, KeyState> m_keys;
 
 		// Update the input state. Should be called at the beginning of a frame/update.
 		void Update();
@@ -185,6 +208,16 @@ namespace eengine
 		/// @param _key The key to check.
 		/// @return Whether or not _key is currently being pressed.
 		bool GetKey(KeyCode _key);
+
+		/// @brief Get whether a key was pressed this update.
+		/// @param _key The key to check.
+		/// @return Whether or not the key was pressed this update.
+		bool GetKeyDown(KeyCode _key);
+	
+		/// @brief Get whether a key was released this update.
+		/// @param _key The key to check.
+		/// @return Whether or not the key was released this update.
+		bool GetKeyUp(KeyCode _key);
 		
 		/// @brief Get the movement of the mouse since the last update.
 		/// @return A vector containing the horizontal and vertical movement of the mouse.

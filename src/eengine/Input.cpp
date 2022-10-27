@@ -19,6 +19,10 @@ namespace eengine
 		m_mouseDelta = glm::vec2(0, 0);
 		m_mouseScroll = glm::vec2(0, 0);
 
+		m_updateCount++;
+		// We would rather overflow to 1 than 0
+		m_updateCount = m_updateCount ? m_updateCount : 1;
+
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_KEYDOWN)
@@ -27,16 +31,19 @@ namespace eengine
 				if (entry == m_keys.end()) // Key is not yet present in map
 				{
 					// Insert key into the map for future reference!
-					m_keys.insert(std::pair<int, bool>(event.key.keysym.sym, true));
+					m_keys.insert(std::pair<int, KeyState>(event.key.keysym.sym, KeyState(true, m_updateCount)));
 				}
 				else
 				{
-					entry->second = true;
+					entry->second.down = true;
+					entry->second.lastUpdatePressed = m_updateCount;
 				}
 			}
 			else if (event.type == SDL_KEYUP)
 			{
-				m_keys.find(event.key.keysym.sym)->second = false;
+				auto entry = m_keys.find(event.key.keysym.sym);
+				entry->second.down = false;
+				entry->second.lastUpdateReleased = m_updateCount;
 			}
 			else if (event.type == SDL_MOUSEMOTION)
 			{
@@ -91,7 +98,19 @@ namespace eengine
 	bool Input::GetKey(KeyCode _key)
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
-		return itr == m_keys.end() ? false : itr->second;
+		return itr == m_keys.end() ? false : itr->second.down;
+	}
+
+	bool Input::GetKeyDown(KeyCode _key) 
+	{
+		auto itr = m_keys.find(SDL_Keycode(_key));
+		return itr == m_keys.end() ? false : itr->second.down && itr->second.lastUpdatePressed == m_updateCount;
+	}
+
+	bool Input::GetKeyUp(KeyCode _key)
+	{
+		auto itr = m_keys.find(SDL_Keycode(_key));
+		return itr == m_keys.end() ? false : !itr->second.down && itr->second.lastUpdateReleased == m_updateCount;
 	}
 
 	glm::vec2 Input::GetMouseDelta()

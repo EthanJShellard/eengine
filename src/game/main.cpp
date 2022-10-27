@@ -22,7 +22,6 @@ int main(int argc, char* argv[])
     e3->GetComponentOfType<eengine::QuadRenderer>()->SetColour(1.0f,0,1.0f,0.8f);
     // Test getting multiple components
     int size = e3->GetComponentsOfType<eengine::QuadRenderer>().size();
-    e3->GetComponentsOfType<Suicider>();
 
    // core->AddEntity()->AddComponent<Suicider>(30);
 

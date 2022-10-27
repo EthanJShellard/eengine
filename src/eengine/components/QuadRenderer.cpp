@@ -2,6 +2,7 @@
 #include "../Environment.h"
 #include "../Entity.h"
 #include "../Camera.h"
+#include "../Input.h"
 // For some reason QuadRenderer needs to be included after Core...... Query this....
 #include "QuadRenderer.h"
 
@@ -18,6 +19,16 @@ namespace eengine
 	{
 		auto transform = GetParent()->GetTransform();
 		transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 90.0f, transform->Up());
+
+		if (GetCore()->GetInput()->GetKeyDown(KeyCode::minus)) 
+		{
+			transform->SetScale(transform->GetScale() * 0.95f);
+		}
+
+		if (GetCore()->GetInput()->GetKeyUp(KeyCode::equals))
+		{
+			transform->SetScale(transform->GetScale() * 1.05f);
+		}
 	}
 
 	void QuadRenderer::OnInit() 
