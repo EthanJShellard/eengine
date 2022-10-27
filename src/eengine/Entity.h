@@ -84,8 +84,17 @@ namespace eengine
 		template<typename T, typename A, typename B, typename C>
 		shared<T> AddComponent(A _a, B _b, C _c);
 
+		/// @brief Get the first Component of type T found on this Entity. Will throw if no such Component exists.
+		/// @tparam T The type of Component to get.
+		/// @return The Component.
 		template<typename T>
 		shared<T> GetComponentOfType();
+
+		/// @brief Get a vector of Components with type T attached to this Entity. Can return an empty vector.
+		/// @tparam T The type of Component to get.
+		/// @return A list of the found Components.
+		template<typename T>
+		std::vector<shared<T>> GetComponentsOfType();
 	};
 
 
@@ -140,14 +149,29 @@ namespace eengine
 	template<typename T>
 	shared<T> Entity::GetComponentOfType() 
 	{
-		for (shared<Component> e : m_components) 
+		for (shared<Component> c : m_components) 
 		{
-			shared<T> ptr = std::dynamic_pointer_cast<T>(e);
+			shared<T> ptr = std::dynamic_pointer_cast<T>(c);
 			if (ptr) 
 			{
 				return ptr;
 			}
 		}
 		throw std::exception();
+	}
+
+	template<typename T>
+	std::vector<shared<T>> Entity::GetComponentsOfType() 
+	{
+		std::vector<shared<T>> componentsFound;
+		for (shared<Component> c : m_components) 
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(c);
+			if (ptr) 
+			{
+				componentsFound.push_back(ptr);
+			}
+		}
+		return componentsFound;
 	}
 }

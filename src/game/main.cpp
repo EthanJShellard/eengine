@@ -15,10 +15,14 @@ int main(int argc, char* argv[])
     e2->GetTransform()->Translate(glm::vec3(0.0f, 0.0f, -5.0f));
 
     auto e3 = core->AddEntity();
-    e3->AddComponent<eengine::QuadRenderer>()->SetColour(0.0f, 0.0f, 1.0f, 0.5f);;
+    e3->AddComponent<eengine::QuadRenderer>()->SetColour(0.0f, 0.0f, 1.0f, 0.5f);
+    e3->AddComponent<eengine::QuadRenderer>()->SetColour(0.9f, 0.9f, 0.9f, 0.4f);;
     e3->GetTransform()->Translate(glm::vec3(-0.8f, 0.0f, -5.0f));
     // Test getting component by type
-    e3->GetComponentOfType<eengine::QuadRenderer>()->SetColour(1.0f,0,1.0f,1.0f);
+    e3->GetComponentOfType<eengine::QuadRenderer>()->SetColour(1.0f,0,1.0f,0.8f);
+    // Test getting multiple components
+    int size = e3->GetComponentsOfType<eengine::QuadRenderer>().size();
+    e3->GetComponentsOfType<Suicider>();
 
    // core->AddEntity()->AddComponent<Suicider>(30);
 
