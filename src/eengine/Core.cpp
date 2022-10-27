@@ -13,6 +13,9 @@
 #include "Environment.h"
 #include "Camera.h"
 
+#define DEFAULT_WINDOW_WIDTH 1200
+#define DEFAULT_WINDOW_HEIGHT 800
+
 namespace eengine
 {
 	Core::Core() 
@@ -22,9 +25,9 @@ namespace eengine
 
 		m_input = std::make_shared<Input>();
 		m_mainCamera = std::make_shared<Camera>();
-		m_mainRenderer = std::make_shared<rend::Renderer>(600, 400);
+		m_mainRenderer = std::make_shared<rend::Renderer>(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		m_mainRenderer->projection(glm::perspective(glm::radians(45.0f),
-			(float)600 / (float)400, 0.1f, 100.f));
+			(float)DEFAULT_WINDOW_WIDTH / (float)DEFAULT_WINDOW_HEIGHT, 0.1f, 100.f));
 		m_mainRenderer->backfaceCull(true);
 		m_mainRenderer->blend(true);
 		m_mainRenderer->depthTest(true);
@@ -61,7 +64,7 @@ namespace eengine
 
 		rtn->m_window = SDL_CreateWindow("eengine",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			600, 400, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+			DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		if (!SDL_GL_CreateContext(rtn->m_window)) 
 		{
