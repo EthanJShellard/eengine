@@ -13,8 +13,8 @@ namespace eengine
 	void Environment::OnFrameStart() 
 	{
 		auto time_now = std::chrono::steady_clock::now();
-		auto diff = time_now - m_lastTime;
-		m_deltaTime = std::chrono::duration_cast<std::chrono::seconds>(diff).count();
+		std::chrono::duration<float, std::ratio<1, 1>> diff = time_now - m_lastTime;
+		m_deltaTime = diff.count();
 		m_lastTime = time_now;
 	}
 
