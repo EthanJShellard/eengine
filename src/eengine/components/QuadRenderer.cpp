@@ -17,7 +17,7 @@ namespace eengine
 
 	void QuadRenderer::OnTick() 
 	{
-		auto transform = GetParent()->m_transform;
+		auto transform = GetParent()->GetTransform();
 		transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 10.0f, transform->Up());
 	}
 
@@ -29,7 +29,7 @@ namespace eengine
 
 	void QuadRenderer::OnDisplay(shared<rend::Renderer> _renderer) 
 	{
-		_renderer->model(GetParent()->m_transform->GetModelMatrix());
+		_renderer->model(GetParent()->GetTransform()->GetModelMatrix());
 		_renderer->shader(&m_shader);
 		_renderer->mesh(&m_mesh);
 		_renderer->color(m_colour);

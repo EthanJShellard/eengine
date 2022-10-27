@@ -31,6 +31,11 @@ namespace eengine
 		return m_core.lock();
 	}
 
+	shared<Transform> Entity::GetTransform() const 
+	{
+		return m_transform;
+	}
+
 	void Entity::Destroy() 
 	{
 		m_destroyed = true;

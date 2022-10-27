@@ -29,14 +29,17 @@ namespace eengine
 		weak<Core> m_core;
 		weak<Entity> m_self;
 
-		bool m_destroyed;
-	public:
-		/// @brief All standard Entities start with a transform component. This reference allows quick access to that component.
 		shared<Transform> m_transform;
 
+		bool m_destroyed;
+	public:
 		/// @brief Get the engine Core.
 		/// @return A shared pointer to the engine Core.
 		shared<Core> GetCore() const;
+
+		/// @brief All standard Entities start with a transform component. This gets a cached reference to that component.
+		/// @return The transform component of this entity
+		shared<Transform> GetTransform() const;
 
 		/// @brief Flag this entity for destruction at the end of this update.
 		void Destroy();
