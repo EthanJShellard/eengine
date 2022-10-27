@@ -7,10 +7,7 @@ namespace eengine
 {
 	/// @brief Component which will render a quad at the location of its parent.
 	class QuadRenderer : public Component 
-	{
-		// SURELY THIS ISN'T NECESSARY?!
-		friend class Entity;
-
+	{	
 	private:
 		rend::Mesh m_mesh;
 		rend::Shader m_shader;
@@ -18,10 +15,10 @@ namespace eengine
 
 		void OnTick();
 		void OnDisplay(shared<rend::Renderer> _renderer);
-		void OnInit();
+
 	public:
 		QuadRenderer();
-
+		void OnInit();
 		/// @brief Set the colour of the quad.
 		/// @param _r The red channel.
 		/// @param _g The green channel.
