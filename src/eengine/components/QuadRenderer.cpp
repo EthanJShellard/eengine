@@ -2,7 +2,6 @@
 #include "../Environment.h"
 #include "../Entity.h"
 #include "../Camera.h"
-#include "../Debug.h"
 // For some reason QuadRenderer needs to be included after Core...... Query this....
 #include "QuadRenderer.h"
 
