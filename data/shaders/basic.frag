@@ -22,6 +22,6 @@ void main()
 
   tex *= u_Color;
 
-  gl_FragColor = tex * vec4(light, 1);
+  gl_FragColor = u_Color;//tex * vec4(light, 1);
 }
 
