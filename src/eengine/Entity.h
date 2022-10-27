@@ -83,6 +83,9 @@ namespace eengine
 		/// @return A shared pointer to the newly created Component.
 		template<typename T, typename A, typename B, typename C>
 		shared<T> AddComponent(A _a, B _b, C _c);
+
+		template<typename T>
+		shared<T> GetComponentOfType();
 	};
 
 
@@ -132,5 +135,19 @@ namespace eengine
 		m_components.push_back(share);
 		share->OnInit();
 		return share;
+	}
+
+	template<typename T>
+	shared<T> Entity::GetComponentOfType() 
+	{
+		for (shared<Component> e : m_components) 
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(e);
+			if (ptr) 
+			{
+				return ptr;
+			}
+		}
+		throw std::exception();
 	}
 }
