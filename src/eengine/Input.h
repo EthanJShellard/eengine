@@ -207,33 +207,33 @@ namespace eengine
 		/// @brief Get whether a key is being pressed.
 		/// @param _key The key to check.
 		/// @return Whether or not _key is currently being pressed.
-		bool GetKey(KeyCode _key);
+		bool GetKey(KeyCode _key) const;
 
 		/// @brief Get whether a key was pressed this update.
 		/// @param _key The key to check.
 		/// @return Whether or not the key was pressed this update.
-		bool GetKeyDown(KeyCode _key);
+		bool GetKeyDown(KeyCode _key) const;
 	
 		/// @brief Get whether a key was released this update.
 		/// @param _key The key to check.
 		/// @return Whether or not the key was released this update.
-		bool GetKeyUp(KeyCode _key);
+		bool GetKeyUp(KeyCode _key) const;
 		
 		/// @brief Get the movement of the mouse since the last update.
 		/// @return A vector containing the horizontal and vertical movement of the mouse.
-		glm::vec2 GetMouseDelta();
+		glm::vec2 GetMouseDelta() const;
 
 		/// @brief Get the movement of the mouse scrollwheel since the last update.
 		/// @return A vector containing the horizontal and vertical movement of the mousewheel.
-		glm::vec2 GetMouseWheelScroll();
+		glm::vec2 GetMouseWheelScroll() const;
 
 		/// @brief Check whether the the process has received a quit signal.
 		/// @return Whether or not the process has been told to quit.
-		bool GetHasQuit();
+		bool GetHasQuit() const;
 
 		/// @brief Get the current mouse sensitivity.
 		/// @return The current mouse sensitivity.
-		float GetMouseSensitivity();
+		float GetMouseSensitivity() const;
 
 		/// @brief Set a new mouse sensitivity.
 		/// @param _newSens The new mouse sensitivity.
@@ -241,15 +241,15 @@ namespace eengine
 
 		/// @brief Check whether mouse 1 (usually the left mouse button) is currently pressed.
 		/// @return Whether or not mouse 1 is pressed.
-		bool Mouse1Down();
+		bool Mouse1Down() const;
 
 		/// @brief Check whether mouse 2 (usually the right mouse button) is currently pressed.
 		/// @return Whether or not mouse 2 is pressed.
-		bool Mouse2Down();
+		bool Mouse2Down() const;
 
 		/// @brief Check whether mouse 3 (usually the middle mouse button) is currently pressed.
 		/// @return Whether or not mouse 3 is pressed.
-		bool Mouse3Down();
+		bool Mouse3Down() const;
 
 		/// @brief Reset the mouse cursor position to the centre of the provided bounds. 
 		/// @details This should be the centre of the screen if the full screen dimensions are provided as arguments.

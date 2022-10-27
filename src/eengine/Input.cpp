@@ -104,40 +104,40 @@ namespace eengine
 		m_mousePreviousPos += m_mouseDelta;
 	}
 
-	bool Input::GetKey(KeyCode _key)
+	bool Input::GetKey(KeyCode _key) const
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
 		return itr == m_keys.end() ? false : itr->second.down;
 	}
 
-	bool Input::GetKeyDown(KeyCode _key) 
+	bool Input::GetKeyDown(KeyCode _key) const
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
 		return itr == m_keys.end() ? false : itr->second.lastUpdatePressed == m_updateCount;
 	}
 
-	bool Input::GetKeyUp(KeyCode _key)
+	bool Input::GetKeyUp(KeyCode _key) const
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
 		return itr == m_keys.end() ? false : itr->second.lastUpdateReleased == m_updateCount;
 	}
 
-	glm::vec2 Input::GetMouseDelta()
+	glm::vec2 Input::GetMouseDelta() const
 	{
 		return m_mouseDelta;
 	}
 
-	glm::vec2 Input::GetMouseWheelScroll()
+	glm::vec2 Input::GetMouseWheelScroll() const
 	{
 		return m_mouseScroll;
 	}
 
-	bool Input::GetHasQuit()
+	bool Input::GetHasQuit() const
 	{
 		return m_quit;
 	}
 
-	float Input::GetMouseSensitivity()
+	float Input::GetMouseSensitivity() const
 	{
 		return m_mouseSensitivity;
 	}
@@ -147,17 +147,17 @@ namespace eengine
 		m_mouseSensitivity = _newSens;
 	}
 
-	bool Input::Mouse1Down()
+	bool Input::Mouse1Down() const
 	{
 		return m_mouse1Pressed;
 	}
 
-	bool Input::Mouse2Down()
+	bool Input::Mouse2Down() const
 	{
 		return m_mouse2Pressed;
 	}
 
-	bool Input::Mouse3Down()
+	bool Input::Mouse3Down() const
 	{
 		return m_mouse3Pressed;
 	}
