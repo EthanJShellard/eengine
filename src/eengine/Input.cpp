@@ -20,8 +20,17 @@ namespace eengine
 		m_mouseScroll = glm::vec2(0, 0);
 
 		m_updateCount++;
-		// We would rather overflow to 1 than 0
-		m_updateCount = m_updateCount ? m_updateCount : 1;
+
+		// We would rather overflow to 1 than 0. Maybe paranoid seeing as it would take years to overflow this with a normal framerate.
+		if (!m_updateCount) 
+		{
+			m_updateCount = 1;
+			for (auto k : m_keys) 
+			{
+				k.second.lastUpdatePressed = 0;
+				k.second.lastUpdateReleased = 0;
+			}
+		}
 
 		while (SDL_PollEvent(&event))
 		{
@@ -104,13 +113,13 @@ namespace eengine
 	bool Input::GetKeyDown(KeyCode _key) 
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
-		return itr == m_keys.end() ? false : itr->second.down && itr->second.lastUpdatePressed == m_updateCount;
+		return itr == m_keys.end() ? false : itr->second.lastUpdatePressed == m_updateCount;
 	}
 
 	bool Input::GetKeyUp(KeyCode _key)
 	{
 		auto itr = m_keys.find(SDL_Keycode(_key));
-		return itr == m_keys.end() ? false : !itr->second.down && itr->second.lastUpdateReleased == m_updateCount;
+		return itr == m_keys.end() ? false : itr->second.lastUpdateReleased == m_updateCount;
 	}
 
 	glm::vec2 Input::GetMouseDelta()
