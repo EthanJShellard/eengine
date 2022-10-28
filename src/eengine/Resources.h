@@ -6,8 +6,9 @@
 
 namespace rend
 {
-	class Shader;
-	class Texture;
+	struct Shader;
+	struct Texture;
+	struct Model;
 }
 
 
@@ -25,6 +26,7 @@ namespace eengine
 
 		std::unordered_map<std::string, shared<rend::Shader>> m_shaders;
 		std::unordered_map<std::string, shared<rend::Texture>> m_textures;
+		std::unordered_map<std::string, shared<rend::Model>> m_models;
 
 		// Project working directory.
 		std::string m_pwd;
@@ -39,5 +41,10 @@ namespace eengine
 		/// @param _texLocation The relative path to the Texture.
 		/// @return A shared pointer to the Texture resource.
 		shared<rend::Texture> GetTexture(std::string _texLocation);
+
+		/// @brief Get a shared pointer to a Model resource. It will be loaded if it has not yet been.
+		/// @param _modelLocation The relative path to the Model.
+		/// @return A shared pointer to the Model resource.
+		shared<rend::Model> GetModel(std::string _modelLocation);
 	};
 }
