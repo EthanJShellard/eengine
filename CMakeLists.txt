@@ -71,6 +71,8 @@ add_library(eengine
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h
     src/eengine/components/QuadRenderer.cpp
+    src/eengine/components/ModelRenderer.h
+    src/eengine/components/ModelRenderer.cpp
 )
 
 add_executable(game

@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "components/Transform.h"
 #include "components/QuadRenderer.h"
+#include "components/ModelRenderer.h"
 #include "Camera.h"
 
 #endif // !EENGINE
