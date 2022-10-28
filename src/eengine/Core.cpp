@@ -13,6 +13,7 @@
 #include "Environment.h"
 #include "Camera.h"
 #include "Resources.h"
+#include "RenderContext.h"
 
 #define DEFAULT_WINDOW_WIDTH 1200
 #define DEFAULT_WINDOW_HEIGHT 800
@@ -26,12 +27,7 @@ namespace eengine
 
 		m_input = std::make_shared<Input>();
 		m_mainCamera = std::make_shared<Camera>();
-		m_mainRenderer = std::make_shared<rend::Renderer>(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
-		m_mainRenderer->projection(glm::perspective(glm::radians(45.0f),
-			(float)DEFAULT_WINDOW_WIDTH / (float)DEFAULT_WINDOW_HEIGHT, 0.1f, 100.f));
-		m_mainRenderer->backfaceCull(true);
-		m_mainRenderer->blend(true);
-		m_mainRenderer->depthTest(true);
+		m_renderContext = shared<RenderContext>(new RenderContext());
 	}
 
 	Core::~Core() 
@@ -56,6 +52,7 @@ namespace eengine
 		// Create Resources object with this working directory.
 		rtn->m_resources = shared<Resources>(new Resources(rtn->m_environment->GetProjectWorkingDirectory()));
 
+		// Initialise SDL
 		Debug::Log("Initialising SDL Video...");
 
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) 
@@ -70,12 +67,16 @@ namespace eengine
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
-		if (!SDL_GL_CreateContext(rtn->m_window)) 
+		if (!SDL_GL_CreateContext(rtn->m_window))
 		{
 			throw std::exception();
 		}
 
 		Debug::Log("Done!");
+		// Done initialising SDL
+
+		// Set up rendering context
+		rtn->m_renderContext->Initialise(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 
 		return rtn;
 	}
@@ -97,16 +98,16 @@ namespace eengine
 			}
 
 			// Update main renderer view matrix using maincamera
-			m_mainRenderer->view(glm::inverse(m_mainCamera->m_transform->GetModelMatrix()));
+			m_renderContext->SetMainViewMatrix(glm::inverse(m_mainCamera->m_transform->GetModelMatrix()));
 
 			// Clear the main render surface
-			m_mainRenderer->clear();
+			m_renderContext->ClearAll();
 
 			// Draw all that need drawing
 			auto drawItr = m_entities.begin();
 			while (drawItr != m_entities.end()) 
 			{
-				(*drawItr)->Display(m_mainRenderer);
+				(*drawItr)->Display(m_renderContext);
 				drawItr++;
 			}
 

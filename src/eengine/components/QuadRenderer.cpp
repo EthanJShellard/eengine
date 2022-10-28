@@ -4,6 +4,7 @@
 #include "../Camera.h"
 #include "../Input.h"
 #include "../Resources.h"
+#include "../RenderContext.h"
 // For some reason QuadRenderer needs to be included after Core...... Query this....
 #include "QuadRenderer.h"
 
@@ -38,15 +39,16 @@ namespace eengine
 		m_texture = GetCore()->GetResources()->GetTexture("\\data\\textures\\dexter.jpg");
 	}
 
-	void QuadRenderer::OnDisplay(shared<rend::Renderer> _renderer) 
+	void QuadRenderer::OnDisplay(shared<RenderContext> _renderContext)
 	{
-		_renderer->model(GetParent()->GetTransform()->GetModelMatrix());
-		_renderer->shader(m_shader.get());
-		_renderer->mesh(&m_mesh);
-		_renderer->color(m_colour);
-		_renderer->texture(m_texture.get());
-				 
-		_renderer->render();
+		shared<rend::Renderer> renderer = _renderContext->GetMeshRenderer();
+		renderer->model(GetParent()->GetTransform()->GetModelMatrix());
+		renderer->shader(m_shader.get());
+		renderer->mesh(&m_mesh);
+		renderer->color(m_colour);
+		renderer->texture(m_texture.get());
+			 
+		renderer->render();
 	}
 
 	void QuadRenderer::SetColour(float _r, float _g, float _b, float _a) 

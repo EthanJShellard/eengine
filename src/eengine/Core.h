@@ -19,6 +19,7 @@ namespace eengine
 	class Entity;
 	class Camera;
 	class Resources;
+	class RenderContext;
 
 	/// @brief The central structure responsible for the operation of eengine.
 	class Core : private NonCopyable
@@ -31,7 +32,7 @@ namespace eengine
 		shared<Input> m_input;
 		weak<Core> m_self;
 		shared<Camera> m_mainCamera;
-		shared<rend::Renderer> m_mainRenderer;
+		shared<RenderContext> m_renderContext;
 		shared<Resources> m_resources;
 
 		SDL_Window* m_window;

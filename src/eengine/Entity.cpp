@@ -18,11 +18,11 @@ namespace eengine
 		}
 	}
 
-	void Entity::Display(shared<rend::Renderer> _renderer)
+	void Entity::Display(shared<RenderContext> _renderContext)
 	{
 		for (shared<Component> c : m_components)
 		{
-			c->OnDisplay(_renderer);
+			c->OnDisplay(_renderContext);
 		}
 	}
 

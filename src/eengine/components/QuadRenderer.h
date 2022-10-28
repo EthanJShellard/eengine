@@ -15,7 +15,7 @@ namespace eengine
 		glm::vec4 m_colour;
 
 		void OnTick();
-		void OnDisplay(shared<rend::Renderer> _renderer);
+		void OnDisplay(shared<RenderContext> _renderContext);
 
 	public:
 		QuadRenderer();

@@ -13,6 +13,7 @@ namespace eengine
 	class Core;
 	class Input;
 	class Transform;
+	class RenderContext;
 
 	/// @brief The Component super-class. Inherit from this to add behavior to eengine Entity.
 	class Component : public NonCopyable
@@ -30,7 +31,7 @@ namespace eengine
 		
 		/// @brief Called once each frame, after the state has finished updating and we are ready to draw.
 		/// @param _renderer The default renderer, available to all components.
-		virtual void OnDisplay(shared<rend::Renderer> _renderer);
+		virtual void OnDisplay(shared<RenderContext> _renderContext);
 
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;

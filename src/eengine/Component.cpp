@@ -1,4 +1,5 @@
 #include "Component.h"
+#include "RenderContext.h"
 
 namespace eengine
 {
@@ -32,7 +33,7 @@ namespace eengine
 		// Stub
 	}
 
-	void Component::OnDisplay(shared<rend::Renderer> _renderer) 
+	void Component::OnDisplay(shared<RenderContext> _renderContext)
 	{
 		// Stub
 	}
