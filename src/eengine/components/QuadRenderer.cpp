@@ -35,6 +35,7 @@ namespace eengine
 	void QuadRenderer::OnInit() 
 	{
 		m_shader = GetCore()->GetResources()->GetShader("\\data\\shaders\\basic.vert", "\\data\\shaders\\basic.frag");
+		m_texture = GetCore()->GetResources()->GetTexture("\\data\\textures\\dexter.jpg");
 	}
 
 	void QuadRenderer::OnDisplay(shared<rend::Renderer> _renderer) 
@@ -43,6 +44,7 @@ namespace eengine
 		_renderer->shader(m_shader.get());
 		_renderer->mesh(&m_mesh);
 		_renderer->color(m_colour);
+		_renderer->texture(m_texture.get());
 				 
 		_renderer->render();
 	}

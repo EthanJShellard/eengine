@@ -11,6 +11,7 @@ namespace eengine
 	private:
 		rend::Mesh m_mesh;
 		shared<rend::Shader> m_shader;
+		shared<rend::Texture> m_texture;
 		glm::vec4 m_colour;
 
 		void OnTick();
