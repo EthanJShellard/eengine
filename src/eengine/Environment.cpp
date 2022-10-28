@@ -6,15 +6,15 @@ namespace eengine
 {
 	Environment::Environment() 
 	{
-		m_lastTime = std::chrono::steady_clock::now();
+		m_lastTime = SDL_GetTicks();
 		m_deltaTime = 0;
 	}
 
 	void Environment::OnFrameStart() 
 	{
-		auto time_now = std::chrono::steady_clock::now();
-		std::chrono::duration<float, std::ratio<1, 1>> diff = time_now - m_lastTime;
-		m_deltaTime = diff.count();
+		uint32_t time_now = SDL_GetTicks();
+		uint32_t diff = time_now - m_lastTime;
+		m_deltaTime = diff / 1000.0f;
 		m_lastTime = time_now;
 	}
 
