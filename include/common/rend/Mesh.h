@@ -35,8 +35,14 @@ struct Face
 
 struct Mesh : sys::EnablePtr
 {
+  static const int TRIANGLE = 3;
+  static const int QUAD = 4;
+  static const int GUI_QUAD = 5;
+  static const int NDC_QUAD = 6;
+
   Mesh();
   Mesh(const sys::String& _path);
+  Mesh(int _type);
   ~Mesh();
 
   void add(const Face& _face);

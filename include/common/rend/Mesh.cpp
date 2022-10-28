@@ -33,6 +33,15 @@ Mesh::Mesh(const sys::String& _path)
    load(_path);
 }
 
+Mesh::Mesh(int _type)
+{
+  if(_type == TRIANGLE) loadTriangle();
+  else if(_type == QUAD) loadQuad();
+  else if(_type == GUI_QUAD) loadGuiQuad();
+  else if(_type == NDC_QUAD) loadNdcQuad();
+  else throw sys::Exception("Invalid type");
+}
+
 void Mesh::add(const Face& _face)
 {
   m_faces.push(_face);
@@ -121,7 +130,7 @@ GLuint Mesh::id()
 }
 
 static void split_string_whitespace(const sys::String& _input,
-  sys::Vector<sys::String> _output)
+  sys::Vector<sys::String>& _output)
 {
   _output.clear();
   sys::String curr;
@@ -151,7 +160,7 @@ static void split_string_whitespace(const sys::String& _input,
 }
 
 static void split_string(const sys::String& _input, char splitter,
-  sys::Vector<sys::String> _output)
+  sys::Vector<sys::String>& _output)
 {
   _output.clear();
   sys::String curr;
@@ -296,6 +305,8 @@ void Mesh::load(const sys::String& _path)
     if(line.length() < 1) continue;
 
     split_string_whitespace(line, tokens);
+
+    if(tokens.size() < 1) printf("%s\n", line.unsafe_raw());
 
     if(tokens[0] == "v" && tokens.size() >= 4)
     {
