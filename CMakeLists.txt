@@ -63,6 +63,8 @@ add_library(eengine
     src/eengine/Debug.cpp
     src/eengine/Environment.h
     src/eengine/Environment.cpp
+    src/eengine/Resources.h
+    src/eengine/Resources.cpp
     src/eengine/components/Transform.h
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h

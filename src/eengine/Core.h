@@ -18,6 +18,7 @@ namespace eengine
 	class Input;
 	class Entity;
 	class Camera;
+	class Resources;
 
 	/// @brief The central structure responsible for the operation of eengine.
 	class Core : private NonCopyable
@@ -31,6 +32,7 @@ namespace eengine
 		weak<Core> m_self;
 		shared<Camera> m_mainCamera;
 		shared<rend::Renderer> m_mainRenderer;
+		shared<Resources> m_resources;
 
 		SDL_Window* m_window;
 		bool m_running;
@@ -57,11 +59,15 @@ namespace eengine
 		shared<Environment> GetEnvironment();
 
 		/// @brief Get the main Camera.
-		/// @return A shared pointer the main Camera.
+		/// @return A shared pointer to the main Camera.
 		shared<Camera> GetMainCamera();
 
 		/// @brief Get the engine Input object.
-		/// @return A shared pointer the engine Input object.
+		/// @return A shared pointer to the engine Input object.
 		shared<Input> GetInput();
+
+		/// @brief Get the engine Resources object.
+		/// @return A shared pointer to the engine Resources object.
+		shared<Resources> GetResources();
 	};
 }

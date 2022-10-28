@@ -3,6 +3,7 @@
 #include "../Entity.h"
 #include "../Camera.h"
 #include "../Input.h"
+#include "../Resources.h"
 // For some reason QuadRenderer needs to be included after Core...... Query this....
 #include "QuadRenderer.h"
 
@@ -33,14 +34,13 @@ namespace eengine
 
 	void QuadRenderer::OnInit() 
 	{
-		std::string pwd = GetCore()->GetEnvironment()->GetProjectWorkingDirectory();
-		m_shader.LoadShaders((pwd + std::string("\\data\\shaders\\basic.vert")).c_str(), (pwd + std::string("\\data\\shaders\\basic.frag")).c_str());
+		m_shader = GetCore()->GetResources()->GetShader("\\data\\shaders\\basic.vert", "\\data\\shaders\\basic.frag");
 	}
 
 	void QuadRenderer::OnDisplay(shared<rend::Renderer> _renderer) 
 	{
 		_renderer->model(GetParent()->GetTransform()->GetModelMatrix());
-		_renderer->shader(&m_shader);
+		_renderer->shader(m_shader.get());
 		_renderer->mesh(&m_mesh);
 		_renderer->color(m_colour);
 				 

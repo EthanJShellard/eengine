@@ -12,6 +12,7 @@
 #include "Debug.h"
 #include "Environment.h"
 #include "Camera.h"
+#include "Resources.h"
 
 #define DEFAULT_WINDOW_WIDTH 1200
 #define DEFAULT_WINDOW_HEIGHT 800
@@ -40,17 +41,20 @@ namespace eengine
 
 	shared<Core> Core::Initialise(const char* _projectWorkingDirectory)
 	{
-		// std::make_shared cannot access private constructor, so call it manually
+		// std::make_shared cannot access private constructor, so call it manually.
 		shared<Core> rtn = shared<Core>(new Core());
 
-		// Store self reference
+		// Store self reference.
 		rtn->m_self = rtn;
 		rtn->m_environment = shared<Environment>(new Environment());
 
-		// Set up project working directory path
+		// Set up project working directory path.
 		std::string pwd = std::string(_projectWorkingDirectory);
 		pwd = pwd.substr(0, pwd.find_last_of('\\'));
 		rtn->m_environment->m_projectWorkingDirectory = pwd;
+
+		// Create Resources object with this working directory.
+		rtn->m_resources = shared<Resources>(new Resources(rtn->m_environment->GetProjectWorkingDirectory()));
 
 		Debug::Log("Initialising SDL Video...");
 
@@ -164,6 +168,11 @@ namespace eengine
 	shared<Input> Core::GetInput() 
 	{
 		return m_input;
+	}
+
+	shared<Resources> Core::GetResources() 
+	{
+		return m_resources;
 	}
 }
 

@@ -10,7 +10,7 @@ namespace eengine
 	{	
 	private:
 		rend::Mesh m_mesh;
-		rend::Shader m_shader;
+		shared<rend::Shader> m_shader;
 		glm::vec4 m_colour;
 
 		void OnTick();
