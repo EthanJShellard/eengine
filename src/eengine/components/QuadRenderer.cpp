@@ -1,3 +1,4 @@
+#include "QuadRenderer.h"
 #include "../Core.h"
 #include "../Environment.h"
 #include "../Entity.h"
@@ -5,8 +6,6 @@
 #include "../Input.h"
 #include "../Resources.h"
 #include "../RenderContext.h"
-// For some reason QuadRenderer needs to be included after Core...... Query this....
-#include "QuadRenderer.h"
 
 namespace eengine 
 {

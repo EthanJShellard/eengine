@@ -1,6 +1,3 @@
-#include <unordered_map>
-#include <string>
-
 #include "Mesh.h"
 #include "Texture.h"
 #include "rendmath.h"
@@ -15,13 +12,6 @@ struct Texture;
 
 namespace rend
 {
-
-	struct Material : sys::EnablePtr
-	{
-		sys::String name;
-		sys::String relativePath;
-		// OTHER MATERIAL INFO HERE
-	};
 
 struct MaterialGroup : sys::EnablePtr
 {
@@ -53,7 +43,6 @@ private:
   sys::List<Part> m_parts;
   sys::Vector<Face> m_faces;
 
-  void LoadMaterials(const sys::String& _path, std::unordered_map<std::string, Material>& _mats );
   void load(const sys::String& _path);
   void center_parts();
 };

@@ -1,5 +1,10 @@
 #include <memory>
 
-#define shared std::shared_ptr
-#define weak std::weak_ptr
-#define unique std::unique_ptr
+template <typename T>
+using shared = std::shared_ptr<T>;
+
+template <typename T>
+using weak = std::weak_ptr<T>;
+
+template <typename T>
+using unique = std::unique_ptr<T>;

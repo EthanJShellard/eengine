@@ -1,5 +1,3 @@
-#include <fstream>
-
 #include "Model.h"
 
 #include "sys/File.h"
@@ -71,57 +69,6 @@ static void split_string(const sys::String& _input, char splitter,
   }
 }
 
-void Model::LoadMaterials(const sys::String& _path, std::unordered_map<std::string, Material>& _mats)
-{
-    std::ifstream file(_path.unsafe_raw());
-    std::string currentLine;
-    Material currentMaterial;
-
-    if (!file.is_open()) 
-    {
-        throw std::exception();
-    }
-
-    while (!file.eof()) 
-    {
-        std::getline(file, currentLine);
-        sys::Vector<sys::String> tokens;
-        split_string_whitespace(currentLine.c_str(), tokens);
-
-        // If line is empty, continue
-        if (tokens.size() < 1) continue;
-
-        if (tokens[0] == "newmtl") 
-        {
-            if (currentMaterial.name.length() != 0) 
-            {
-                auto itr = _mats.find(std::string(currentMaterial.name.unsafe_raw()));
-                if (itr != _mats.end()) 
-                {
-                    // Overwrite!
-                    itr->second.name = currentMaterial.name;
-                    itr->second.relativePath = currentMaterial.relativePath;
-                }
-                else 
-                {
-                    // Create!
-                    _mats.insert(std::pair<std::string, Material>(std::string(itr->second.name.unsafe_raw()), itr->second));
-                }
-            }
-
-            currentMaterial.name = tokens[1];
-            currentMaterial.relativePath = "";
-        }
-        else if (tokens[0] == "map_Kd") 
-        {
-            std::string newPath = std::string(_path.unsafe_raw());
-            newPath = newPath.substr(0, newPath.find_last_of('\\') + 1);
-            newPath.append(tokens[1].unsafe_raw());
-            currentMaterial.relativePath = newPath.c_str();
-        }
-    }
-}
-
 void Model::load(const sys::String& _path)
 {
   sys::String line;
@@ -130,7 +77,6 @@ void Model::load(const sys::String& _path)
   sys::Vector<vec2> texcoords;
   sys::Vector<vec3> normals;
   sys::Vector<sys::String> innerTokens;
-  std::unordered_map<std::string, Material> mats;
 
   sys::String pn("Untitled");
   sys::Ptr<Part> part;
@@ -221,28 +167,6 @@ void Model::load(const sys::String& _path)
       {
         pn = tokens[1];
       }
-    }
-    else if (tokens[0] == "mtllib") //Load material library
-    {
-        std::string stringPath = std::string(_path.unsafe_raw());
-        std::string newPath = stringPath.substr(0, stringPath.find_last_of('/') + 1);
-        newPath.append(tokens[1].unsafe_raw());
-        LoadMaterials(newPath.c_str(), mats);
-    }
-    else if (tokens[0] == "usemtl") 
-    {
-        if (!mg) 
-        {
-            throw std::exception();
-        }
-
-        auto itr = mats.find(std::string(tokens[1].unsafe_raw()));
-        if (itr == mats.end()) 
-        {
-            throw std::exception();
-        }
-        sys::Ptr<Texture> tex;
-        mg->texture = new Texture(itr->second.relativePath);
     }
   }
 
