@@ -1,14 +1,12 @@
 #include <rend/rend.h>
 
-#include <string>
-
 #include "../Component.h"
 #include "../eengine_defines.h"
 
 namespace eengine 
 {
 	/// @brief A component which will render a rend::Model.
-	class ModelRenderer : public Component 
+	COMPONENT(ModelRenderer)
 	{
 	private:
 		shared<rend::Model> m_model;

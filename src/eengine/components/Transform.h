@@ -9,7 +9,7 @@
 namespace eengine 
 {
 	/// @brief Class which handles position, rotation and scale.
-	class Transform : public Component
+	COMPONENT(Transform)
 	{
 	private:
 		glm::vec3 m_position;

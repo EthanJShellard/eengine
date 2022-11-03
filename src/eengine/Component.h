@@ -33,6 +33,10 @@ namespace eengine
 		/// @param _renderer The default renderer, available to all components.
 		virtual void OnDisplay(shared<RenderContext> _renderContext);
 
+		/// @breif Called to get the type name of this component. Use the NAME(T) macro to define this function in your components.
+		/// @return The type name of this component.
+		virtual const char* GetName() const = 0;
+
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;
 		weak<Core> m_core;
