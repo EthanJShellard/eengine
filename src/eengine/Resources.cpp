@@ -5,6 +5,9 @@
 #include "Resources.h"
 #include "Core.h"
 #include "Environment.h"
+#include "Resource.h"
+#include "Debug.h"
+#include "Shader.h"
 
 namespace eengine 
 {
@@ -13,49 +16,43 @@ namespace eengine
 	{
 	}
 
-	shared<rend::Shader> Resources::GetShader(std::string _fragLocation, std::string _vertLocation)
+	shared<Shader> Resources::LoadShader(std::string _vertPath, std::string _fragPath) 
 	{
-		// Check if shader has already been loaded!
-		auto locs = _fragLocation + _vertLocation;
-		auto itr = m_shaders.find(locs);
-		if (itr != m_shaders.end()) 
+		// Create combined path
+		std::string comboPath = _vertPath + _fragPath;
+
+		// Check if Shader has already been loaded!
+		auto itr = m_resources.find(comboPath);
+		if (itr != m_resources.end())
 		{
-			return itr->second;
+			// Will return null if you've somehow tried to load an existing non-shader resource using this function
+			return std::dynamic_pointer_cast<Shader>(itr->second);
 		}
 
-		// Shader not found! Let's create it!
-		shared<rend::Shader> newShader = std::make_shared<rend::Shader>((m_pwd + _fragLocation).c_str(), (m_pwd + _vertLocation).c_str());
-		m_shaders.insert(std::pair< std::string, shared<rend::Shader > >(locs, newShader));
-		return newShader;
-	}
+		// Resource not found! Let's load it!
+		shared<Shader> newShader = std::make_shared<Shader>();
+		newShader->m_path = comboPath;
+		newShader->m_resources = m_self;
+		newShader->m_vertPath = m_pwd + _vertPath;
+		newShader->m_fragPath = m_pwd + _fragPath;
 
-	shared<rend::Texture> Resources::GetTexture(std::string _texLocation) 
-	{
-		// Check if Texture has already been loaded!
-		auto itr = m_textures.find(_texLocation);
-		if (itr != m_textures.end()) 
+		// Attempt to load
+		try
 		{
-			return itr->second;
+			newShader->OnCreate();
+			newShader->Load();
+			newShader->OnLoad();
+
+			m_resources.insert(std::pair<std::string, shared<Resource>>(comboPath, newShader));
+
+			return newShader;
 		}
-
-		// Texture not found! Let's create it!
-		shared<rend::Texture> newTexture = std::make_shared<rend::Texture>((m_pwd + _texLocation).c_str());
-		m_textures.insert(std::pair<std::string, shared<rend::Texture>>(_texLocation, newTexture));
-		return newTexture;
-	}
-
-	shared<rend::Model> Resources::GetModel(std::string _modelLocation)
-	{
-		// Check if Model has already been loaded!
-		auto itr = m_models.find(_modelLocation);
-		if (itr != m_models.end())
+		catch (std::runtime_error e)
 		{
-			return itr->second;
-		}
+			// Failed to load the resource!
+			Debug::Log(e.what());
 
-		// Model not found! Let's create it!
-		shared<rend::Model> newModel = std::make_shared<rend::Model>((m_pwd + _modelLocation).c_str());
-		m_models.insert(std::pair<std::string, shared<rend::Model>>(_modelLocation, newModel));
-		return newModel;
+			return NULL;
+		}
 	}
 }

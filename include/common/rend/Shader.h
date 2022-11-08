@@ -1,3 +1,6 @@
+#ifndef REND_SHADER
+#define REND_SHADER
+
 #include <GL/glew.h>
 
 #include "sys/String.h"
@@ -41,3 +44,5 @@ private:
 };
 
 }
+
+#endif REND_SHADER

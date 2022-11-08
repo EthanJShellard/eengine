@@ -1,17 +1,21 @@
-#include <rend/rend.h>
+#include <rend/Mesh.h>
 
 #include "../eengine_defines.h"
 #include "../Component.h"
 
 namespace eengine 
 {
+	// Engine forward declarations
+	class Shader;
+	class Texture;
+
 	/// @brief Component which will render a quad at the location of its parent.
 	COMPONENT(QuadRenderer)
 	{	
 	private:
 		rend::Mesh m_mesh;
-		shared<rend::Shader> m_shader;
-		shared<rend::Texture> m_texture;
+		shared<Shader> m_shader;
+		shared<Texture> m_texture;
 		glm::vec4 m_colour;
 
 		void OnTick();

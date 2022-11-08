@@ -1,3 +1,6 @@
+#ifndef EENGINE_DEBUG
+#define EENGINE_DEBUG
+
 #include <string>
 
 namespace eengine 
@@ -15,3 +18,5 @@ namespace eengine
 		static void Log(const std::string& str);
 	};
 }
+
+#endif // EENGINE_DEBUG

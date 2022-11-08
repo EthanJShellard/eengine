@@ -2,6 +2,8 @@
 
 #include "../Component.h"
 #include "../eengine_defines.h"
+#include "../Model.h"
+#include "../Shader.h"
 
 namespace eengine 
 {
@@ -9,8 +11,8 @@ namespace eengine
 	COMPONENT(ModelRenderer)
 	{
 	private:
-		shared<rend::Model> m_model;
-		shared<rend::Shader> m_shader;
+		shared<Model> m_model;
+		shared<Shader> m_shader;
 		std::string m_modelPath;
 		
 		void OnDisplay(shared<RenderContext> _renderContext);

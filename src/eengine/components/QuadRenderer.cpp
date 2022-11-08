@@ -6,6 +6,8 @@
 #include "../Input.h"
 #include "../Resources.h"
 #include "../RenderContext.h"
+#include "../Texture.h"
+#include "../Shader.h"
 
 namespace eengine 
 {
@@ -34,18 +36,18 @@ namespace eengine
 
 	void QuadRenderer::OnInit() 
 	{
-		m_shader = GetCore()->GetResources()->GetShader("\\data\\shaders\\basic.vert", "\\data\\shaders\\basic.frag");
-		m_texture = GetCore()->GetResources()->GetTexture("\\data\\textures\\dexter.jpg");
+		m_shader = GetCore()->GetResources()->LoadShader("\\data\\shaders\\basic.vert", "\\data\\shaders\\basic.frag");
+		m_texture = GetCore()->GetResources()->Load<Texture>("\\data\\textures\\dexter.jpg");
 	}
 
 	void QuadRenderer::OnDisplay(shared<RenderContext> _renderContext)
 	{
 		shared<rend::Renderer> renderer = _renderContext->GetMeshRenderer();
 		renderer->model(GetParent()->GetTransform()->GetModelMatrix());
-		renderer->shader(m_shader.get());
+		renderer->shader(m_shader->GetRendShader().get());
 		renderer->mesh(&m_mesh);
 		renderer->color(m_colour);
-		renderer->texture(m_texture.get());
+		renderer->texture(m_texture->GetRendTexture().get());
 			 
 		renderer->render();
 	}

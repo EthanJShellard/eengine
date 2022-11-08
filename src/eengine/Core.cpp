@@ -2,8 +2,6 @@
 #include <string>
 
 #include <SDL2/SDL.h>
-#include <GL/glew.h>
-#include <glm/glm.hpp>
 #include <rend/rend.h>
 
 #include "Core.h"
@@ -51,6 +49,7 @@ namespace eengine
 
 		// Create Resources object with this working directory.
 		rtn->m_resources = shared<Resources>(new Resources(rtn->m_environment->GetProjectWorkingDirectory()));
+		rtn->m_resources->m_self = rtn->m_resources;
 
 		// Initialise SDL
 		Debug::Log("Initialising SDL Video...");

@@ -23,4 +23,6 @@ class T##WRAPPER : public eengine::Component\
 };\
 class T : public T##WRAPPER\
 
+#define EENGINE_USING_REND 1
+
 #endif // EENGINE_DEFINES

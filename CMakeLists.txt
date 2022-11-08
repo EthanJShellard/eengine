@@ -67,6 +67,14 @@ add_library(eengine
     src/eengine/Resources.cpp
     src/eengine/RenderContext.h
     src/eengine/RenderContext.cpp
+    src/eengine/Resource.h
+    src/eengine/Resource.cpp
+    src/eengine/Shader.h
+    src/eengine/Shader.cpp
+    src/eengine/Model.h
+    src/eengine/Model.cpp
+    src/eengine/Texture.h
+    src/eengine/Texture.cpp
     src/eengine/components/Transform.h
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h

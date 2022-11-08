@@ -1,3 +1,6 @@
+#ifndef REND_MODEL
+#define REND_MODEL
+
 #include "Mesh.h"
 #include "Texture.h"
 #include "rendmath.h"
@@ -48,4 +51,6 @@ private:
 };
 
 }
+
+#endif // REND_MODEL
 
