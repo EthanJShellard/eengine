@@ -75,6 +75,8 @@ add_library(eengine
     src/eengine/Model.cpp
     src/eengine/Texture.h
     src/eengine/Texture.cpp
+    src/eengine/Mesh.h
+    src/eengine/Mesh.cpp
     src/eengine/components/Transform.h
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h

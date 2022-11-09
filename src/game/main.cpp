@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
     auto e3 = core->AddEntity();
     e3->AddComponent<eengine::ModelRenderer>("\\data\\models\\curuthers\\curuthers.obj");
     e3->GetTransform()->Translate(glm::vec3(-1.0f, 0.0f, -5.0f));
+    e3->GetTransform()->Scale(glm::vec3(0.3f,0.3f,0.3f));
 
    // core->AddEntity()->AddComponent<Suicider>(30);
 

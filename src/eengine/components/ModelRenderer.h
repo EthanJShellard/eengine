@@ -1,5 +1,3 @@
-#include <rend/rend.h>
-
 #include "../Component.h"
 #include "../eengine_defines.h"
 #include "../Model.h"

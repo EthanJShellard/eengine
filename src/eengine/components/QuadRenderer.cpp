@@ -8,14 +8,15 @@
 #include "../RenderContext.h"
 #include "../Texture.h"
 #include "../Shader.h"
+#include "../Mesh.h"
 
 namespace eengine 
 {
 	QuadRenderer::QuadRenderer() :
-		m_mesh(),
+		m_mesh(std::make_shared<Mesh>()),
 		m_colour(glm::vec4(1.0f))
 	{
-		m_mesh.loadQuad();
+		m_mesh->SetAsQuad();
 	}
 
 	void QuadRenderer::OnTick() 
@@ -42,14 +43,16 @@ namespace eengine
 
 	void QuadRenderer::OnDisplay(shared<RenderContext> _renderContext)
 	{
+#if EENGINE_USING_REND
 		shared<rend::Renderer> renderer = _renderContext->GetMeshRenderer();
 		renderer->model(GetParent()->GetTransform()->GetModelMatrix());
 		renderer->shader(m_shader->GetRendShader().get());
-		renderer->mesh(&m_mesh);
+		renderer->mesh(m_mesh->GetRendMesh().get());
 		renderer->color(m_colour);
 		renderer->texture(m_texture->GetRendTexture().get());
 			 
 		renderer->render();
+#endif // EENGINE_USING_REND
 	}
 
 	void QuadRenderer::SetColour(float _r, float _g, float _b, float _a) 

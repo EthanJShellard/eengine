@@ -1,9 +1,13 @@
+#include "ModelRenderer.h"
+
 #include "../Core.h"
 #include "../Resources.h"
 #include "../RenderContext.h"
 #include "../Entity.h"
-// Same as in QuadRenderer.cpp - for some reason ModelRenderer.h needs to be included after Core.h
-#include "ModelRenderer.h"
+
+#if EENGINE_USING_REND
+#include <rend/rend.h>
+#endif // EENGINE_USING_REND
 
 namespace eengine 
 {
@@ -35,11 +39,13 @@ namespace eengine
 
 	void ModelRenderer::OnDisplay(shared<RenderContext> _renderContext) 
 	{
+#if EENGINE_USING_REND
 		shared<rend::ModelRenderer> renderer = _renderContext->GetModelRenderer();
 		renderer->Renderer::model(GetParent()->GetTransform()->GetModelMatrix());
 		renderer->model(m_model->GetRendModel().get());
 		renderer->shader(m_shader->GetRendShader().get());
 		
 		renderer->render();
+#endif // EENGINE_USING_REND
 	}
 }
