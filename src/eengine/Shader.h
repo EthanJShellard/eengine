@@ -12,6 +12,7 @@ namespace eengine
 	class ModelRenderer;
 	class QuadRenderer;
 
+	/// @brief eengine wrapper for Shader resources.
 	class Shader : public Resource 
 	{
 		friend class Resources;

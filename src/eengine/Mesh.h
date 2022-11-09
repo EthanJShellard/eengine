@@ -9,6 +9,7 @@ namespace eengine
 	// eengine forward declarations
 	class QuadRenderer;
 
+	/// @brief eengine wrapper for Mesh resources.
 	class Mesh : public Resource 
 	{
 		friend class QuadRenderer;

@@ -10,6 +10,7 @@ namespace eengine
 	// Engine forward declarations
 	class Resources;
 
+	/// @brief Superclass for eengine resources. In most cases, resources should be obtained via Resources.
 	class Resource 
 	{
 		friend class Resources;

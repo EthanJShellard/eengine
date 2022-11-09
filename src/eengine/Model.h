@@ -9,6 +9,7 @@ namespace eengine
 	// Engine forward declarations
 	class ModelRenderer;
 
+	/// @brief eengine wrapper for Model resources.
 	class Model : public Resource 
 	{
 		friend class Resources;

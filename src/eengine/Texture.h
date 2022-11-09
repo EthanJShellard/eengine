@@ -9,6 +9,7 @@ namespace eengine
 	// Engine forward declarations
 	class QuadRenderer;
 
+	/// @brief eengine wrapper for Texture resources.
 	class Texture : public Resource 
 	{
 		friend class Resources;
