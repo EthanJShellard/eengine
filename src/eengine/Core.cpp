@@ -30,7 +30,9 @@ namespace eengine
 
 	Core::~Core() 
 	{
+		SDL_GL_DeleteContext(SDL_GL_GetCurrentContext());
 		SDL_DestroyWindow(m_window);
+		SDL_Quit();
 	}
 
 	shared<Core> Core::Initialise(const char* _projectWorkingDirectory)
