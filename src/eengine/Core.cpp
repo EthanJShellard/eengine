@@ -95,25 +95,7 @@ namespace eengine
 			// Update each entity
 			for (shared<Entity> entity : m_entities) 
 			{
-				try 
-				{
-					entity->Tick();
-				}
-				catch (std::runtime_error e) 
-				{
-					Debug::Log(e.what());
-					entity->Destroy();
-				}
-				catch (std::exception e) 
-				{
-					Debug::Log(e.what());
-					entity->Destroy();
-				}
-				catch (...) 
-				{
-					Debug::Log("Caught unkown exception!");
-					entity->Destroy();
-				}
+				entity->Tick();
 			}
 
 			// Update main renderer view matrix using maincamera
@@ -152,9 +134,9 @@ namespace eengine
 				Stop();
 			}
 
-			std::string str = "deltaTime: ";
-			str.append( std::to_string(m_environment->GetDeltaTime()));
-			Debug::Log(str);
+			//std::string str = "deltaTime: ";
+			//str.append( std::to_string(m_environment->GetDeltaTime()));
+			//Debug::Log(str);
 		}
 	}
 
