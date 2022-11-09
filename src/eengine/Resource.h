@@ -4,6 +4,7 @@
 #include <string>
 
 #include "eengine_defines.h"
+#include "NonCopyable.h"
 
 namespace eengine 
 {
@@ -11,7 +12,7 @@ namespace eengine
 	class Resources;
 
 	/// @brief Superclass for eengine resources. In most cases, resources should be obtained via Resources.
-	class Resource 
+	class Resource : public NonCopyable
 	{
 		friend class Resources;
 	private:
