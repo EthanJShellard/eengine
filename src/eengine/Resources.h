@@ -47,6 +47,13 @@ namespace eengine
 		/// @return A shared pointer to the Resource.
 		template <typename T>
 		shared<T> Load(std::string _path);
+
+		/// @brief Unload a Resource, such that the engine will not hold onto it.
+		/// @details The Resource's memory will only actually be released when there are no remaining strong references to the Resource. 
+		/// It is recommended to only call this when you can make sure remaining strong references will go out of scope. 
+		/// This is especially true if the Resource may be loaded again in future as you risk leaking memory otherwise.
+		/// @param _path The path to the Resource.
+		void Unload(std::string _path);
 	};
 
 	template <typename T>

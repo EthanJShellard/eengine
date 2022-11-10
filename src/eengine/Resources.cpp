@@ -55,4 +55,14 @@ namespace eengine
 			return NULL;
 		}
 	}
+
+	void Resources::Unload(std::string _path) 
+	{
+		auto itr = m_resources.find(_path);
+
+		if (itr != m_resources.end()) 
+		{
+			m_resources.erase(itr);
+		}
+	}
 }
