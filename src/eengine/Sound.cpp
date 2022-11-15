@@ -16,6 +16,7 @@ namespace eengine
 
 	Sound::~Sound() 
 	{
+		// STB vorbis uses 
 		free(m_rawData);
 	}
 }
