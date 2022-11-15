@@ -77,6 +77,10 @@ add_library(eengine
     src/eengine/Texture.cpp
     src/eengine/Mesh.h
     src/eengine/Mesh.cpp
+    src/eengine/Sound.h
+    src/eengine/Sound.cpp
+    src/eengine/AudioContext.h
+    src/eengine/AudioContext.cpp
     src/eengine/components/Transform.h
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h
