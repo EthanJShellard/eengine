@@ -115,6 +115,7 @@ target_link_libraries(eengine
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
+    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/OpenAL-1.1/OpenAL32.lib
     rend
 
 )
