@@ -22,7 +22,7 @@ namespace eengine
 	void QuadRenderer::OnTick() 
 	{
 		auto transform = GetParent()->GetTransform();
-		transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 90.0f, transform->Up());
+		//transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 90.0f, transform->Up());
 
 		if (GetCore()->GetInput()->GetKeyDown(KeyCode::minus)) 
 		{

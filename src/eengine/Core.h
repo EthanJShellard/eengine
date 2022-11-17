@@ -20,6 +20,7 @@ namespace eengine
 	class Camera;
 	class Resources;
 	class RenderContext;
+	class AudioContext;
 
 	/// @brief The central structure responsible for the operation of eengine.
 	class Core : private NonCopyable
@@ -34,6 +35,7 @@ namespace eengine
 		shared<Camera> m_mainCamera;
 		shared<RenderContext> m_renderContext;
 		shared<Resources> m_resources;
+		shared<AudioContext> m_audioContext;
 
 		SDL_Window* m_window;
 		bool m_running;

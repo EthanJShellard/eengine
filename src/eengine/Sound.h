@@ -13,11 +13,17 @@ namespace eengine
 
 		ALuint m_id;
 
+		int m_channels;
+		int m_sampleRate;
+
 		void Load();
 
 	public:
 		ALuint GetID();
+		int GetNumChannels();
+		int GetSampleRate();
 
+		Sound();
 		~Sound();
 	};
 }

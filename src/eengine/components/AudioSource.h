@@ -13,14 +13,28 @@ namespace eengine
 	COMPONENT(AudioSource)
 	{
 		ALuint m_id;
+		float m_volume;
+		float m_pitch;
+		bool m_loop;
 
 		shared<Transform> m_parentTransform;
 
-		void OnInit();
 		void OnTick();
 
 	public:
+		void OnInit();
+		bool IsPlaying();
+
 		void PlayOneShot(std::shared_ptr<Sound> _sound);
+
+		void SetVolume(float _newVolume) { m_volume = _newVolume; }
+		float GetVolume() { return m_volume; }
+
+		void SetPitch(float _newPitch) { m_pitch = _newPitch; }
+		float GetPitch() { return m_pitch; }
+
+		void SetLooping(bool _loop) { m_loop = _loop; }
+		bool GetLooping() { return m_loop; }
 	};
 }
 

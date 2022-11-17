@@ -33,6 +33,11 @@ namespace eengine
 
 
 	}
+	
+	AudioContext::AudioContext() :
+		m_context(nullptr),
+		m_device(nullptr)
+	{}
 
 	AudioContext::~AudioContext() 
 	{

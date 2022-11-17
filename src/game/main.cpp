@@ -2,6 +2,7 @@
 
 #include "eengine.h"
 #include "components/Suicider.h"
+#include "components/ScreamingMover.h"
 
 int main(int argc, char* argv[])
 {
@@ -10,6 +11,8 @@ int main(int argc, char* argv[])
     auto e = core->AddEntity();
     e->AddComponent<eengine::QuadRenderer>()->SetColour(1.0f, 0.0f, 0.0f, 0.5f);
     e->GetTransform()->Translate(glm::vec3(0.8f, 0.0f, -5.0f));
+    e->AddComponent<eengine::AudioSource>();
+    e->AddComponent<ScreamingMover>();
     
     auto e2 = core->AddEntity();
     e2->AddComponent<eengine::QuadRenderer>()->SetColour(0.0f, 1.0f, 0.0f, 0.5f);;

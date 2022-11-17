@@ -19,10 +19,7 @@ namespace eengine
 	class Component : public NonCopyable
 	{
 		friend class Entity;
-	private:
-		/// @brief Called just after component is instantiated and provided with references to its parent, the engine Core and engine Input.
-		virtual void OnInit();
-		
+	private:		
 		/// @brief Called just before OnTick is called for the first time. 
 		virtual void OnBegin();
 		
@@ -42,6 +39,10 @@ namespace eengine
 		weak<Core> m_core;
 		weak<Input> m_input;
 	public:
+		/// @brief Called just after component is instantiated and provided with references to its parent, the engine Core and engine Input.
+		/// Do not call manually
+		virtual void OnInit();
+
 		/// @brief Get a shared pointer to the Entity which owns this component.
 		/// @return A shared pointer to the Entity which owns this component.
 		shared<Entity> GetParent();

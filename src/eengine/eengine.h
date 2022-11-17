@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "Input.h"
+#include "Resources.h"
 #include "components/Transform.h"
 #include "components/QuadRenderer.h"
 #include "components/ModelRenderer.h"

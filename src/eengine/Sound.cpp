@@ -9,28 +9,55 @@ namespace eengine
 	void Sound::Load() 
 	{
 		int error = 0;
-		stb_vorbis_alloc alloc_buffer;
+		short* alloc_buffer;
 
-		stb_vorbis_open_filename(m_path.c_str(), &error, &alloc_buffer);
+		//stb_vorbis_open_filename(m_path.c_str(), &error, &alloc_buffer);
+		size_t len = stb_vorbis_decode_filename(m_path.c_str(), &m_channels, &m_sampleRate, &alloc_buffer);
 
-		std::vector<char> bufferData;
-		
-		char* rawData = alloc_buffer.alloc_buffer;
+		std::vector<unsigned char> buffer;
+		buffer.resize(len * m_channels * sizeof(short));
+		memcpy(&buffer.at(0), alloc_buffer, buffer.size());
 
 		alGenBuffers(1, &m_id);
 
-		ALenum format = 0;
-		ALsizei freq = 0;
+		ALenum format = AL_FORMAT_MONO16;
 
-		alBufferData(m_id, format, &rawData, static_cast<ALsizei>(alloc_buffer.alloc_buffer_length_in_bytes), freq);
+		// Expecting 16bit from stb_vorbis
+		if (m_channels == 1) 
+		{
+			format = AL_FORMAT_MONO16;
+		}
+		else if (m_channels == 2)
+		{
+			m_sampleRate *= 2;
+		}
 
-		// STB vorbis uses 
-		free(rawData);
+		alBufferData(m_id, format, &buffer.at(0), ALsizei(buffer.size()), m_sampleRate);
+
+		// STB vorbis uses ?
+		free(alloc_buffer);
 	}
 
 	ALuint Sound::GetID() 
 	{
 		return m_id;
+	}
+
+	int Sound::GetNumChannels() 
+	{
+		return m_channels;
+	}
+
+	int Sound::GetSampleRate() 
+	{
+		return m_sampleRate;
+	}
+
+	Sound::Sound() :
+		m_id(-1),
+		m_channels(-1),
+		m_sampleRate(-1)
+	{	
 	}
 
 	Sound::~Sound() 

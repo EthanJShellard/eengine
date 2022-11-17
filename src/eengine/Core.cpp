@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "Resources.h"
 #include "RenderContext.h"
+#include "AudioContext.h"
 
 #define DEFAULT_WINDOW_WIDTH 1200
 #define DEFAULT_WINDOW_HEIGHT 800
@@ -26,6 +27,8 @@ namespace eengine
 		m_input = std::make_shared<Input>();
 		m_mainCamera = std::make_shared<Camera>();
 		m_renderContext = shared<RenderContext>(new RenderContext());
+		m_audioContext = shared<AudioContext>(new AudioContext());
+		m_audioContext->Initialise();
 	}
 
 	Core::~Core() 

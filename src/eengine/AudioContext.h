@@ -10,11 +10,14 @@ namespace eengine
 {
 	class AudioContext : public NonCopyable 
 	{
+		friend class Core;
+
 		ALCdevice_struct* m_device;
 		ALCcontext_struct* m_context;
 
 		void Initialise();
 
+		AudioContext();
 	public:
 		~AudioContext();
 	};
