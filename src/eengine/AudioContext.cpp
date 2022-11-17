@@ -1,5 +1,7 @@
 #include "AudioContext.h"
 
+#include <stdexcept>
+
 namespace eengine 
 {
 	void AudioContext::Initialise() 
@@ -7,10 +9,35 @@ namespace eengine
 		// Get the first available device
 		m_device = alcOpenDevice(nullptr);
 
-		if (m_device) 
+		if (!m_device) 
 		{
+			throw std::runtime_error("Unable to open audio device...");
 			//m_context = alcCreateContext(m_device, nullptr);
 			//alcMakeContextCurrent(m_context);
 		}
+
+		m_context = alcCreateContext(m_device, NULL);
+
+		if (!m_context) 
+		{
+			alcCloseDevice(m_device);
+			throw std::runtime_error("Unable to create openAL context with default device...");
+		}
+
+		if (!alcMakeContextCurrent(m_context)) 
+		{
+			alcDestroyContext(m_context);
+			alcCloseDevice(m_device);
+			throw std::runtime_error("Unable to set current openAL context...");
+		}
+
+
+	}
+
+	AudioContext::~AudioContext() 
+	{
+		alcMakeContextCurrent(NULL);
+		alcDestroyContext(m_context);
+		alcCloseDevice(m_device);
 	}
 }

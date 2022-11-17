@@ -8,6 +8,9 @@
 #include "components/Transform.h"
 #include "components/QuadRenderer.h"
 #include "components/ModelRenderer.h"
+#include "components/AudioListener.h"
+#include "components/AudioSource.h"
+#include "Sound.h"
 #include "Camera.h"
 
 #endif // !EENGINE

@@ -3,7 +3,7 @@
 
 #include "Resource.h"
 
-#include <stb_vorbis.c>
+#include <openAL/al.h>
 
 namespace eengine 
 {
@@ -11,11 +11,13 @@ namespace eengine
 	{
 		friend class Resources;
 
-		char* m_rawData;
+		ALuint m_id;
 
 		void Load();
 
 	public:
+		ALuint GetID();
+
 		~Sound();
 	};
 }

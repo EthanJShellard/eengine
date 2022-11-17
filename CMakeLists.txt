@@ -87,12 +87,18 @@ add_library(eengine
     src/eengine/components/QuadRenderer.cpp
     src/eengine/components/ModelRenderer.h
     src/eengine/components/ModelRenderer.cpp
+    src/eengine/components/AudioListener.h
+    src/eengine/components/AudioListener.cpp
+    src/eengine/components/AudioSource.h
+    src/eengine/components/AudioSource.cpp
 )
 
 add_executable(game
     src/game/main.cpp
     src/game/components/Suicider.h
     src/game/components/Suicider.cpp
+    src/game/components/ScreamingMover.h
+    src/game/components/ScreamingMover.cpp
 )
 
 target_include_directories(rend

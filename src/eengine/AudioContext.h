@@ -1,3 +1,6 @@
+#ifndef EENGINE_AUDIO_CONTEXT
+#define EENGINE_AUDIO_CONTEXT
+
 #include <openAL/al.h>
 #include <openAL/alc.h>
 
@@ -11,5 +14,10 @@ namespace eengine
 		ALCcontext_struct* m_context;
 
 		void Initialise();
+
+	public:
+		~AudioContext();
 	};
 }
+
+#endif // EENGINE_AUDIO_CONTEXT
