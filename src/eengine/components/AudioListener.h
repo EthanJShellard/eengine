@@ -8,7 +8,7 @@
 
 namespace eengine 
 {
-	COMPONENT(AudioListener)
+	class AudioListener : public Component
 	{
 		shared<Transform> m_parentTransform;
 

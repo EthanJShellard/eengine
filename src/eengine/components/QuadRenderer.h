@@ -13,7 +13,7 @@ namespace eengine
 	class Mesh;
 
 	/// @brief Component which will render a quad at the location of its parent.
-	COMPONENT(QuadRenderer)
+	class QuadRenderer : public Component
 	{	
 	private:
 		shared<Mesh> m_mesh;

@@ -1,6 +1,6 @@
 #include <eengine.h>
 
-COMPONENT(ScreamingMover)
+class ScreamingMover : public eengine::Component
 {
 	void OnTick();
 

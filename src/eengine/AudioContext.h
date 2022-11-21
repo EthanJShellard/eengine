@@ -8,6 +8,7 @@
 
 namespace eengine 
 {
+	/// @brief Contains audio context and devices.
 	class AudioContext : public NonCopyable 
 	{
 		friend class Core;

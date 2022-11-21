@@ -98,7 +98,25 @@ namespace eengine
 			// Update each entity
 			for (shared<Entity> entity : m_entities) 
 			{
-				entity->Tick();
+				try 
+				{
+					entity->Tick();
+				}
+				catch (std::runtime_error e)
+				{
+					Debug::Log(e.what());
+					entity->Destroy();
+				}
+				catch (std::exception e)
+				{
+					Debug::Log(e.what());
+					entity->Destroy();
+				}
+				catch (...)
+				{
+					Debug::Log("Caught unknown exception!");
+					entity->Destroy();
+				}
 			}
 
 			// Update main renderer view matrix using maincamera

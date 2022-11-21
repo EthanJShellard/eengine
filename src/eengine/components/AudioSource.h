@@ -10,7 +10,7 @@ namespace eengine
 {
 	class Sound;
 
-	COMPONENT(AudioSource)
+	class AudioSource : public Component
 	{
 		ALuint m_id;
 		float m_volume;

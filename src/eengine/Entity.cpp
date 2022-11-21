@@ -18,31 +18,7 @@ namespace eengine
 	{
 		for (shared<Component> c : m_components)
 		{
-			try 
-			{
-				c->OnTick();
-			}
-			catch (std::runtime_error e)
-			{
-				std::stringstream sStream;
-				sStream << e.what() << " : " << c->GetName();
-				Debug::Log(sStream.str());
-				Destroy();
-			}
-			catch (std::exception e)
-			{
-				std::stringstream sStream;
-				sStream << e.what() << " : " << c->GetName();
-				Debug::Log(sStream.str());
-				Destroy();
-			}
-			catch (...)
-			{
-				std::stringstream sStream;
-				sStream << "Caught unknown exception! : " << c->GetName();
-				Debug::Log(sStream.str());
-				Destroy();
-			}
+			c->OnTick();
 		}
 	}
 

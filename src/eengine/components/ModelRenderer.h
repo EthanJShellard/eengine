@@ -6,7 +6,7 @@
 namespace eengine 
 {
 	/// @brief A component which will render a rend::Model.
-	COMPONENT(ModelRenderer)
+	class ModelRenderer : public Component
 	{
 	private:
 		shared<Model> m_model;

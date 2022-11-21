@@ -1,6 +1,6 @@
 #include "eengine.h"
 
-COMPONENT(Suicider)
+class Suicider : public eengine::Component
 {
 public:
 	Suicider();
