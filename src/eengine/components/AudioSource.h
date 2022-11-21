@@ -35,6 +35,8 @@ namespace eengine
 
 		void SetLooping(bool _loop) { m_loop = _loop; }
 		bool GetLooping() { return m_loop; }
+
+		~AudioSource();
 	};
 }
 

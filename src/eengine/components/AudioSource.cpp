@@ -38,4 +38,10 @@ namespace eengine
 		alSourcef(m_id, AL_PITCH, m_pitch);
 		alSourcePlay(m_id);
 	}
+
+	AudioSource::~AudioSource() 
+	{
+		alSourceStop(m_id);
+		alDeleteSources(1, &m_id);
+	}
 }
