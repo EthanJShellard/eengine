@@ -1,4 +1,6 @@
+#include <list>
 #include <vector>
+#include <algorithm>
 
 #include "eengine_defines.h"
 #include "NonCopyable.h"
@@ -26,8 +28,8 @@ namespace eengine
 		void Tick();
 		void Display(shared<RenderContext> _renderContext);
 
-		std::vector<shared<Component>> m_components;
-		std::vector<shared<Component>> m_newComponents;
+		std::list<shared<Component>> m_components;
+		std::list<shared<Component>> m_newComponents;
 		weak<Core> m_core;
 		weak<Entity> m_self;
 
@@ -97,6 +99,20 @@ namespace eengine
 		/// @return A list of the found Components.
 		template<typename T>
 		std::vector<shared<T>> GetComponentsOfType();
+
+		/// @brief Remove the first Component of type T on this Entity. Can throw an exception if no such Component is found.
+		/// @tparam T The type of Component to remove.
+		template<typename T>
+		void RemoveComponentOfType();
+
+		/// @brief Remove all Components of type T from this Entity.
+		/// @tparam T The type of Component to remove.
+		template<typename T>
+		void RemoveComponentsOfType();
+
+		/// @brief Remove the parameter Component from this Entity. Will throw an exception if the Component is not present on this Entity.
+		/// @param _component The Component to remove.
+		void RemoveComponent(shared<Component> _component);
 	};
 
 
@@ -179,5 +195,66 @@ namespace eengine
 			}
 		}
 		return componentsFound;
+	}
+
+	template<typename T>
+	void Entity::RemoveComponentOfType()
+	{
+		auto itr = m_components.begin();
+
+		while (itr != m_components.end()) 
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(*itr);
+			if (ptr) 
+			{
+				if (!m_newComponents.empty()) 
+				{
+					auto newCmp = std::find(m_newComponents.begin(), m_newComponents.end(), ptr);
+					if (newCmp != m_newComponents.end())
+					{
+						m_newComponents.erase(newCmp);
+					}
+				}
+
+				m_components.erase(itr);
+				return;
+			}
+			itr++;
+		}
+		throw std::exception();
+	}
+
+	template<typename T>
+	void Entity::RemoveComponentsOfType() 
+	{
+		auto itr = m_components.begin();
+
+		while (itr != m_components.end())
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(*itr);
+			if (ptr)
+			{
+				itr = m_components.erase(itr);
+			}
+			else 
+			{
+				itr++;
+			}
+		}
+
+		auto newCmp = m_newComponents.begin();
+
+		while (newCmp != m_newComponents.end()) 
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(*newCmp);
+			if (ptr)
+			{
+				newCmp = m_newComponents.erase(newCmp);
+			}
+			else
+			{
+				newCmp++;
+			}
+		}
 	}
 }

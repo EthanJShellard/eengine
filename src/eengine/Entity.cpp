@@ -60,4 +60,27 @@ namespace eengine
 	{
 		return m_destroyed;
 	}
+
+	void Entity::RemoveComponent(shared<Component> _component) 
+	{
+		auto itr = std::find(m_components.begin(), m_components.end(), _component);
+		if (itr != m_components.end()) 
+		{
+			m_components.erase(itr);
+		}
+		else 
+		{
+			throw std::exception();
+		}
+
+		auto newCmp = std::find(m_newComponents.begin(), m_newComponents.end(), _component);
+		if (newCmp != m_newComponents.end())
+		{
+			m_newComponents.erase(newCmp);
+		}
+		else 
+		{
+			throw std::exception();
+		}
+	}
 }
