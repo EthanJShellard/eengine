@@ -19,8 +19,16 @@ namespace eengine
 		void Load();
 
 	public:
+		/// @brief Get the the ID of this Sound.
+		/// @return This Sound's ID.
 		ALuint GetID();
+
+		/// @brief Get the number of audio channels this sound has.
+		/// @return The number audio channels this sound has.
 		int GetNumChannels();
+
+		/// @brief Get the sample rate of this sound in Hz.
+		/// @return The sample rate of this sound in Hz.
 		int GetSampleRate();
 
 		Sound();

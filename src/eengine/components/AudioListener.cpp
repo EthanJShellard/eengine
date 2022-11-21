@@ -13,6 +13,5 @@ namespace eengine
 		glm::vec3 parentPos = m_parentTransform->GetPosition();
 
 		alListener3f(AL_POSITION, parentPos.x, parentPos.y, parentPos.z);
-
 	}
 }
