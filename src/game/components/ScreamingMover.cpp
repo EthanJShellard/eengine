@@ -15,13 +15,14 @@ void ScreamingMover::OnTick()
 	{
 		m_audioSource = GetParent()->GetComponentOfType<eengine::AudioSource>();
 		m_audioSource->SetVolume(0.5f);
-		m_audioSource->SetLooping(true);
+		//m_audioSource->SetLooping(true);
 	}
 
 	// Again, because I don't have OnStart
 	if (!m_audioSource->IsPlaying())
 	{
 		m_audioSource->PlayOneShot(m_sound);
+		m_sound->SetDirectional(!m_sound->GetDirectional());
 	}
 
 	glm::vec3 movement = glm::vec3(0);

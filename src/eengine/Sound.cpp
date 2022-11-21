@@ -8,6 +8,13 @@ namespace eengine
 {
 	void Sound::Load() 
 	{
+		m_dirty = true;
+	}
+
+	void Sound::PrepareBuffers() 
+	{
+		alDeleteBuffers(1, &m_id);
+
 		int error = 0;
 		short* alloc_buffer;
 
@@ -20,16 +27,24 @@ namespace eengine
 
 		alGenBuffers(1, &m_id);
 
-		ALenum format = AL_FORMAT_MONO16;
-
 		// Expecting 16bit from stb_vorbis
-		if (m_channels == 1) 
+		ALenum format = AL_FORMAT_MONO16;
+		
+		if (m_channels == 1)
 		{
 			format = AL_FORMAT_MONO16;
 		}
-		else if (m_channels == 2)
+		if (m_channels == 2)
 		{
-			m_sampleRate *= 2;
+			if (m_directional) 
+			{
+				// If we want directional audio for this sound, stick with mono regardless and adjust sample rate accordingly.
+				m_sampleRate *= 2;
+			}
+			else 
+			{
+				format = AL_FORMAT_STEREO16;
+			}
 		}
 
 		alBufferData(m_id, format, &buffer.at(0), ALsizei(buffer.size()), m_sampleRate);
@@ -40,6 +55,10 @@ namespace eengine
 
 	ALuint Sound::GetID() 
 	{
+		if (m_dirty) 
+		{
+			PrepareBuffers();
+		}
 		return m_id;
 	}
 
@@ -53,10 +72,23 @@ namespace eengine
 		return m_sampleRate;
 	}
 
+	void Sound::SetDirectional(bool _directional) 
+	{
+		m_directional = _directional;
+		m_dirty = true;
+	}
+	
+	bool Sound::GetDirectional() 
+	{
+		return m_directional;
+	}
+
 	Sound::Sound() :
 		m_id(-1),
 		m_channels(-1),
-		m_sampleRate(-1)
+		m_sampleRate(-1),
+		m_dirty(false),
+		m_directional(true)
 	{	
 	}
 

@@ -5,6 +5,7 @@
 #include "NonCopyable.h"
 #include "eengine_defines.h"
 #include "Debug.h"
+#include "Sound.h"
 
 namespace rend
 {
