@@ -16,6 +16,17 @@ namespace eengine
 
 	void Entity::Tick()
 	{
+		// Call OnBegin on newly added components
+		if (!m_newComponents.empty()) 
+		{
+			for (shared<Component> c : m_newComponents)
+			{
+				c->OnBegin();
+			}
+			m_newComponents.clear();
+		}
+
+		// Update components
 		for (shared<Component> c : m_components)
 		{
 			c->OnTick();

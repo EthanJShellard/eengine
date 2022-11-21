@@ -27,6 +27,7 @@ namespace eengine
 		void Display(shared<RenderContext> _renderContext);
 
 		std::vector<shared<Component>> m_components;
+		std::vector<shared<Component>> m_newComponents;
 		weak<Core> m_core;
 		weak<Entity> m_self;
 
@@ -107,6 +108,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
+		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
 	}
@@ -119,6 +121,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
+		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
 	}
@@ -131,6 +134,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
+		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
 	}
@@ -143,6 +147,7 @@ namespace eengine
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
 		m_components.push_back(share);
+		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
 	}

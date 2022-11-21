@@ -45,3 +45,8 @@ void ScreamingMover::OnTick()
 	GetParent()->GetTransform()->Translate(movement * 5.0f * GetCore()->GetEnvironment()->GetDeltaTime());
 
 }
+
+void ScreamingMover::OnBegin() 
+{
+	eengine::Debug::Log("Began!");
+}
