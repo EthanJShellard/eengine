@@ -64,11 +64,19 @@ namespace eengine
 
 	int Sound::GetNumChannels() 
 	{
+		if (m_dirty)
+		{
+			PrepareBuffers();
+		}
 		return m_channels;
 	}
 
 	int Sound::GetSampleRate() 
 	{
+		if (m_dirty)
+		{
+			PrepareBuffers();
+		}
 		return m_sampleRate;
 	}
 
