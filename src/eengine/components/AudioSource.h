@@ -14,6 +14,7 @@ namespace eengine
 	class AudioSource : public Component
 	{
 		ALuint m_id;
+		shared<Sound> m_currentSound;
 		float m_volume;
 		float m_pitch;
 		bool m_loop;
@@ -56,6 +57,10 @@ namespace eengine
 		/// @brief Get whether or not this audio source is set to loop when the sound it is playing ends.
 		/// @return Whether or not this audio source will loop.
 		bool GetLooping() { return m_loop; }
+
+		/// @brief Stop playback from this audio source.
+		/// @param _detachSource Whether or not to detach the currently played sound from this source.
+		void Stop(bool _detachSound = true);
 
 		~AudioSource();
 	};

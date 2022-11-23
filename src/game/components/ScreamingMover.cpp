@@ -6,6 +6,7 @@
 void ScreamingMover::OnInit() 
 {
 	m_sound = GetCore()->GetResources()->Load<eengine::Sound>("\\data\\audio\\dixie_horn.ogg");
+	m_secondSound = GetCore()->GetResources()->Load<eengine::Sound>("\\data\\audio\\91962__billengholm-yahoo-com__ridebell.ogg");
 }
 
 void ScreamingMover::OnTick() 
@@ -14,15 +15,16 @@ void ScreamingMover::OnTick()
 	if (!m_audioSource) 
 	{
 		m_audioSource = GetParent()->GetComponentOfType<eengine::AudioSource>();
-		m_audioSource->SetVolume(0.5f);
+		m_audioSource->SetVolume(0.1f);
 		//m_audioSource->SetLooping(true);
 	}
 
 	// Again, because I don't have OnStart
 	if (!m_audioSource->IsPlaying())
 	{
-		m_audioSource->PlayOneShot(m_sound);
-		m_sound->SetDirectional(!m_sound->GetDirectional());
+		bool dir = !m_sound->GetDirectional();
+		m_audioSource->PlayOneShot(dir ? m_sound : m_secondSound);
+		m_sound->SetDirectional(dir);
 	}
 
 	glm::vec3 movement = glm::vec3(0);
