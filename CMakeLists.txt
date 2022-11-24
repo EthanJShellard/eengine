@@ -250,8 +250,12 @@ add_library(eengine
     src/eengine/Mesh.cpp
     src/eengine/Sound.h
     src/eengine/Sound.cpp
+    src/eengine/Collider.h
+    src/eengine/Collider.cpp
     src/eengine/AudioContext.h
     src/eengine/AudioContext.cpp
+    src/eengine/PhysicsContext.h
+    src/eengine/PhysicsContext.cpp
     src/eengine/components/Transform.h
     src/eengine/components/Transform.cpp
     src/eengine/components/QuadRenderer.h
@@ -262,6 +266,8 @@ add_library(eengine
     src/eengine/components/AudioListener.cpp
     src/eengine/components/AudioSource.h
     src/eengine/components/AudioSource.cpp
+    src/eengine/components/RigidBody.h
+    src/eengine/components/RigidBody.cpp
 )
 
 add_executable(game
