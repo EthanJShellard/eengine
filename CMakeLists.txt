@@ -3,6 +3,177 @@ project(EENGINE)
 
 find_package(OpenGL REQUIRED)
 
+add_library(pellet
+  include/common/pellet/Bullet3Collision/BroadPhaseCollision/b3DynamicBvh.cpp
+  include/common/pellet/Bullet3Collision/BroadPhaseCollision/b3DynamicBvhBroadphase.cpp
+  include/common/pellet/Bullet3Collision/BroadPhaseCollision/b3OverlappingPairCache.cpp
+  include/common/pellet/Bullet3Collision/NarrowPhaseCollision/b3ConvexUtility.cpp
+  include/common/pellet/Bullet3Collision/NarrowPhaseCollision/b3CpuNarrowPhase.cpp
+  include/common/pellet/Bullet3Common/b3AlignedAllocator.cpp
+  include/common/pellet/Bullet3Common/b3Logging.cpp
+  include/common/pellet/Bullet3Common/b3Vector3.cpp
+  include/common/pellet/Bullet3Dynamics/b3CpuRigidBodyPipeline.cpp
+  include/common/pellet/Bullet3Dynamics/ConstraintSolver/b3FixedConstraint.cpp
+  include/common/pellet/Bullet3Dynamics/ConstraintSolver/b3Generic6DofConstraint.cpp
+  include/common/pellet/Bullet3Dynamics/ConstraintSolver/b3PgsJacobiSolver.cpp
+  include/common/pellet/Bullet3Dynamics/ConstraintSolver/b3Point2PointConstraint.cpp
+  include/common/pellet/Bullet3Dynamics/ConstraintSolver/b3TypedConstraint.cpp
+  include/common/pellet/Bullet3Geometry/b3ConvexHullComputer.cpp
+  include/common/pellet/Bullet3Geometry/b3GeometryUtil.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btDbvt.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btDispatcher.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btQuantizedBvh.cpp
+  include/common/pellet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btBoxBoxDetector.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCollisionObject.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCollisionWorld.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCollisionWorldImporter.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btCompoundCompoundCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btGhostObject.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btHashedSimplePairCache.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btManifoldResult.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btSimulationIslandManager.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/btUnionFind.cpp
+  include/common/pellet/BulletCollision/CollisionDispatch/SphereTriangleDetector.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btBox2dShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btBoxShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btCapsuleShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btCollisionShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btCompoundShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConcaveShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConeShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvex2dShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexHullShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexInternalShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexPointCloudShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexPolyhedron.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btCylinderShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btEmptyShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btMinkowskiSumShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btMultiSphereShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btOptimizedBvh.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btShapeHull.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btSphereShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btStaticPlaneShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btStridingMeshInterface.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTetrahedronShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleBuffer.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleCallback.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleMesh.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btTriangleMeshShape.cpp
+  include/common/pellet/BulletCollision/CollisionShapes/btUniformScalingShape.cpp
+  include/common/pellet/BulletCollision/Gimpact/btContactProcessing.cpp
+  include/common/pellet/BulletCollision/Gimpact/btGenericPoolAllocator.cpp
+  include/common/pellet/BulletCollision/Gimpact/btGImpactBvh.cpp
+  include/common/pellet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp
+  include/common/pellet/BulletCollision/Gimpact/btGImpactQuantizedBvh.cpp
+  include/common/pellet/BulletCollision/Gimpact/btGImpactShape.cpp
+  include/common/pellet/BulletCollision/Gimpact/btTriangleShapeEx.cpp
+  include/common/pellet/BulletCollision/Gimpact/gim_box_set.cpp
+  include/common/pellet/BulletCollision/Gimpact/gim_contact.cpp
+  include/common/pellet/BulletCollision/Gimpact/gim_memory.cpp
+  include/common/pellet/BulletCollision/Gimpact/gim_tri_collision.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btConvexCast.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.cpp
+  include/common/pellet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.cpp
+  include/common/pellet/BulletDynamics/Character/btKinematicCharacterController.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btContactConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btFixedConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btGearConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btGeneric6DofSpring2Constraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btHinge2Constraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btHingeConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btNNCGConstraintSolver.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btTypedConstraint.cpp
+  include/common/pellet/BulletDynamics/ConstraintSolver/btUniversalConstraint.cpp
+  include/common/pellet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
+  include/common/pellet/BulletDynamics/Dynamics/btDiscreteDynamicsWorldMt.cpp
+  include/common/pellet/BulletDynamics/Dynamics/btRigidBody.cpp
+  include/common/pellet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp
+  include/common/pellet/BulletDynamics/Dynamics/btSimulationIslandManagerMt.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBody.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyConstraint.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyConstraintSolver.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyDynamicsWorld.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyFixedConstraint.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyJointLimitConstraint.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyJointMotor.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodyPoint2Point.cpp
+  include/common/pellet/BulletDynamics/Featherstone/btMultiBodySliderConstraint.cpp
+  include/common/pellet/BulletDynamics/MLCPSolvers/btDantzigLCP.cpp
+  include/common/pellet/BulletDynamics/MLCPSolvers/btLemkeAlgorithm.cpp
+  include/common/pellet/BulletDynamics/MLCPSolvers/btMLCPSolver.cpp
+  include/common/pellet/BulletDynamics/Vehicle/btRaycastVehicle.cpp
+  include/common/pellet/BulletDynamics/Vehicle/btWheelInfo.cpp
+  include/common/pellet/BulletInverseDynamics/details/MultiBodyTreeImpl.cpp
+  include/common/pellet/BulletInverseDynamics/details/MultiBodyTreeInitCache.cpp
+  include/common/pellet/BulletInverseDynamics/IDMath.cpp
+  include/common/pellet/BulletInverseDynamics/MultiBodyTree.cpp
+  include/common/pellet/BulletSoftBody/btDefaultSoftBodySolver.cpp
+  include/common/pellet/BulletSoftBody/btSoftBody.cpp
+  include/common/pellet/BulletSoftBody/btSoftBodyConcaveCollisionAlgorithm.cpp
+  include/common/pellet/BulletSoftBody/btSoftBodyHelpers.cpp
+  include/common/pellet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.cpp
+  include/common/pellet/BulletSoftBody/btSoftMultiBodyDynamicsWorld.cpp
+  include/common/pellet/BulletSoftBody/btSoftRigidCollisionAlgorithm.cpp
+  include/common/pellet/BulletSoftBody/btSoftRigidDynamicsWorld.cpp
+  include/common/pellet/BulletSoftBody/btSoftSoftCollisionAlgorithm.cpp
+  include/common/pellet/LinearMath/btAlignedAllocator.cpp
+  include/common/pellet/LinearMath/btConvexHull.cpp
+  include/common/pellet/LinearMath/btConvexHullComputer.cpp
+  include/common/pellet/LinearMath/btGeometryUtil.cpp
+  include/common/pellet/LinearMath/btPolarDecomposition.cpp
+  include/common/pellet/LinearMath/btQuickprof.cpp
+  include/common/pellet/LinearMath/btSerializer.cpp
+  include/common/pellet/LinearMath/btThreads.cpp
+  include/common/pellet/LinearMath/btVector3.cpp
+)
+
 add_library(rend
     include/common/rend/rend.h
     include/common/rend/Animation.h
@@ -101,6 +272,10 @@ add_executable(game
     src/game/components/ScreamingMover.cpp
 )
 
+target_include_directories(pellet
+    PUBLIC include/common/pellet
+)
+
 target_include_directories(rend
     PUBLIC include/common
     PUBLIC include/Windows-x64
@@ -127,6 +302,7 @@ target_link_libraries(eengine
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
     ${PROJECT_SOURCE_DIR}/lib/Windows-x64/OpenAL-1.1/OpenAL32.lib
     rend
+    pellet
 
 )
 target_link_libraries(game
