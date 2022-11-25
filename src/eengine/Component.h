@@ -30,6 +30,9 @@ namespace eengine
 		/// @param _renderer The default renderer, available to all components.
 		virtual void OnDisplay(shared<RenderContext> _renderContext);
 
+		/// @brief Called Just before this Component is to be removed from its parent and then likely deallocated.
+		virtual void OnRemove();
+
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;
 		weak<Core> m_core;

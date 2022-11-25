@@ -1,3 +1,6 @@
+#ifndef EENGINE_COLLIDER
+#define EENGINE_COLLIDER
+
 #include "eengine_defines.h"
 
 #include <pellet/btBulletCollisionCommon.h>
@@ -11,15 +14,13 @@ namespace eengine
 	{
 		friend class RigidBody;
 
+	protected:
 		// Create a system for sharing these, maybe using resources...
 		shared<btCollisionShape> m_collisionShape;
 		shared<btTransform> m_transform;
 
-	public:
-		void SetSphere();
-		void SetCube();
-		void SetCapsule();
-		void SetCone();
-		void SetCylinder();
+		Collider();
 	};
 }
+
+#endif // EENGINE_COLLIDER

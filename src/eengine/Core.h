@@ -21,6 +21,7 @@ namespace eengine
 	class Resources;
 	class RenderContext;
 	class AudioContext;
+	class PhysicsContext;
 
 	/// @brief The central structure responsible for the operation of eengine.
 	class Core : private NonCopyable
@@ -36,6 +37,7 @@ namespace eengine
 		shared<RenderContext> m_renderContext;
 		shared<Resources> m_resources;
 		shared<AudioContext> m_audioContext;
+		shared<PhysicsContext> m_physicsContext;
 
 		SDL_Window* m_window;
 		bool m_running;
@@ -63,14 +65,18 @@ namespace eengine
 
 		/// @brief Get the main Camera.
 		/// @return A shared pointer to the main Camera.
-		shared<Camera> GetMainCamera();
+		shared<Camera> GetMainCamera() { return m_mainCamera; }
 
 		/// @brief Get the engine Input object.
 		/// @return A shared pointer to the engine Input object.
-		shared<Input> GetInput();
+		shared<Input> GetInput() { return m_input; }
 
 		/// @brief Get the engine Resources object.
 		/// @return A shared pointer to the engine Resources object.
-		shared<Resources> GetResources();
+		shared<Resources> GetResources() { return m_resources; }
+
+		/// @brief Get the engine physics context.
+		/// @return A shared pointer to the engine physics context.
+		shared<PhysicsContext> GetPhysicsContext() { return m_physicsContext; }
 	};
 }

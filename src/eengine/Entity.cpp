@@ -66,6 +66,7 @@ namespace eengine
 		auto itr = std::find(m_components.begin(), m_components.end(), _component);
 		if (itr != m_components.end()) 
 		{
+			(*itr)->OnRemove();
 			m_components.erase(itr);
 		}
 		else 
@@ -77,10 +78,6 @@ namespace eengine
 		if (newCmp != m_newComponents.end())
 		{
 			m_newComponents.erase(newCmp);
-		}
-		else 
-		{
-			throw std::exception();
 		}
 	}
 }

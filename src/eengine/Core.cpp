@@ -13,6 +13,7 @@
 #include "Resources.h"
 #include "RenderContext.h"
 #include "AudioContext.h"
+#include "PhysicsContext.h"
 
 #define DEFAULT_WINDOW_WIDTH 1200
 #define DEFAULT_WINDOW_HEIGHT 800
@@ -29,6 +30,8 @@ namespace eengine
 		m_renderContext = shared<RenderContext>(new RenderContext());
 		m_audioContext = shared<AudioContext>(new AudioContext());
 		m_audioContext->Initialise();
+		m_physicsContext = shared<PhysicsContext>(new PhysicsContext());
+		m_physicsContext->m_maxSubSteps = 5;
 	}
 
 	Core::~Core() 
@@ -119,6 +122,9 @@ namespace eengine
 				}
 			}
 
+			// Update physics with any changes from entities components included
+			m_physicsContext->UpdateFixed(m_environment->GetDeltaTime());
+
 			// Update main renderer view matrix using maincamera
 			m_renderContext->SetMainViewMatrix(glm::inverse(m_mainCamera->m_transform->GetModelMatrix()));
 
@@ -181,21 +187,6 @@ namespace eengine
 	shared<Environment> Core::GetEnvironment()
 	{
 		return m_environment;
-	}
-
-	shared<Camera> Core::GetMainCamera() 
-	{
-		return m_mainCamera;
-	}
-
-	shared<Input> Core::GetInput() 
-	{
-		return m_input;
-	}
-
-	shared<Resources> Core::GetResources() 
-	{
-		return m_resources;
 	}
 }
 

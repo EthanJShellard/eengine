@@ -37,4 +37,9 @@ namespace eengine
 	{
 		// Stub
 	}
+
+	void Component::OnRemove() 
+	{
+		// Stub
+	}
 }

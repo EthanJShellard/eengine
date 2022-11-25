@@ -17,13 +17,23 @@ Suicider::Suicider(int _target)
 
 void Suicider::OnTick() 
 {
-	if (m_count == m_target)
+	//if (m_count == m_target)
+	//{
+	//	GetParent()->Destroy();
+	//}
+	//else 
+	//{
+	//	m_count++;
+	//	std::cout << "Hello!" << std::endl;
+	//}
+
+	if (GetCore()->GetInput()->GetKey(eengine::KeyCode::space)) 
 	{
-		GetParent()->Destroy();
+ 		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyImpulse(glm::vec3(0,1,0), glm::vec3(0,-1,0));
 	}
-	else 
+
+	if (GetCore()->GetInput()->GetKey(eengine::KeyCode::right)) 
 	{
-		m_count++;
-		std::cout << "Hello!" << std::endl;
+		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyTorque(glm::vec3(0,1,0));
 	}
 }

@@ -1,3 +1,6 @@
+#ifndef EENGINE_ENVIRONMENT
+#define EENGINE_ENVIRONMENT
+
 #include <gl/glew.h>
 
 #include <string>
@@ -30,3 +33,5 @@ namespace eengine
 		std::string GetProjectWorkingDirectory();
 	};
 }
+
+#endif EENGINE_ENVIRONMENT

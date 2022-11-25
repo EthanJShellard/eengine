@@ -9,17 +9,25 @@ int main(int argc, char* argv[])
  
     shared<eengine::Core> core = eengine::Core::Initialise(argv[0]);
 
-
     {
         auto e = core->AddEntity();
         e->AddComponent<eengine::QuadRenderer>()->SetColour(1.0f, 0.0f, 0.0f, 0.5f);
         e->GetTransform()->Translate(glm::vec3(0.8f, 0.0f, -5.0f));
         e->AddComponent<eengine::AudioSource>();
         e->AddComponent<ScreamingMover>();
+        e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.5f,0.5f,0.5f), 1.0f);
+        e->AddComponent<Suicider>();
 
         auto e2 = core->AddEntity();
         e2->AddComponent<eengine::QuadRenderer>()->SetColour(0.0f, 1.0f, 0.0f, 0.5f);;
-        e2->GetTransform()->Translate(glm::vec3(0.0f, 0.0f, -5.0f));
+        e2->GetTransform()->Translate(glm::vec3(0.8f, -1.0f, -5.0f));
+        auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(5.0f, 0.5f, 5.0f), 1.0f);
+        rb->SetYPosLocked(true);
+        rb->SetXPosLocked(true);
+        rb->SetZPosLocked(true);
+        rb->SetXRotLocked(true);
+        rb->SetYRotLocked(true);
+        rb->SetZRotLocked(true);
 
         auto e3 = core->AddEntity();
         e3->AddComponent<eengine::ModelRenderer>("\\data\\models\\curuthers\\curuthers.obj");
