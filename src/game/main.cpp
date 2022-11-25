@@ -15,13 +15,12 @@ int main(int argc, char* argv[])
         e->GetTransform()->Translate(glm::vec3(0.8f, 0.0f, -5.0f));
         e->AddComponent<eengine::AudioSource>();
         e->AddComponent<ScreamingMover>();
-        e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.5f,0.5f,0.5f), 1.0f);
-        e->AddComponent<Suicider>();
+        
 
         auto e2 = core->AddEntity();
         e2->AddComponent<eengine::QuadRenderer>()->SetColour(0.0f, 1.0f, 0.0f, 0.5f);;
         e2->GetTransform()->Translate(glm::vec3(0.8f, -1.0f, -5.0f));
-        auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(5.0f, 0.5f, 5.0f), 1.0f);
+        auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(50.0f, 0.5f, 50.0f), 1.0f);
         rb->SetYPosLocked(true);
         rb->SetXPosLocked(true);
         rb->SetZPosLocked(true);
@@ -33,6 +32,8 @@ int main(int argc, char* argv[])
         e3->AddComponent<eengine::ModelRenderer>("\\data\\models\\curuthers\\curuthers.obj");
         e3->GetTransform()->Translate(glm::vec3(-1.0f, 0.0f, -5.0f));
         e3->GetTransform()->Scale(glm::vec3(0.3f, 0.3f, 0.3f));
+        e3->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(0.5f), 1.0f);
+        e3->AddComponent<Suicider>();
     }
     
 

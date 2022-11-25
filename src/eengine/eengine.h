@@ -9,6 +9,7 @@
 #include "Sound.h"
 #include "Camera.h"
 #include "BoxCollider.h"
+#include "SphereCollider.h"
 #include "Environment.h"
 #include "components/Transform.h"
 #include "components/QuadRenderer.h"
