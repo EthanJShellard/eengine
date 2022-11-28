@@ -256,6 +256,8 @@ add_library(eengine
     src/eengine/BoxCollider.cpp
     src/eengine/SphereCollider.h
     src/eengine/SphereCollider.cpp
+    src/eengine/CylinderCollider.h
+    src/eengine/CylinderCollider.cpp
     src/eengine/AudioContext.h
     src/eengine/AudioContext.cpp
     src/eengine/PhysicsContext.h

@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
         e3->AddComponent<eengine::ModelRenderer>("\\data\\models\\curuthers\\curuthers.obj");
         e3->GetTransform()->Translate(glm::vec3(-1.0f, 0.0f, -5.0f));
         e3->GetTransform()->Scale(glm::vec3(0.3f, 0.3f, 0.3f));
-        e3->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(0.5f), 1.0f);
+        e3->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CylinderCollider>(0.5f, 0.5f, 0.5f), 1.0f);
         e3->AddComponent<Suicider>();
     }
     
