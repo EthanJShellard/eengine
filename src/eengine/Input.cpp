@@ -44,8 +44,13 @@ namespace eengine
 				}
 				else
 				{
+					// Prevent multiple downs!
+					if (!entry->second.down) 
+					{
+						entry->second.lastUpdatePressed = m_updateCount;
+					}
+
 					entry->second.down = true;
-					entry->second.lastUpdatePressed = m_updateCount;
 				}
 			}
 			else if (event.type == SDL_KEYUP)

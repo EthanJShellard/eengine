@@ -27,9 +27,9 @@ void Suicider::OnTick()
 	//	std::cout << "Hello!" << std::endl;
 	//}
 
-	if (GetCore()->GetInput()->GetKey(eengine::KeyCode::space)) 
+	if (GetCore()->GetInput()->GetKeyDown(eengine::KeyCode::space)) 
 	{
- 		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyImpulse(glm::vec3(0,1,0), glm::vec3(0,-1,0));
+ 		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyImpulse(glm::vec3(0,5,0), glm::vec3(0,-1,0));
 	}
 
 	if (GetCore()->GetInput()->GetKey(eengine::KeyCode::right)) 
