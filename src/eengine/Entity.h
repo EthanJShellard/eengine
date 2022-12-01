@@ -110,7 +110,7 @@ namespace eengine
 		template<typename T>
 		void RemoveComponentsOfType();
 
-		/// @brief Remove the parameter Component from this Entity. Will throw an exception if the Component is not present on this Entity.
+		/// @brief Remove the parameter Component from this Entity. Will return nullptr if the Component is not present on this Entity.
 		/// @param _component The Component to remove.
 		void RemoveComponent(shared<Component> _component);
 	};
@@ -120,6 +120,15 @@ namespace eengine
 	shared<T> Entity::AddComponent()
 	{
 		auto share = std::make_shared<T>();
+
+		if (share->NeedsUniqueness()) 
+		{
+			if (GetComponentOfType<T>()) 
+			{
+				throw std::runtime_error("Attempted to add multiple components of a type which requires uniqueness!!");
+			}
+		}
+
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
@@ -133,6 +142,15 @@ namespace eengine
 	shared<T> Entity::AddComponent(A _a)
 	{
 		auto share = std::make_shared<T>(_a);
+
+		if (share->NeedsUniqueness())
+		{
+			if (GetComponentOfType<T>())
+			{
+				throw std::runtime_error("Attempted to add multiple components of a type which requires uniqueness!!");
+			}
+		}
+
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
@@ -146,6 +164,15 @@ namespace eengine
 	shared<T> Entity::AddComponent(A _a, B _b)
 	{
 		auto share = std::make_shared<T>(_a, _b);
+
+		if (share->NeedsUniqueness())
+		{
+			if (GetComponentOfType<T>())
+			{
+				throw std::runtime_error("Attempted to add multiple components of a type which requires uniqueness!!");
+			}
+		}
+
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
@@ -159,6 +186,15 @@ namespace eengine
 	shared<T> Entity::AddComponent(A _a, B _b, C _c)
 	{
 		auto share = std::make_shared<T>(_a, _b, _c);
+
+		if (share->NeedsUniqueness())
+		{
+			if (GetComponentOfType<T>())
+			{
+				throw std::runtime_error("Attempted to add multiple components of a type which requires uniqueness!!");
+			}
+		}
+
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
@@ -179,7 +215,7 @@ namespace eengine
 				return ptr;
 			}
 		}
-		throw std::exception();
+		return nullptr;
 	}
 
 	template<typename T>

@@ -42,6 +42,11 @@ namespace eengine
 		/// Do not call manually
 		virtual void OnInit();
 
+		/// @brief Called when attempting to add a Component to an Entity. Override to specify whether or not there
+		/// should only ever be one instance of this Component on an Entity. Returns false by default.
+		/// @return Whether or not there should only ever be one instance of this component on an Entity.
+		virtual bool NeedsUniqueness() const;
+
 		/// @brief Get a shared pointer to the Entity which owns this component.
 		/// @return A shared pointer to the Entity which owns this component.
 		shared<Entity> GetParent();

@@ -42,4 +42,9 @@ namespace eengine
 	{
 		// Stub
 	}
+
+	bool Component::NeedsUniqueness() const
+	{
+		return false;
+	}
 }

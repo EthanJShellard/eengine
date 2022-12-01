@@ -50,6 +50,11 @@ namespace eengine
 		m_removed = true;
 	}
 
+	bool RigidBody::NeedsUniqueness() const
+	{
+		return true;
+	}
+
 	RigidBody::~RigidBody() 
 	{
 		// If this is being removed before engine stop

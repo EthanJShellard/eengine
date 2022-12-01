@@ -31,6 +31,8 @@ namespace eengine
 
 		~RigidBody();
 
+		bool NeedsUniqueness() const;
+
 		/// @brief Set whether the x axis position of this RigidBody should be locked.
 		/// @param _lock Should the x axis position be locked.
 		void SetXPosLocked(bool _lock) { m_posLock.setX(!_lock); m_rigidBody->setLinearFactor(m_posLock); }
