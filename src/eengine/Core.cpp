@@ -4,6 +4,10 @@
 #include <SDL2/SDL.h>
 #include <rend/rend.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 #include "Core.h"
 #include "Entity.h"
 #include "Input.h"
@@ -51,9 +55,13 @@ namespace eengine
 		rtn->m_environment = shared<Environment>(new Environment());
 
 		// Set up project working directory path.
+#if WIN32
 		std::string pwd = std::string(_projectWorkingDirectory);
 		pwd = pwd.substr(0, pwd.find_last_of('\\'));
 		rtn->m_environment->m_projectWorkingDirectory = pwd;
+#elif __EMSCRIPTEN__
+		rtn->m_environment->m_projectWorkingDirectory = ".";
+#endif
 
 		// Create Resources object with this working directory.
 		rtn->m_resources = shared<Resources>(new Resources(rtn->m_environment->GetProjectWorkingDirectory()));
@@ -88,83 +96,95 @@ namespace eengine
 		return rtn;
 	}
 
+	void Core::Loop(void* _userData) 
+	{
+		Core* self = (Core*)_userData;
+
+		// MAIN ENGINE LOOP
+		self->m_input->Update();
+		self->m_environment->OnFrameStart();
+
+		// Update each entity
+		for (shared<Entity> entity : self->m_entities)
+		{
+			try
+			{
+				entity->Tick();
+			}
+			catch (std::runtime_error e)
+			{
+				Debug::Log(e.what());
+				entity->Destroy();
+			}
+			catch (std::exception e)
+			{
+				Debug::Log(e.what());
+				entity->Destroy();
+			}
+			catch (...)
+			{
+				Debug::Log("Caught unknown exception!");
+				entity->Destroy();
+			}
+		}
+
+		// Update physics with any changes from entities components included
+		self->m_physicsContext->UpdateFixed(self->m_environment->GetDeltaTime());
+
+		// Update main renderer view matrix using maincamera
+		self->m_renderContext->SetMainViewMatrix(glm::inverse(self->m_mainCamera->m_transform->GetModelMatrix()));
+
+		// Clear the main render surface
+		self->m_renderContext->ClearAll();
+
+		// Draw all that need drawing
+		auto drawItr = self->m_entities.begin();
+		while (drawItr != self->m_entities.end())
+		{
+			(*drawItr)->Display(self->m_renderContext);
+			drawItr++;
+		}
+
+		// Swap buffers to display rendered content
+		SDL_GL_SwapWindow(self->m_window);
+
+		// Clean up destroyed entities
+		auto itr = self->m_entities.begin();
+		while (itr != self->m_entities.end())
+		{
+			if ((*itr)->IsDestroyed())
+			{
+				itr = self->m_entities.erase(itr);
+			}
+			else
+			{
+				itr++;
+			}
+		}
+		// Only here for testing while we don't have a real engine loop.
+		if (self->m_input->GetHasQuit())
+		{
+			self->Stop();
+		}
+
+		//std::string str = "deltaTime: ";
+		//str.append( std::to_string(m_environment->GetDeltaTime()));
+		//Debug::Log(str);
+	}
+
 	void Core::Start() 
 	{
 		m_running = true;
 
-		while (m_running) 
+#ifdef __EMSCRIPTEN__
+		emscripten_set_main_loop_arg(Loop, (void*)this, 0, 1);
+#else
+		while (m_running)
 		{
-			// MAIN ENGINE LOOP
-			m_input->Update();
-			m_environment->OnFrameStart();
-
-			// Update each entity
-			for (shared<Entity> entity : m_entities) 
-			{
-				try 
-				{
-					entity->Tick();
-				}
-				catch (std::runtime_error e)
-				{
-					Debug::Log(e.what());
-					entity->Destroy();
-				}
-				catch (std::exception e)
-				{
-					Debug::Log(e.what());
-					entity->Destroy();
-				}
-				catch (...)
-				{
-					Debug::Log("Caught unknown exception!");
-					entity->Destroy();
-				}
-			}
-
-			// Update physics with any changes from entities components included
-			m_physicsContext->UpdateFixed(m_environment->GetDeltaTime());
-
-			// Update main renderer view matrix using maincamera
-			m_renderContext->SetMainViewMatrix(glm::inverse(m_mainCamera->m_transform->GetModelMatrix()));
-
-			// Clear the main render surface
-			m_renderContext->ClearAll();
-
-			// Draw all that need drawing
-			auto drawItr = m_entities.begin();
-			while (drawItr != m_entities.end()) 
-			{
-				(*drawItr)->Display(m_renderContext);
-				drawItr++;
-			}
-
-			// Swap buffers to display rendered content
-			SDL_GL_SwapWindow(m_window);
-
-			// Clean up destroyed entities
-			auto itr = m_entities.begin();
-			while (itr != m_entities.end()) 
-			{
-				if ((*itr)->IsDestroyed()) 
-				{
-					itr = m_entities.erase(itr);
-				}
-				else 
-				{
-					itr++;
-				}
-			}
-			// Only here for testing while we don't have a real engine loop.
-			if (m_input->GetHasQuit()) 
-			{
-				Stop();
-			}
-
-			//std::string str = "deltaTime: ";
-			//str.append( std::to_string(m_environment->GetDeltaTime()));
-			//Debug::Log(str);
+			Loop((void*)this);
 		}
+#endif
+		
 	}
 
 	void Core::Stop() 

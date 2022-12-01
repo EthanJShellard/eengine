@@ -9,6 +9,11 @@
 namespace rend
 {
 
+    const int Mesh::TRIANGLE = 3;
+    const int Mesh::QUAD = 4;
+    const int Mesh::GUI_QUAD = 5;
+    const int Mesh::NDC_QUAD = 6;
+
 Mesh::Mesh() :
   m_dirty(true)
 { }

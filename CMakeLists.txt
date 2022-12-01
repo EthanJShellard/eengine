@@ -3,6 +3,40 @@ project(EENGINE)
 
 find_package(OpenGL REQUIRED)
 
+include_directories(
+    include/common/pellet
+    include/common
+    src
+)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF
+include_directories(
+    include/emcc-emscripten-wasm
+)
+
+link_directories(
+    ${PROJECT_SOURCE_DIR}/lib/emcc-emscripten-wasm
+)
+
+set(CMAKE_EXECUTABLE_SUFFIX ".html")
+
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file ${CMAKE_SOURCE_DIR}/data@data")
+
+add_compile_definitions(PLATFORM_EMSCRIPTEN)
+
+elseif(WIN32) # ELSE IF
+
+link_directories(
+    ${PROJECT_SOURCE_DIR}/lib/cl-windows-amd64/OpenAL-1.1
+    ${PROJECT_SOURCE_DIR}/lib/cl-windows-amd64/glew-2.1.0-x64
+    ${PROJECT_SOURCE_DIR}/lib/cl-windows-amd64/SDL2-2.24.1
+)
+
+include_directories(
+    include/cl-windows-amd64
+)
+endif() # ENDIF
+
 add_library(pellet
   include/common/pellet/Bullet3Collision/BroadPhaseCollision/b3DynamicBvh.cpp
   include/common/pellet/Bullet3Collision/BroadPhaseCollision/b3DynamicBvhBroadphase.cpp
@@ -181,7 +215,7 @@ add_library(rend
     include/common/rend/Buffer.h
     include/common/rend/Buffer.cpp
     include/common/rend/Mesh.h
-    include/common/rend/mesh.cpp
+    include/common/rend/Mesh.cpp
     include/common/rend/Model.h
     include/common/rend/Model.cpp
     include/common/rend/ModelRenderer.h
@@ -284,39 +318,42 @@ add_executable(game
     src/game/components/ScreamingMover.cpp
 )
 
-target_include_directories(pellet
-    PUBLIC include/common/pellet
+if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF
+
+target_link_libraries(rend
+    GL
+    GLEW
 )
 
-target_include_directories(rend
-    PUBLIC include/common
-    PUBLIC include/Windows-x64
+target_link_libraries(eengine
+    rend
+    openal
+    SDL2
+    pellet
 )
 
-target_include_directories(eengine
-    PUBLIC include/Windows-x64
-    PUBLIC include/common
-)
-target_include_directories(game
-    PRIVATE src/eengine/
+elseif(WIN32) # ELSE IF
+include_directories(
+    include/Windows-x64
 )
 
 target_link_libraries(rend
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
+    glew32
+    SDL2
+    SDL2main
     opengl32
 )
 
 target_link_libraries(eengine
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/glew-2.1.0-x64/glew32.lib
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2.lib
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/SDL2-2.24.1/SDL2main.lib
-    ${PROJECT_SOURCE_DIR}/lib/Windows-x64/OpenAL-1.1/OpenAL32.lib
+    glew32
+    SDL2
+    SDL2main
+    OpenAL32
     rend
     pellet
-
 )
+endif() # ENDIF
+
 target_link_libraries(game
     eengine
 )

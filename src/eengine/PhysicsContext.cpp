@@ -1,6 +1,7 @@
 #include "PhysicsContext.h"
 #include "components/RigidBody.h"
 #include "Entity.h"
+#include "Core.h"
 
 namespace eengine
 {

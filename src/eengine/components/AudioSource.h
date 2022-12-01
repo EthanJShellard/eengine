@@ -4,7 +4,7 @@
 #include "../eengine_defines.h"
 #include "../Component.h"
 
-#include <openAL/al.h>
+#include <AL/al.h>
 
 namespace eengine 
 {

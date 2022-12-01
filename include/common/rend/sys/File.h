@@ -9,6 +9,8 @@
 
 #include <stdio.h>
 
+#include <iostream>
+
 namespace sys
 {
 
@@ -107,10 +109,12 @@ private:
 #ifdef _MSC_VER
     if(fopen_s(&m_raw, m_path.unsafe_raw(), "rb"))
     {
+        std::cout << m_path.unsafe_raw() << std::endl;
       throw Exception("Failed to open file for reading");
     }
 #else
     m_raw = fopen(m_path.unsafe_raw(), "rb");
+    std::cout << m_path.unsafe_raw() << std::endl;
     if(!m_raw) throw Exception("Failed to open file for reading");
 #endif
 

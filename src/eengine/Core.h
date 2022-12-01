@@ -1,3 +1,6 @@
+#ifndef EENGINE_CORE
+#define EENGINE_CORE
+
 #include <list>
 
 #include "eengine_defines.h"
@@ -41,6 +44,8 @@ namespace eengine
 
 		SDL_Window* m_window;
 		bool m_running;
+
+		static void Loop(void* _userData);
 	public:
 		~Core();
 
@@ -80,3 +85,5 @@ namespace eengine
 		shared<PhysicsContext> GetPhysicsContext() { return m_physicsContext; }
 	};
 }
+
+#endif // EENGINE_CORE

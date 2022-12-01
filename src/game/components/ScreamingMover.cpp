@@ -1,12 +1,11 @@
 #include "ScreamingMover.h"
-#include <Environment.h>
 
 #include <stdexcept>
 
 void ScreamingMover::OnInit() 
 {
-	m_sound = GetCore()->GetResources()->Load<eengine::Sound>("\\data\\audio\\dixie_horn.ogg");
-	m_secondSound = GetCore()->GetResources()->Load<eengine::Sound>("\\data\\audio\\91962__billengholm-yahoo-com__ridebell.ogg");
+	m_sound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/dixie_horn.ogg");
+	m_secondSound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/91962__billengholm-yahoo-com__ridebell.ogg");
 }
 
 void ScreamingMover::OnTick() 

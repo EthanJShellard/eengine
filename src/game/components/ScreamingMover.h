@@ -1,4 +1,4 @@
-#include <eengine.h>
+#include <eengine/eengine.h>
 
 class ScreamingMover : public eengine::Component
 {

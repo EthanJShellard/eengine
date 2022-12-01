@@ -1,8 +1,8 @@
 #ifndef EENGINE_AUDIO_CONTEXT
 #define EENGINE_AUDIO_CONTEXT
 
-#include <openAL/al.h>
-#include <openAL/alc.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 
 #include "NonCopyable.h"
 

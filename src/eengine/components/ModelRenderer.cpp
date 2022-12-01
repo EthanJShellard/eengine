@@ -28,7 +28,7 @@ namespace eengine
 		}
 
 		// Default shader
-		m_shader = GetCore()->GetResources()->LoadShader("\\data\\shaders\\basic.vert", "\\data\\shaders\\basic.frag");
+		m_shader = GetCore()->GetResources()->LoadShader("/data/shaders/basic.vert", "/data/shaders/basic.frag");
 	}
 
 	void ModelRenderer::SetModel(const std::string& _modelPath) 

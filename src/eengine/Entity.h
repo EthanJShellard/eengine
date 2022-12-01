@@ -5,6 +5,7 @@
 #include "eengine_defines.h"
 #include "NonCopyable.h"
 #include "components/Transform.h"
+#include "Core.h"
 
 namespace rend 
 {
@@ -15,7 +16,6 @@ namespace eengine
 {
 	// Engine forward declarations
 	class Component;
-	class Core;
 	class RenderContext;
 
 	/// @brief A game object class which contains Components. All objects in eengine consist of an Entity with Component children.

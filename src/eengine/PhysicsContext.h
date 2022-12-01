@@ -7,6 +7,8 @@
 
 namespace eengine 
 {
+	class RigidBody;
+
 	class PhysicsContext : public NonCopyable
 	{
 		friend class Core;

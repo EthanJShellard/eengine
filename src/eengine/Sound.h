@@ -3,7 +3,7 @@
 
 #include "Resource.h"
 
-#include <openAL/al.h>
+#include <AL/al.h>
 
 namespace eengine 
 {

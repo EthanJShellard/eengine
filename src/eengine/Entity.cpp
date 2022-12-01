@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "Debug.h"
+#include "Core.h"
 
 namespace eengine 
 {
