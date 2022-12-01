@@ -1,4 +1,5 @@
 #include "eengine_defines.h"
+#include "NonCopyable.h"
 
 #include <pellet/btBulletDynamicsCommon.h>
 
@@ -6,13 +7,13 @@
 
 namespace eengine 
 {
-	class PhysicsContext 
+	class PhysicsContext : public NonCopyable
 	{
 		friend class Core;
 		friend class RigidBody;
 
 		shared<btDiscreteDynamicsWorld> m_dynamicsWorld;
-		shared<btDefaultCollisionConfiguration> m_collisionConfig;
+		shared<btCollisionConfiguration> m_collisionConfig;
 		shared<btCollisionDispatcher> m_collisionDispatcher;
 		shared<btBroadphaseInterface> m_broadphaseInterface;
 		shared<btSequentialImpulseConstraintSolver> m_impulseSolver;

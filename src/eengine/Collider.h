@@ -2,6 +2,7 @@
 #define EENGINE_COLLIDER
 
 #include "eengine_defines.h"
+#include "NonCopyable.h"
 
 #include <pellet/btBulletCollisionCommon.h>
 
@@ -10,7 +11,7 @@ namespace eengine
 	// Engine forward declarations
 	class RigidBody;
 
-	class Collider 
+	class Collider : public NonCopyable 
 	{
 		friend class RigidBody;
 

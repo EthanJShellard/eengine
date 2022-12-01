@@ -52,7 +52,7 @@ namespace eengine
 
 	RigidBody::~RigidBody() 
 	{
-		/// If this is being removed before engine stop
+		// If this is being removed before engine stop
 		if (!m_removed && GetCore() != nullptr)
 		{
 			GetCore()->GetPhysicsContext()->UnregisterRigidBody(m_self.lock());
