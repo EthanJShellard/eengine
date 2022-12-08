@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "NonCopyable.h"
+#include "eengine_defines.h"
 
 namespace eengine 
 {
@@ -185,7 +186,6 @@ namespace eengine
 		friend class Core;
 
 	private:
-		glm::vec2 m_mousePreviousPos;
 		glm::vec2 m_mousePos;
 		glm::vec2 m_mouseDelta;
 		glm::vec2 m_mouseScroll;
@@ -195,8 +195,11 @@ namespace eengine
 		bool m_quit;
 		float m_mouseSensitivity;
 		uint64_t m_updateCount;
+		bool m_mouseLocked;
 
 		std::unordered_map<int, KeyState> m_keys;
+
+		SDL_Window* m_window;
 
 		// Update the input state. Should be called at the beginning of a frame/update.
 		void Update();
@@ -251,10 +254,15 @@ namespace eengine
 		/// @return Whether or not mouse 3 is pressed.
 		bool Mouse3Down() const;
 
-		/// @brief Reset the mouse cursor position to the centre of the provided bounds. 
-		/// @details This should be the centre of the screen if the full screen dimensions are provided as arguments.
-		/// @param _screenWidth The width of the area in which to centre the mouse.
-		/// @param _screenHeight The height of the area in which to centre the mouse.
-		void ResetMousePosition(int _screenWidth, int _screenHeight);
+		/// @brief Reset the mouse cursor position to the centre of window.
+		void ResetMousePosition();
+
+		/// @brief Set whether or not the mouse should be locked to the centre of the window.
+		/// @param _lock Whether or the mouse should be locked to the centre of the window.
+		void SetMouseLocked(bool _lock);
+
+		/// @brief Get whether or not the mouse should be locked to the centre of the window.
+		/// @return Whether or not the mouse should be locked to the centre of the window.
+		bool GetMouseLocked() const;
 	};
 }

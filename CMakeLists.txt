@@ -22,8 +22,6 @@ set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file ${CMAKE_SOURCE_DIR}/data@data")
 
-add_compile_definitions(PLATFORM_EMSCRIPTEN)
-
 elseif(WIN32) # ELSE IF
 
 link_directories(

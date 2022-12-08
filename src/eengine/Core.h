@@ -3,6 +3,8 @@
 
 #include <list>
 
+#include <glm/glm.hpp>
+
 #include "eengine_defines.h"
 #include "NonCopyable.h"
 
@@ -83,6 +85,10 @@ namespace eengine
 		/// @brief Get the engine physics context.
 		/// @return A shared pointer to the engine physics context.
 		shared<PhysicsContext> GetPhysicsContext() { return m_physicsContext; }
+
+		/// @brief Get the dimensions of the main window.
+		/// @return A 2d vector containing the width and height of the window.
+		glm::vec2 GetWindowDimensions() const;
 	};
 }
 

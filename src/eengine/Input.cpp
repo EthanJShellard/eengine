@@ -1,16 +1,23 @@
 #include <SDL2/SDL.h>
 
 #include "input.h"
+#include "Core.h"
 
 namespace eengine
 {
-	Input::Input()
+	Input::Input() :
+		m_mouse1Pressed(false),
+		m_mouse2Pressed(false),
+		m_mouse3Pressed(false),
+		m_quit(false),
+		m_mouseSensitivity(12.0f),
+		m_mouseDelta(0),
+		m_mousePos(0),
+		m_mouseScroll(0),
+		m_updateCount(1),
+		m_mouseLocked(false),
+		m_window(nullptr)
 	{
-		m_mouse1Pressed = false;
-		m_mouse2Pressed = false;
-		m_mouse3Pressed = false;
-		m_quit = false;
-		m_mouseSensitivity = 20.0f;
 	}
 
 	void Input::Update()
@@ -62,8 +69,10 @@ namespace eengine
 			else if (event.type == SDL_MOUSEMOTION)
 			{
 				// use += delta to avoid issues if mouse motion comes in more than once
-				m_mouseDelta.x += event.motion.x - m_mousePreviousPos.x;
-				m_mouseDelta.y += event.motion.y - m_mousePreviousPos.y;
+				m_mouseDelta.x += event.motion.xrel;
+				m_mouseDelta.y += event.motion.yrel;
+				m_mousePos.x = event.motion.x;
+				m_mousePos.y = event.motion.y;
 			}
 			else if (event.type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -106,7 +115,10 @@ namespace eengine
 			}
 		}
 
-		m_mousePreviousPos += m_mouseDelta;
+		if (m_mouseLocked && (SDL_GetWindowFlags(m_window) & SDL_WINDOW_INPUT_FOCUS))
+		{
+			ResetMousePosition();
+		}
 	}
 
 	bool Input::GetKey(KeyCode _key) const
@@ -167,8 +179,23 @@ namespace eengine
 		return m_mouse3Pressed;
 	}
 
-	void Input::ResetMousePosition(int _screenWidth, int _screenHeight)
+	void Input::ResetMousePosition()
 	{
-		m_mousePreviousPos = glm::vec2(_screenWidth / 2, _screenHeight / 2);
+		if (m_window) 
+		{
+			int width, height;
+			SDL_GetWindowSize(m_window, &width, &height);
+			SDL_WarpMouseInWindow(m_window, width / 2, height / 2);
+		}
+	}
+
+	void Input::SetMouseLocked(bool _lock) 
+	{
+		m_mouseLocked = _lock;
+	}
+
+	bool Input::GetMouseLocked() const 
+	{
+		return m_mouseLocked;
 	}
 }

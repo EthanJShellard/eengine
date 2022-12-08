@@ -19,8 +19,8 @@
 #include "AudioContext.h"
 #include "PhysicsContext.h"
 
-#define DEFAULT_WINDOW_WIDTH 1200
-#define DEFAULT_WINDOW_HEIGHT 800
+#define DEFAULT_WINDOW_WIDTH 1920
+#define DEFAULT_WINDOW_HEIGHT 1080
 
 namespace eengine
 {
@@ -92,6 +92,11 @@ namespace eengine
 
 		// Set up rendering context
 		rtn->m_renderContext->Initialise(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+
+		// Provide input with the SDL window
+		rtn->m_input->m_window = rtn->m_window;
+		// We want relative mouse inputs
+		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		return rtn;
 	}
@@ -176,6 +181,9 @@ namespace eengine
 	{
 		m_running = true;
 
+		// Do a quick input update to flush out initial data
+		m_input->Update();
+
 #ifdef __EMSCRIPTEN__
 		emscripten_set_main_loop_arg(Loop, (void*)this, 0, 1);
 #else
@@ -207,6 +215,13 @@ namespace eengine
 	shared<Environment> Core::GetEnvironment()
 	{
 		return m_environment;
+	}
+
+	glm::vec2 Core::GetWindowDimensions() const
+	{
+		int width, height;
+		SDL_GetWindowSize(m_window, &width, &height);
+		return glm::vec2(width, height);
 	}
 }
 
