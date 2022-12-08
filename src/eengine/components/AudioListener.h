@@ -13,7 +13,7 @@ namespace eengine
 	{
 		shared<Transform> m_parentTransform;
 
-		void OnInit();
+		void OnInit(float _deltaTime);
 		void OnTick();
 	};
 }

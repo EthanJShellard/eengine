@@ -28,7 +28,7 @@ namespace eengine
 		// Stub
 	}
 
-	void Component::OnTick() 
+	void Component::OnTick(float _deltaTIme) 
 	{
 		// Stub
 	}

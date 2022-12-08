@@ -21,7 +21,7 @@ namespace eengine
 		shared<Texture> m_texture;
 		glm::vec4 m_colour;
 
-		void OnTick();
+		void OnTick(float _deltaTime);
 		void OnDisplay(shared<RenderContext> _renderContext);
 
 	public:

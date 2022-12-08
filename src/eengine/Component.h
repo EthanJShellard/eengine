@@ -24,7 +24,8 @@ namespace eengine
 		virtual void OnBegin();
 		
 		/// @brief Called once each frame before rendering, if the parent Entity and Component are enabled.
-		virtual void OnTick();
+		/// @param _deltaTime The time since last frame in seconds
+		virtual void OnTick(float _deltaTime);
 		
 		/// @brief Called once each frame, after the state has finished updating and we are ready to draw.
 		/// @param _renderer The default renderer, available to all components.

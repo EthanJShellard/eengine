@@ -15,7 +15,7 @@ Suicider::Suicider(int _target)
 }
 
 
-void Suicider::OnTick() 
+void Suicider::OnTick(float _deltaTime) 
 {
 	//if (m_count == m_target)
 	//{
@@ -28,7 +28,6 @@ void Suicider::OnTick()
 	//}
 
 	auto input = GetCore()->GetInput();
-	auto deltaTime = GetCore()->GetEnvironment()->GetDeltaTime();
 
 	if (input->GetKeyDown(eengine::KeyCode::space)) 
 	{
@@ -45,24 +44,24 @@ void Suicider::OnTick()
 	float sensitivity = GetCore()->GetInput()->GetMouseSensitivity();
 	auto transform = GetCore()->GetMainCamera()->m_transform;
 
-	transform->Rotate(deltaTime * -sensitivity * delta.x, glm::vec3(0,1,0));
-	transform->Rotate(deltaTime * -sensitivity * delta.y, transform->Right());
+	transform->Rotate(_deltaTime * -sensitivity * delta.x, glm::vec3(0,1,0));
+	transform->Rotate(_deltaTime * -sensitivity * delta.y, transform->Right());
 
 	if (input->GetKey(eengine::KeyCode::w)) 
 	{
-		transform->Translate(5 * deltaTime * -transform->Forward());
+		transform->Translate(5 * _deltaTime * -transform->Forward());
 	}
 	if (input->GetKey(eengine::KeyCode::s))
 	{
-		transform->Translate(5 * deltaTime * transform->Forward());
+		transform->Translate(5 * _deltaTime * transform->Forward());
 	}
 	if (input->GetKey(eengine::KeyCode::a))
 	{
-		transform->Translate(5 * deltaTime * -transform->Right());
+		transform->Translate(5 * _deltaTime * -transform->Right());
 	}
 	if (input->GetKey(eengine::KeyCode::d))
 	{
-		transform->Translate(5 * deltaTime * transform->Right());
+		transform->Translate(5 * _deltaTime * transform->Right());
 	}
 	if (input->GetKey(eengine::KeyCode::escape)) 
 	{

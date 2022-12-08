@@ -3,7 +3,7 @@
 
 namespace eengine 
 {
-	void AudioListener::OnInit() 
+	void AudioListener::OnInit(float _delatTime) 
 	{
 		m_parentTransform = GetParent()->GetTransform();
 	}

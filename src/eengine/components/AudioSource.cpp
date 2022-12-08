@@ -15,7 +15,7 @@ namespace eengine
 		m_loop = false;
 	}
 
-	void AudioSource::OnTick() 
+	void AudioSource::OnTick(float _deltaTime) 
 	{
 		glm::vec3 parentPos = m_parentTransform->GetPosition();
 

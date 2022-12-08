@@ -21,7 +21,7 @@ namespace eengine
 
 		shared<Transform> m_parentTransform;
 
-		void OnTick();
+		void OnTick(float _deltaTime);
 
 	public:
 		void OnInit();

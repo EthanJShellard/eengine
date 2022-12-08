@@ -19,7 +19,7 @@ namespace eengine
 		m_mesh->SetAsQuad();
 	}
 
-	void QuadRenderer::OnTick() 
+	void QuadRenderer::OnTick(float _deltaTime) 
 	{
 		auto transform = GetParent()->GetTransform();
 		//transform->Rotate(GetCore()->GetEnvironment()->GetDeltaTime() * 90.0f, transform->Up());

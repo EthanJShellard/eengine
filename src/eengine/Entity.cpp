@@ -15,7 +15,7 @@ namespace eengine
 		m_destroyed = false;
 	}
 
-	void Entity::Tick()
+	void Entity::Tick(float _deltaTime)
 	{
 		// Call OnBegin on newly added components
 		if (!m_newComponents.empty()) 
@@ -30,7 +30,7 @@ namespace eengine
 		// Update components
 		for (shared<Component> c : m_components)
 		{
-			c->OnTick();
+			c->OnTick(_deltaTime);
 		}
 	}
 

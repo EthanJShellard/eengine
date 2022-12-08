@@ -2,7 +2,7 @@
 
 class ScreamingMover : public eengine::Component
 {
-	void OnTick();
+	void OnTick(float _deltaTime);
 	void OnBegin();
 
 	shared<eengine::Sound> m_sound;

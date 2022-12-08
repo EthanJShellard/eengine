@@ -114,7 +114,7 @@ namespace eengine
 		{
 			try
 			{
-				entity->Tick();
+				entity->Tick(self->m_environment->GetDeltaTime());
 			}
 			catch (std::runtime_error e)
 			{

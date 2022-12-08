@@ -8,7 +8,7 @@ void ScreamingMover::OnInit()
 	m_secondSound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/91962__billengholm-yahoo-com__ridebell.ogg");
 }
 
-void ScreamingMover::OnTick() 
+void ScreamingMover::OnTick(float _deltaTime) 
 {
 	// Really bad way of doing this, but don't have OnStart implemented yet
 	if (!m_audioSource) 
@@ -43,7 +43,7 @@ void ScreamingMover::OnTick()
 	{
 		movement += glm::vec3(0, 0, 5);
 	}
-	GetParent()->GetTransform()->Translate(movement * 5.0f * GetCore()->GetEnvironment()->GetDeltaTime());
+	GetParent()->GetTransform()->Translate(movement * 5.0f * _deltaTime);
 
 }
 
