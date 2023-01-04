@@ -2,6 +2,7 @@
 
 #include "input.h"
 #include "Core.h"
+#include "Debug.h"
 
 namespace eengine
 {
@@ -15,7 +16,6 @@ namespace eengine
 		m_mousePos(0),
 		m_mouseScroll(0),
 		m_updateCount(1),
-		m_mouseLocked(false),
 		m_window(nullptr)
 	{
 	}
@@ -28,7 +28,7 @@ namespace eengine
 
 		m_updateCount++;
 
-		// We would rather overflow to 1 than 0. Maybe paranoid seeing as it would take years to overflow this with a normal framerate.
+		// We would rather overflow to 1 than 0. Maybe paranoid seeing as it would take ages to overflow this with a normal framerate.
 		if (!m_updateCount) 
 		{
 			m_updateCount = 1;
@@ -69,8 +69,9 @@ namespace eengine
 			else if (event.type == SDL_MOUSEMOTION)
 			{
 				// use += delta to avoid issues if mouse motion comes in more than once
-				m_mouseDelta.x += event.motion.xrel;
-				m_mouseDelta.y += event.motion.yrel;
+				bool relativeMode = SDL_GetRelativeMouseMode();
+				m_mouseDelta.x += relativeMode ? event.motion.xrel : event.motion.x - m_mousePos.x;
+				m_mouseDelta.y += relativeMode ? event.motion.yrel : event.motion.y - m_mousePos.y;
 				m_mousePos.x = event.motion.x;
 				m_mousePos.y = event.motion.y;
 			}
@@ -113,11 +114,6 @@ namespace eengine
 			{
 				m_quit = true;
 			}
-		}
-
-		if (m_mouseLocked && (SDL_GetWindowFlags(m_window) & SDL_WINDOW_INPUT_FOCUS))
-		{
-			ResetMousePosition();
 		}
 	}
 
@@ -189,13 +185,18 @@ namespace eengine
 		}
 	}
 
-	void Input::SetMouseLocked(bool _lock) 
+	void Input::SetInputGrab(bool _lock) 
 	{
-		m_mouseLocked = _lock;
+		SDL_SetWindowGrab(m_window, (SDL_bool)_lock);
 	}
 
-	bool Input::GetMouseLocked() const 
+	bool Input::GetInputGrab() const 
 	{
-		return m_mouseLocked;
+		return SDL_GetWindowGrab(m_window);
+	}
+
+	void Input::SetRelativeMouseMode(bool _relativeMouseMode) const 
+	{
+		SDL_SetRelativeMouseMode((SDL_bool)_relativeMouseMode);
 	}
 }

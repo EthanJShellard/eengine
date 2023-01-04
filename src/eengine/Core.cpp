@@ -19,8 +19,8 @@
 #include "AudioContext.h"
 #include "PhysicsContext.h"
 
-#define DEFAULT_WINDOW_WIDTH 1920
-#define DEFAULT_WINDOW_HEIGHT 1080
+#define DEFAULT_WINDOW_WIDTH 1280
+#define DEFAULT_WINDOW_HEIGHT 720
 
 namespace eengine
 {
@@ -95,8 +95,6 @@ namespace eengine
 
 		// Provide input with the SDL window
 		rtn->m_input->m_window = rtn->m_window;
-		// We want relative mouse inputs
-		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		return rtn;
 	}

@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
         e3->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CylinderCollider>(0.5f, 0.5f, 0.5f), 1.0f);
         e3->AddComponent<Suicider>();
 
-        core->GetInput()->SetMouseLocked(true);
+        core->GetInput()->SetRelativeMouseMode(true);
+        core->GetInput()->SetInputGrab(true);
     }
     
 

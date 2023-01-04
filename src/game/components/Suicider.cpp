@@ -46,7 +46,10 @@ void Suicider::OnTick(float _deltaTime)
 
 	auto delta = input->GetMouseDelta();
 
-	float sensitivity = GetCore()->GetInput()->GetMouseSensitivity();
+
+	//eengine::Debug::Log("mouse delta: (" + std::to_string(delta.x) + ", " + std::to_string(delta.y) + ")");
+
+	float sensitivity = input->GetMouseSensitivity();
 	auto transform = GetCore()->GetMainCamera()->m_transform;
 
 	transform->Rotate(_deltaTime * -sensitivity * delta.x, glm::vec3(0,1,0));

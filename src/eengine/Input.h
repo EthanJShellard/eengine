@@ -195,7 +195,6 @@ namespace eengine
 		bool m_quit;
 		float m_mouseSensitivity;
 		uint64_t m_updateCount;
-		bool m_mouseLocked;
 
 		std::unordered_map<int, KeyState> m_keys;
 
@@ -257,12 +256,16 @@ namespace eengine
 		/// @brief Reset the mouse cursor position to the centre of window.
 		void ResetMousePosition();
 
-		/// @brief Set whether or not the mouse should be locked to the centre of the window.
-		/// @param _lock Whether or the mouse should be locked to the centre of the window.
-		void SetMouseLocked(bool _lock);
+		/// @brief Set whether or not the window should grab input, not allowing the mouse to exit the window.
+		/// @param _lock Which input grab mode should be set.
+		void SetInputGrab(bool _lock);
 
-		/// @brief Get whether or not the mouse should be locked to the centre of the window.
-		/// @return Whether or not the mouse should be locked to the centre of the window.
-		bool GetMouseLocked() const;
+		/// @brief Get whether the window is set to grab input.
+		/// @return Whether or not the window will grab input.
+		bool GetInputGrab() const;
+
+		/// @brief Set whether or not we should use relative mouse delta inputs.
+		/// @param _relativeMouseMode The new relative mouse mode.
+		void SetRelativeMouseMode(bool _relativeMouseMode) const;
 	};
 }
