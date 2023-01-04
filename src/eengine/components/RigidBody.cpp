@@ -67,9 +67,18 @@ namespace eengine
 	void RigidBody::ApplyImpulse(const glm::vec3& _impulse, const glm::vec3& _relativePos) 
 	{
 		m_rigidBody->applyImpulse(btVector3(_impulse.x, _impulse.y, _impulse.z), btVector3(_relativePos.x, _relativePos.y, _relativePos.z));
+		// Activate the rigidbody to make sure it isn't sleeping
+		Activate();
 	}
 	void RigidBody::ApplyTorque(const glm::vec3& _torque) 
 	{
 		m_rigidBody->applyTorque(btVector3(_torque.x, _torque.y, _torque.z));
+		// Activate the rigidbody to make sure it isn't sleeping
+		Activate();
+	}
+
+	void RigidBody::Activate() 
+	{
+		m_rigidBody->activate();
 	}
 }

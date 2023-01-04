@@ -53,9 +53,12 @@ namespace eengine
 			auto eTransform = rb->GetParent()->GetTransform();
 			auto bTransform = rb->m_rigidBody->getWorldTransform();
 
-			// Enfornce use made changes
+			// Enforce user-made changes
 			if (eTransform->m_rotDirty || eTransform->m_posDirty) 
 			{
+				// Activate the rigidbody to make sure it isn't sleeping
+				rb->Activate();
+
 				if (eTransform->m_posDirty) 
 				{
 					auto pos = eTransform->GetPosition();

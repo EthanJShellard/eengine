@@ -22,6 +22,7 @@ namespace eengine
 		void OnBegin();
 		void OnRemove();
 
+		void Activate();
 	public:
 
 		/// @brief Create a RigidBody with a collider and set mass.
