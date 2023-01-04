@@ -4,12 +4,11 @@
 #include <list>
 
 #include <glm/glm.hpp>
+#include <SDL2/SDL.h>
 
 #include "eengine_defines.h"
 #include "NonCopyable.h"
 
-// Forward declarations
-struct SDL_Window;
 
 namespace rend
 {
@@ -45,6 +44,7 @@ namespace eengine
 		shared<PhysicsContext> m_physicsContext;
 
 		SDL_Window* m_window;
+		SDL_GLContext m_SDL_GLContext;
 		bool m_running;
 
 		static void Loop(void* _userData);

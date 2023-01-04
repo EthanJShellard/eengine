@@ -1,5 +1,11 @@
 #include "Model.h"
 
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+
 #include "sys/File.h"
 #include "sys/Ptr.h"
 
@@ -69,6 +75,149 @@ static void split_string(const sys::String& _input, char splitter,
   }
 }
 
+// More cludge
+void SplitStringWhitespace(const std::string& _input, std::vector<std::string>& _output)
+{
+    std::string curr;
+
+    _output.clear();
+
+    for (size_t i = 0; i < _input.length(); i++)
+    {
+        if (_input.at(i) == ' ' ||
+            _input.at(i) == '\r' ||
+            _input.at(i) == '\n' ||
+            _input.at(i) == '\t')
+        {
+            if (curr.length() > 0)
+            {
+                _output.push_back(curr);
+                curr = "";
+            }
+        }
+        else
+        {
+            curr += _input.at(i);
+        }
+    }
+
+    if (curr.length() > 0)
+    {
+        _output.push_back(curr);
+    }
+}
+
+// KLUUUUDGE
+struct Material 
+{
+    float m_specularHighlights;
+    glm::vec3 m_ambientColour;
+    glm::vec3 m_diffuseColour;
+    glm::vec3 m_specularColour;
+    glm::vec3 m_emissiveColour;
+    float m_opticalDensity;
+    float m_dissolve;
+    int m_illuminationModel;
+    sys::Ptr<Texture> m_texture;
+
+};
+
+// CLUDGING
+void LoadMaterials(const std::string& _path, std::string& _currentLine, std::unordered_map<std::string, std::shared_ptr<Material> >& _map)
+{
+    std::ifstream file(_path.c_str());
+    std::shared_ptr<Material> currentMaterial;
+
+    if (!file.is_open())
+    {
+        _currentLine.append(" (Failed to open file)");
+        throw std::exception();
+    }
+
+    while (!file.eof())
+    {
+        std::getline(file, _currentLine);
+        if (_currentLine.length() < 1) continue; //If line is empty go to next line
+
+        std::vector<std::string> tokens;
+        SplitStringWhitespace(_currentLine, tokens);
+        if (tokens.size() < 1) continue; //If no tokens returned go to next line
+
+        if (tokens.at(0) == "newmtl") //New material
+        {
+            currentMaterial = std::make_shared<Material>();
+            _map.insert(std::make_pair(tokens.at(1), currentMaterial));
+        }
+        else if (tokens.at(0) == "Ns") //Specular highlights define
+        {
+            currentMaterial->m_specularHighlights = atof(tokens.at(1).c_str());
+        }
+        else if (tokens.at(0) == "Ka") //Ambient colour define
+        {
+            currentMaterial->m_ambientColour = glm::vec3
+            (
+                atof(tokens.at(1).c_str()),
+                atof(tokens.at(2).c_str()),
+                atof(tokens.at(3).c_str())
+            );
+        }
+        else if (tokens.at(0) == "Kd") //Diffuse colour define
+        {
+            currentMaterial->m_diffuseColour = glm::vec3
+            (
+                atof(tokens.at(1).c_str()),
+                atof(tokens.at(2).c_str()),
+                atof(tokens.at(3).c_str())
+            );
+        }
+        else if (tokens.at(0) == "Ks") //Specular colour define
+        {
+            currentMaterial->m_specularColour = glm::vec3
+            (
+                atof(tokens.at(1).c_str()),
+                atof(tokens.at(2).c_str()),
+                atof(tokens.at(3).c_str())
+            );
+        }
+        else if (tokens.at(0) == "Ke") //Emissive colour define
+        {
+            currentMaterial->m_emissiveColour = glm::vec3
+            (
+                atof(tokens.at(1).c_str()),
+                atof(tokens.at(2).c_str()),
+                atof(tokens.at(3).c_str())
+            );
+        }
+        else if (tokens.at(0) == "Ni") //Optical density define
+        {
+            currentMaterial->m_opticalDensity = atof(tokens.at(1).c_str());
+        }
+        else if (tokens.at(0) == "d") //Dissolve define
+        {
+            currentMaterial->m_dissolve = atof(tokens.at(1).c_str());
+        }
+        else if (tokens.at(0) == "illum") //Illumination model define
+        {
+            currentMaterial->m_illuminationModel = atof(tokens.at(1).c_str());
+        }
+        else if (tokens.at(0) == "map_Kd") //Texture define - does not account for spaces in material file names!!!
+        {
+            std::string newPath = _path.substr(0, _path.find_last_of('/') + 1);
+            newPath.append(tokens.at(1));
+
+            // THIS TEXTURE WILL LEAK. CONSULT KARSTEN ABOUT WRANGLING SYS
+            currentMaterial->m_texture = new Texture(newPath.c_str());
+        }
+    }
+
+    if (!currentMaterial->m_texture) //If no texture was defined, provide default texture
+    {
+        //currentMaterial->m_texture = new Texture("assets/textures/default.png");
+    }
+
+    file.close();
+}
+
 void Model::load(const sys::String& _path)
 {
   sys::String line;
@@ -81,6 +230,9 @@ void Model::load(const sys::String& _path)
   sys::String pn("Untitled");
   sys::Ptr<Part> part;
   sys::Ptr<MaterialGroup> mg;
+
+  std::unordered_map < std::string, std::shared_ptr<Material>> materialMap;
+  bool materialsLoaded = false;
 
   for(sys::File file(_path); file.read_line(line);)
   {
@@ -96,6 +248,14 @@ void Model::load(const sys::String& _path)
         atof(tokens[3].unsafe_raw()));
 
       positions.push(p);
+    }
+    else if (tokens[0] == "mtllib") //Load material library
+    {
+        std::string objPath = _path.unsafe_raw();
+        std::string newPath = objPath.substr(0, objPath.find_last_of('/') + 1);
+        newPath.append(tokens[1].unsafe_raw());
+        LoadMaterials(newPath, std::string(line.unsafe_raw()), materialMap);
+        materialsLoaded = true;
     }
     else if(tokens[0] == "vt" && tokens.size() >= 3)
     {
@@ -157,6 +317,24 @@ void Model::load(const sys::String& _path)
         mg->mesh.add(f);
         m_faces.push(f);
       }
+    }
+    else if (tokens[0] == "usemtl") 
+    {
+        if (materialsLoaded) 
+        {
+            if (!part)
+            {
+                part = m_parts.emplace();
+                part->name = pn;
+                part->color = vec4(1, 1, 1, 1);
+                printf("%s\n", part->name.unsafe_raw());
+            }
+
+            if (!mg) mg = part->mgs.emplace();
+
+            mg->texture = materialMap.find(tokens[1].unsafe_raw())->second->m_texture;
+        }
+         
     }
     else if(tokens[0] == "g" || tokens[0] == "o")
     {

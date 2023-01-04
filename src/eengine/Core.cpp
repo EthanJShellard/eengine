@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 
-#include <SDL2/SDL.h>
 #include <rend/rend.h>
 
 #ifdef __EMSCRIPTEN__
@@ -40,7 +39,7 @@ namespace eengine
 
 	Core::~Core() 
 	{
-		SDL_GL_DeleteContext(SDL_GL_GetCurrentContext());
+		SDL_GL_DeleteContext(m_SDL_GLContext);
 		SDL_DestroyWindow(m_window);
 		SDL_Quit();
 	}
@@ -82,7 +81,8 @@ namespace eengine
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
-		if (!SDL_GL_CreateContext(rtn->m_window))
+		rtn->m_SDL_GLContext = SDL_GL_CreateContext(rtn->m_window);
+		if (!rtn->m_SDL_GLContext)
 		{
 			throw std::exception();
 		}

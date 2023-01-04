@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "rendmath.h"
 
+#include <memory>
+
 #include "sys/Ptr.h"
 #include "sys/List.h"
 #include "sys/String.h"

@@ -87,6 +87,15 @@ void ModelRenderer::render()
         model = model * m_animation->model(*pit, 0);
       }
 
+      // TEXTURE CLUDGE
+      auto matItr = pit->mgs.begin();
+      if (matItr != pit->mgs.end() && matItr->texture)
+      {
+          glActiveTexture(GL_TEXTURE0);
+          glBindTexture(GL_TEXTURE_2D, matItr->texture->id());
+          glUniform1i(m_shader->texture0Loc(), 0);
+      }
+
       glUniformMatrix4fv(m_shader->modelLoc(), 1, GL_FALSE,
         glm::value_ptr(model));
 
