@@ -53,13 +53,35 @@ namespace eengine
 			auto eTransform = rb->GetParent()->GetTransform();
 			auto bTransform = rb->m_rigidBody->getWorldTransform();
 
+			// Enfornce use made changes
+			if (eTransform->m_rotDirty || eTransform->m_posDirty) 
+			{
+				if (eTransform->m_posDirty) 
+				{
+					auto pos = eTransform->GetPosition();
+					bTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
+				}
+				
+				if (eTransform->m_rotDirty) 
+				{
+					auto rot = eTransform->GetQuaternionRotation();
+					bTransform.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
+				}
+			
+				rb->m_rigidBody->setWorldTransform(bTransform);
+				eTransform->m_rotDirty = eTransform->m_posDirty = false;
+				continue;
+			}
+
 			// Position
 			btVector3 newPos = bTransform.getOrigin();
 			eTransform->SetPosition(newPos.x(), newPos.y(), newPos.z());
+			eTransform->m_posDirty = false; // This should only be true with other uses of SetPosition!
 
 			// Rotation
 			btQuaternion newRot = bTransform.getRotation();
 			eTransform->SetRotation(glm::quat(newRot.w(), newRot.x(), newRot.y(), newRot.z()));
+			eTransform->m_rotDirty = false; // This should only be true with other uses of SetRotation!
 		}
 	}
 

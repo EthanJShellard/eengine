@@ -11,6 +11,8 @@ namespace eengine
 	/// @brief Class which handles position, rotation and scale.
 	class Transform : public Component
 	{
+		friend class PhysicsContext;
+
 	private:
 		glm::vec3 m_position;
 		glm::quat m_orientation;
@@ -21,6 +23,8 @@ namespace eengine
 		glm::mat4 m_translationMatrix;
 
 		bool m_dirty;
+		bool m_posDirty; // Solely for physics context to read and modify
+		bool m_rotDirty; // Solely for physics context to read and modify
 	public:
 		Transform();
 

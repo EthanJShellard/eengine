@@ -39,6 +39,11 @@ void Suicider::OnTick(float _deltaTime)
 		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyTorque(glm::vec3(0,1,0));
 	}
 
+	if (input->GetKeyDown(eengine::KeyCode::j)) 
+	{
+		GetParent()->GetTransform()->Translate(glm::vec3(0,1.0,0));
+	}
+
 	auto delta = input->GetMouseDelta();
 
 	float sensitivity = GetCore()->GetInput()->GetMouseSensitivity();
