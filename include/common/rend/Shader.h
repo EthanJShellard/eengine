@@ -45,4 +45,4 @@ private:
 
 }
 
-#endif REND_SHADER
+#endif // REND_SHADER

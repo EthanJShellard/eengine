@@ -28,6 +28,8 @@ namespace eengine
 
 		m_updateCount++;
 
+		
+
 		// We would rather overflow to 1 than 0. Maybe paranoid seeing as it would take ages to overflow this with a normal framerate.
 		if (!m_updateCount) 
 		{

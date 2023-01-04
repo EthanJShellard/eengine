@@ -32,4 +32,4 @@ namespace eengine
 	};
 }
 
-#endif EENGINE_ENVIRONMENT
+#endif // EENGINE_ENVIRONMENT

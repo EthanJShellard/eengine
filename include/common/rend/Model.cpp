@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <unordered_map>
+
 
 #include "sys/File.h"
 #include "sys/Ptr.h"
@@ -107,23 +107,8 @@ void SplitStringWhitespace(const std::string& _input, std::vector<std::string>& 
     }
 }
 
-// KLUUUUDGE
-struct Material 
-{
-    float m_specularHighlights;
-    glm::vec3 m_ambientColour;
-    glm::vec3 m_diffuseColour;
-    glm::vec3 m_specularColour;
-    glm::vec3 m_emissiveColour;
-    float m_opticalDensity;
-    float m_dissolve;
-    int m_illuminationModel;
-    sys::Ptr<Texture> m_texture;
-
-};
-
 // CLUDGING
-void LoadMaterials(const std::string& _path, std::string& _currentLine, std::unordered_map<std::string, std::shared_ptr<Material> >& _map)
+void Model::LoadMaterials(const std::string _path, std::string _currentLine, std::unordered_map<std::string, std::shared_ptr<Material> >& _map)
 {
     std::ifstream file(_path.c_str());
     std::shared_ptr<Material> currentMaterial;

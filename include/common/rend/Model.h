@@ -6,6 +6,7 @@
 #include "rendmath.h"
 
 #include <memory>
+#include <unordered_map>
 
 #include "sys/Ptr.h"
 #include "sys/List.h"
@@ -17,6 +18,21 @@ struct Texture;
 
 namespace rend
 {
+
+// KLUUUUDGE
+struct Material
+{
+    float m_specularHighlights;
+    glm::vec3 m_ambientColour;
+    glm::vec3 m_diffuseColour;
+    glm::vec3 m_specularColour;
+    glm::vec3 m_emissiveColour;
+    float m_opticalDensity;
+    float m_dissolve;
+    int m_illuminationModel;
+    sys::Ptr<Texture> m_texture;
+
+};
 
 struct MaterialGroup : sys::EnablePtr
 {
@@ -50,6 +66,8 @@ private:
 
   void load(const sys::String& _path);
   void center_parts();
+
+  void LoadMaterials(const std::string _path, std::string _currentLine, std::unordered_map<std::string, std::shared_ptr<Material> >& _map);
 };
 
 }
