@@ -11,7 +11,7 @@ namespace eengine
 		m_mouse2Pressed(false),
 		m_mouse3Pressed(false),
 		m_quit(false),
-		m_mouseSensitivity(12.0f),
+		m_mouseSensitivity(0.25f),
 		m_mouseDelta(0),
 		m_mousePos(0),
 		m_mouseScroll(0),

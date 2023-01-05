@@ -1,21 +1,21 @@
-#include <SDL2/SDL.h>
-
 #include "Environment.h"
+
+#include <chrono>
 
 namespace eengine 
 {
 	Environment::Environment() 
 	{
-		m_lastTime = SDL_GetTicks();
+		m_lastTime = std::chrono::high_resolution_clock::now();
 		m_deltaTime = 0;
 	}
 
 	void Environment::OnFrameStart() 
 	{
-		uint32_t time_now = SDL_GetTicks();
-		uint32_t diff = time_now - m_lastTime;
-		m_deltaTime = diff / 1000.0f;
-		m_lastTime = time_now;
+		auto timeNow = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> secs = timeNow - m_lastTime;
+		m_lastTime = timeNow;
+		m_deltaTime = secs.count();
 	}
 
 	float Environment::GetDeltaTime() 

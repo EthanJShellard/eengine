@@ -15,7 +15,7 @@ namespace eengine
 		friend class Core;
 
 	private:
-		uint32_t m_lastTime;
+		std::chrono::steady_clock::time_point m_lastTime;
 		float m_deltaTime;
 		std::string m_projectWorkingDirectory;
 

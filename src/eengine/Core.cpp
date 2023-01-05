@@ -169,10 +169,6 @@ namespace eengine
 		{
 			self->Stop();
 		}
-
-		//std::string str = "deltaTime: ";
-		//str.append( std::to_string(m_environment->GetDeltaTime()));
-		//Debug::Log(str);
 	}
 
 	void Core::Start() 
