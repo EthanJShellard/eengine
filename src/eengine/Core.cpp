@@ -23,18 +23,16 @@
 
 namespace eengine
 {
-	Core::Core() 
+	Core::Core() :
+		m_running(false),
+		m_window(nullptr)
 	{
-		m_running = false;
-		m_window = NULL;
-
 		m_input = std::make_shared<Input>();
 		m_mainCamera = std::make_shared<Camera>();
 		m_renderContext = shared<RenderContext>(new RenderContext());
 		m_audioContext = shared<AudioContext>(new AudioContext());
 		m_audioContext->Initialise();
 		m_physicsContext = shared<PhysicsContext>(new PhysicsContext());
-		m_physicsContext->m_maxSubSteps = 5;
 	}
 
 	Core::~Core() 
@@ -107,12 +105,14 @@ namespace eengine
 		self->m_input->Update();
 		self->m_environment->OnFrameStart();
 
+		float deltaTime = self->m_environment->GetDeltaTime();
+
 		// Update each entity
 		for (shared<Entity> entity : self->m_entities)
 		{
 			try
 			{
-				entity->Tick(self->m_environment->GetDeltaTime());
+				entity->Tick(deltaTime);
 			}
 			catch (std::runtime_error e)
 			{
@@ -131,8 +131,32 @@ namespace eengine
 			}
 		}
 
-		// Update physics with any changes from entities components included
-		self->m_physicsContext->UpdateFixed(self->m_environment->GetDeltaTime());
+		// Update physics with any changes from ticks included
+		self->m_physicsContext->UpdateFixed(deltaTime);
+
+		// Perform late update with each entity
+		for (shared<Entity> entity : self->m_entities)
+		{
+			try
+			{
+				entity->LateTick(self->m_environment->GetDeltaTime());
+			}
+			catch (std::runtime_error e)
+			{
+				Debug::Log(e.what());
+				entity->Destroy();
+			}
+			catch (std::exception e)
+			{
+				Debug::Log(e.what());
+				entity->Destroy();
+			}
+			catch (...)
+			{
+				Debug::Log("Caught unknown exception!");
+				entity->Destroy();
+			}
+		}
 
 		// Update main renderer view matrix using maincamera
 		self->m_renderContext->SetMainViewMatrix(glm::inverse(self->m_mainCamera->m_transform->GetModelMatrix()));

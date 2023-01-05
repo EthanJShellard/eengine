@@ -7,7 +7,7 @@ public:
 	Suicider(int _target);
 
 private:
-	void OnTick(float deltaTime) override;
+	void OnTick(float _deltaTime) override;
 
 	int m_count;
 	int m_target;

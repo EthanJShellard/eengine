@@ -7,7 +7,7 @@ namespace eengine
 {
 	PhysicsContext::PhysicsContext() :
 		m_fixedTimeStep(1.0f/60.0f),
-		m_maxSubSteps(0)
+		m_maxSubSteps(5)
 	{
 		m_collisionConfig = std::make_shared<btDefaultCollisionConfiguration>();
 		m_collisionDispatcher = std::make_shared<btCollisionDispatcher>(m_collisionConfig.get());
@@ -64,15 +64,26 @@ namespace eengine
 					auto pos = eTransform->GetPosition();
 					bTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
 				}
+				else 
+				{
+					btVector3 newPos = bTransform.getOrigin();
+					eTransform->SetPosition(newPos.x(), newPos.y(), newPos.z());
+				}
 				
 				if (eTransform->m_rotDirty) 
 				{
 					auto rot = eTransform->GetQuaternionRotation();
 					bTransform.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
 				}
+				else 
+				{
+					btQuaternion newRot = bTransform.getRotation();
+					eTransform->SetRotation(glm::quat(newRot.w(), newRot.x(), newRot.y(), newRot.z()));
+				}
 			
 				rb->m_rigidBody->setWorldTransform(bTransform);
 				eTransform->m_rotDirty = eTransform->m_posDirty = false;
+
 				continue;
 			}
 

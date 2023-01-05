@@ -29,47 +29,13 @@ void Suicider::OnTick(float _deltaTime)
 
 	auto input = GetCore()->GetInput();
 
-	if (input->GetKeyDown(eengine::KeyCode::space)) 
+	if (GetInput()->GetKey(eengine::KeyCode::right))
 	{
- 		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyImpulse(glm::vec3(0,5,0), glm::vec3(0,-1,0));
-	}
-
-	if (input->GetKey(eengine::KeyCode::right)) 
-	{
-		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyTorque(glm::vec3(0,1,0));
+		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyTorque(glm::vec3(0, 1, 0));
 	}
 
 	if (input->GetKeyDown(eengine::KeyCode::j)) 
 	{
 		GetParent()->GetTransform()->Translate(glm::vec3(0,1.0,0));
-	}
-
-	auto delta = input->GetMouseDelta();
-
-	float sensitivity = input->GetMouseSensitivity();
-	auto transform = GetCore()->GetMainCamera()->m_transform;
-
-	transform->Rotate(-sensitivity * delta.x, glm::vec3(0,1,0));
-	transform->Rotate(-sensitivity * delta.y, transform->Right());
-
-	if (input->GetKey(eengine::KeyCode::w)) 
-	{
-		transform->Translate(5 * _deltaTime * -transform->Forward());
-	}
-	if (input->GetKey(eengine::KeyCode::s))
-	{
-		transform->Translate(5 * _deltaTime * transform->Forward());
-	}
-	if (input->GetKey(eengine::KeyCode::a))
-	{
-		transform->Translate(5 * _deltaTime * -transform->Right());
-	}
-	if (input->GetKey(eengine::KeyCode::d))
-	{
-		transform->Translate(5 * _deltaTime * transform->Right());
-	}
-	if (input->GetKey(eengine::KeyCode::escape)) 
-	{
-		GetCore()->Stop();
 	}
 }

@@ -314,6 +314,8 @@ add_executable(game
     src/game/components/Suicider.cpp
     src/game/components/ScreamingMover.h
     src/game/components/ScreamingMover.cpp
+    src/game/components/PlayerController.h
+    src/game/components/PlayerController.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF

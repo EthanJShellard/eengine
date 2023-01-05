@@ -2,6 +2,7 @@
 #define EENGINE_DEBUG
 
 #include <string>
+#include <glm/glm.hpp>
 
 namespace eengine 
 {
@@ -15,7 +16,12 @@ namespace eengine
 
 		/// @brief Print a string to the debug console.
 		/// @param str The string to print.
-		static void Log(const std::string& str);
+		static void Log(const std::string& _str);
+
+		/// @brief Print a vector to the debug console.
+		/// @param _vectorName The name of the vector.
+		/// @param _vector The vector.
+		static void Log(const std::string& _vectorName, const glm::vec3& _vector);
 	};
 }
 

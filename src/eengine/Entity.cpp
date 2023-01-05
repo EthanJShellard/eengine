@@ -34,6 +34,15 @@ namespace eengine
 		}
 	}
 
+	void Entity::LateTick(float _deltaTime) 
+	{
+		// Update components
+		for (shared<Component> c : m_components)
+		{
+			c->OnLateTick(_deltaTime);
+		}
+	}
+
 	void Entity::Display(shared<RenderContext> _renderContext)
 	{
 		for (shared<Component> c : m_components)

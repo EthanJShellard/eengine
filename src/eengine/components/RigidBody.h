@@ -2,6 +2,7 @@
 #include "../eengine_defines.h"
 
 #include <pellet/btBulletDynamicsCommon.h>
+#include <glm/glm.hpp>
 
 namespace eengine 
 {
@@ -43,6 +44,11 @@ namespace eengine
 		/// @brief Set whether the z axis position of this RigidBody should be locked.
 		/// @param _lock Should the z axis position be locked.
 		void SetZPosLocked(bool _lock) { m_posLock.setZ(!_lock); m_rigidBody->setLinearFactor(m_posLock); }
+		/// @brief Set which axes this RigidBody should have its position locked in.
+		/// @param _lockX Lock the X axis?
+		/// @param _lockY Lock the Y axis?
+		/// @param _lockZ Lock the Z axis?
+		void SetPositionAxesLocked(bool _lockX, bool _lockY, bool _lockZ) { m_posLock.setValue(!_lockX, !_lockY, !_lockZ); m_rigidBody->setLinearFactor(m_posLock); }
 
 		/// @brief Set whether the x axis rotation of this RigidBody should be locked.
 		/// @param _lock Should the x axis rotation be locked.
@@ -53,6 +59,11 @@ namespace eengine
 		/// @brief Set whether the z axis rotation of this RigidBody should be locked.
 		/// @param _lock Should the z axis rotation be locked.
 		void SetZRotLocked(bool _lock) { m_rotLock.setZ(!_lock); m_rigidBody->setAngularFactor(m_posLock); }
+		/// @brief Set which axes this RigidBody should have its rotation locked in.
+		/// @param _lockX Lock the X axis?
+		/// @param _lockY Lock the Y axis?
+		/// @param _lockZ Lock the Z axis?
+		void SetRotationAxesLocked(bool _lockX, bool _lockY, bool _lockZ) { m_rotLock.setValue(!_lockX, !_lockY, !_lockZ); m_rigidBody->setAngularFactor(m_rotLock); }
 
 		/// @brief Apply an immediate impulse to this RigidBody.
 		/// @param _impulse The impulse vector.
@@ -62,5 +73,17 @@ namespace eengine
 		/// @brief Apply an immediate torque to this RigidBody.
 		/// @param _torque The torque to be applied in each axis.
 		void ApplyTorque(const glm::vec3& _torque);
+
+		/// @brief Set the linear velocity of this RigidBody.
+		/// @param _velocity The new linear velocity of this RigidBody.
+		void SetVelocity(const glm::vec3& _velocity);
+
+		/// @brief Get the linear velocity of this RigidBody.
+		/// @return The linear velocity of this RigidBody.
+		glm::vec3 GetVelocity() const;
+
+		/// @brief Set the coefficient of friction of this RigidBody.
+		/// @param friction The new coefficient of friction.
+		void SetFriction(float friction);
 	};
 }

@@ -12,6 +12,7 @@
 #include "SphereCollider.h"
 #include "CylinderCollider.h"
 #include "Environment.h"
+#include "Debug.h"
 #include "components/Transform.h"
 #include "components/QuadRenderer.h"
 #include "components/ModelRenderer.h"

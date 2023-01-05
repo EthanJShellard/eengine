@@ -77,6 +77,24 @@ namespace eengine
 		Activate();
 	}
 
+	void RigidBody::SetVelocity(const glm::vec3& _velocity) 
+	{
+		m_rigidBody->setLinearVelocity(btVector3(_velocity.x, _velocity.y, _velocity.z));
+		// Activate the rigidbody to make sure it isn't sleeping
+		Activate();
+	}
+
+	glm::vec3 RigidBody::GetVelocity() const 
+	{
+		auto vel = m_rigidBody->getLinearVelocity();
+		return glm::vec3(vel.x(), vel.y(), vel.z());
+	}
+
+	void RigidBody::SetFriction(float _friction) 
+	{
+		m_rigidBody->setFriction(_friction);
+	}
+
 	void RigidBody::Activate() 
 	{
 		m_rigidBody->activate();

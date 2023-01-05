@@ -26,6 +26,7 @@ namespace eengine
 		Entity();
 
 		void Tick(float _deltaTime);
+		void LateTick(float _deltaTime);
 		void Display(shared<RenderContext> _renderContext);
 
 		std::list<shared<Component>> m_components;

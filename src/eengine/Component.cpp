@@ -33,6 +33,11 @@ namespace eengine
 		// Stub
 	}
 
+	void Component::OnLateTick(float _deltaTime) 
+	{
+		// Stub
+	}
+
 	void Component::OnDisplay(shared<RenderContext> _renderContext)
 	{
 		// Stub
