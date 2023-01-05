@@ -28,8 +28,6 @@ namespace eengine
 
 		m_updateCount++;
 
-		
-
 		// We would rather overflow to 1 than 0. Maybe paranoid seeing as it would take ages to overflow this with a normal framerate.
 		if (!m_updateCount) 
 		{
@@ -40,6 +38,26 @@ namespace eengine
 				k.second.lastUpdateReleased = 0;
 			}
 		}
+
+		// Update mouse position data via GetMouseState to circumvent jitter
+		if (SDL_GetRelativeMouseMode()) 
+		{
+			int x(0), y(0);
+			SDL_GetRelativeMouseState(&x, &y);
+			m_mouseDelta = glm::vec2(x, y);
+
+			SDL_GetMouseState(&x, &y);
+			m_mousePos = glm::vec2(x, y);
+		}
+		else 
+		{
+			int x(0), y(0);
+			SDL_GetMouseState(&x, &y);
+			glm::vec2 newPos = glm::vec2(x, y);
+			m_mouseDelta = newPos - m_mousePos;
+			m_mousePos = newPos;
+		}
+
 
 		while (SDL_PollEvent(&event))
 		{
@@ -67,15 +85,6 @@ namespace eengine
 				auto entry = m_keys.find(event.key.keysym.sym);
 				entry->second.down = false;
 				entry->second.lastUpdateReleased = m_updateCount;
-			}
-			else if (event.type == SDL_MOUSEMOTION)
-			{
-				// use += delta to avoid issues if mouse motion comes in more than once
-				bool relativeMode = SDL_GetRelativeMouseMode();
-				m_mouseDelta.x += relativeMode ? event.motion.xrel : event.motion.x - m_mousePos.x;
-				m_mouseDelta.y += relativeMode ? event.motion.yrel : event.motion.y - m_mousePos.y;
-				m_mousePos.x = event.motion.x;
-				m_mousePos.y = event.motion.y;
 			}
 			else if (event.type == SDL_MOUSEBUTTONDOWN)
 			{
