@@ -11,7 +11,6 @@ namespace eengine
 	/// @brief Represents the location and properties of an audio listener. You should only have one of these active at a time.
 	class AudioListener : public Component
 	{
-		shared<Transform> m_parentTransform;
 		shared<Transform> m_camTransform;
 
 		void OnTick(float _deltaTime);
