@@ -189,9 +189,7 @@ namespace eengine
 		glm::vec2 m_mousePos;
 		glm::vec2 m_mouseDelta;
 		glm::vec2 m_mouseScroll;
-		bool m_mouse1Pressed;
-		bool m_mouse2Pressed;
-		bool m_mouse3Pressed;
+		KeyState m_mouse1State, m_mouse2State, m_mouse3State;
 		bool m_quit;
 		float m_mouseSensitivity;
 		uint64_t m_updateCount;
@@ -243,15 +241,39 @@ namespace eengine
 
 		/// @brief Check whether mouse 1 (usually the left mouse button) is currently pressed.
 		/// @return Whether or not mouse 1 is pressed.
-		bool Mouse1Down() const;
+		bool GetMouse1() const;
+
+		/// @brief Check whether mouse 1 (usually the left mouse button) was pressed this frame.
+		/// @return Whether or not mouse 1 was pressed this frame.
+		bool GetMouse1Down() const;
+		
+		/// @brief Check whether mouse 1 (usually the left mouse button) was released this frame.
+		/// @return Whether or not mouse 1 was released this frame.
+		bool GetMouse1Up() const;
 
 		/// @brief Check whether mouse 2 (usually the right mouse button) is currently pressed.
 		/// @return Whether or not mouse 2 is pressed.
-		bool Mouse2Down() const;
+		bool GetMouse2() const;
+
+		/// @brief Check whether mouse 2 (usually the right mouse button) was pressed this frame.
+		/// @return Whether or not mouse 2 was pressed this frame.
+		bool GetMouse2Down() const;
+
+		/// @brief Check whether mouse 2 (usually the right mouse button) was released this frame.
+		/// @return Whether or not mouse 2 was released this frame.
+		bool GetMouse2Up() const;
 
 		/// @brief Check whether mouse 3 (usually the middle mouse button) is currently pressed.
 		/// @return Whether or not mouse 3 is pressed.
-		bool Mouse3Down() const;
+		bool GetMouse3() const;
+
+		/// @brief Check whether mouse 3 (usually the middle mouse button) was pressed this frame.
+		/// @return Whether or not mouse 3 was pressed this frame.
+		bool GetMouse3Down() const;
+
+		/// @brief Check whether mouse 3 (usually the middle mouse button) was released this frame.
+		/// @return Whether or not mouse 3 was released this frame.
+		bool GetMouse3Up() const;
 
 		/// @brief Reset the mouse cursor position to the centre of window.
 		void ResetMousePosition();

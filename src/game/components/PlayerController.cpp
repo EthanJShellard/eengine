@@ -57,7 +57,7 @@ void PlayerController::OnTick(float _deltaTime)
 		newVel += (m_playerSpeed * m_transform->Right());
 	}
 
-	if (input->Mouse1Down()) 
+	if (input->GetMouse1Down()) 
 	{
 		auto e = GetCore()->AddEntity();
 		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.125f, 0.125f, 0.125f), 10.0f);
