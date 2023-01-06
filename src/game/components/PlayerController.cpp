@@ -8,6 +8,7 @@ void PlayerController::OnBegin()
 	m_transform = GetParent()->GetTransform();
 	m_playerSpeed = 4.0f;
 	m_camOffset = glm::vec3(0.0f, 0.4f, 0.0f);
+	m_viewAngleLimit = 70.0f;
 }
 
 void PlayerController::OnTick(float _deltaTime) 
@@ -18,7 +19,23 @@ void PlayerController::OnTick(float _deltaTime)
 	float sensitivity = input->GetMouseSensitivity();
 
 	m_transform->Rotate(-sensitivity * delta.x, glm::vec3(0, 1, 0));
-	//m_transform->Rotate(-sensitivity * delta.y, m_transform->Right());
+	
+	// Camera yaw
+	auto camTransform = GetCore()->GetMainCamera()->m_transform;
+	camTransform->Rotate(-sensitivity * delta.x, glm::vec3(0, 1, 0));
+	// Clamped camera pitch
+	float viewDot = glm::dot(camTransform->Forward(), m_transform->Forward());
+	float angleBetween = glm::degrees(std::acos(viewDot));
+	bool upperHalf = glm::dot(-camTransform->Forward(), glm::vec3(0, 1, 0)) > 0;
+	if ( angleBetween + (upperHalf ? -(sensitivity * delta.y) : sensitivity * delta.y) > m_viewAngleLimit)
+	{
+		float vertRotation = upperHalf ? (m_viewAngleLimit - angleBetween) : -(m_viewAngleLimit - angleBetween);
+		camTransform->Rotate(vertRotation, camTransform->Right());		
+	}
+	else 
+	{
+		camTransform->Rotate(-(sensitivity * delta.y), camTransform->Right());
+	}
 
 	glm::vec3 newVel = m_rigidBody->GetVelocity();
 	float verticalVel = newVel.y;
@@ -46,9 +63,9 @@ void PlayerController::OnTick(float _deltaTime)
 		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.125f, 0.125f, 0.125f), 10.0f);
 		e->AddComponent<eengine::ModelRenderer>("/data/models/crate/UnitCube.obj");
 		e->GetTransform()->SetScale(0.125f,0.125f,0.125f);
-		e->GetTransform()->SetPosition(m_transform->GetPosition() - m_transform->Forward() * 2.0f);
+		e->GetTransform()->SetPosition(camTransform->GetPosition() - camTransform->Forward() * 1.0f);
 
-		rb->ApplyImpulse(100.0f * -m_transform->Forward(), e->GetTransform()->GetPosition() - m_transform->GetPosition());
+		rb->ApplyImpulse(100.0f * -camTransform->Forward(), e->GetTransform()->GetPosition() - camTransform->GetPosition());
 	}
 
 	if (glm::length(newVel) != 0) 
@@ -74,7 +91,7 @@ void PlayerController::OnLateTick(float _deltaTime)
 	// Pin camera to this entity
 	auto mainCamTransform = GetCore()->GetMainCamera()->m_transform;
 	mainCamTransform->SetPosition(m_transform->GetPosition() + m_camOffset);
-	mainCamTransform->SetRotation(m_transform->GetQuaternionRotation());
+	//mainCamTransform->SetRotation(m_transform->GetQuaternionRotation());
 
 	//eengine::Debug::Log("Forward", m_transform->Forward());
 }

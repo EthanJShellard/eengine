@@ -17,6 +17,7 @@ private:
 
 	float m_playerSpeed;
 	glm::vec3 m_camOffset;
+	float m_viewAngleLimit;
 	shared<eengine::RigidBody> m_rigidBody;
 	shared<eengine::Transform> m_transform;
 };
