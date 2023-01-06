@@ -40,6 +40,17 @@ void PlayerController::OnTick(float _deltaTime)
 		newVel += (m_playerSpeed * m_transform->Right());
 	}
 
+	if (input->Mouse1Down()) 
+	{
+		auto e = GetCore()->AddEntity();
+		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.125f, 0.125f, 0.125f), 10.0f);
+		e->AddComponent<eengine::ModelRenderer>("/data/models/crate/UnitCube.obj");
+		e->GetTransform()->SetScale(0.125f,0.125f,0.125f);
+		e->GetTransform()->SetPosition(m_transform->GetPosition() - m_transform->Forward() * 2.0f);
+
+		rb->ApplyImpulse(100.0f * -m_transform->Forward(), e->GetTransform()->GetPosition() - m_transform->GetPosition());
+	}
+
 	if (glm::length(newVel) != 0) 
 	{
 		newVel = glm::length(newVel) > m_playerSpeed ? glm::normalize(newVel) * m_playerSpeed : newVel;
