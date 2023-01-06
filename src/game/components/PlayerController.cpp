@@ -64,6 +64,9 @@ void PlayerController::OnTick(float _deltaTime)
 		e->AddComponent<eengine::ModelRenderer>("/data/models/crate/UnitCube.obj");
 		e->GetTransform()->SetScale(0.125f,0.125f,0.125f);
 		e->GetTransform()->SetPosition(camTransform->GetPosition() - camTransform->Forward() * 1.0f);
+		auto as = e->AddComponent<eengine::AudioSource>();
+		as->PlayOneShot(GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/dixie_horn.ogg"));
+		as->SetVolume(0.1f);
 
 		rb->ApplyImpulse(100.0f * -camTransform->Forward(), e->GetTransform()->GetPosition() - camTransform->GetPosition());
 	}

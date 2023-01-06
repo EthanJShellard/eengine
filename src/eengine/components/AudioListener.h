@@ -12,9 +12,12 @@ namespace eengine
 	class AudioListener : public Component
 	{
 		shared<Transform> m_parentTransform;
+		shared<Transform> m_camTransform;
 
-		void OnInit(float _deltaTime);
-		void OnTick();
+		void OnTick(float _deltaTime);
+
+	public:
+		void OnInit();
 	};
 }
 

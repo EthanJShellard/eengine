@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
         playerRB->SetRotationAxesLocked(true, true, true);
         playerRB->SetFriction(3.0f);
         player->AddComponent<PlayerController>();
+        player->AddComponent<eengine::AudioListener>();
 
         core->GetInput()->SetRelativeMouseMode(true);
         core->GetInput()->SetInputGrab(true);
