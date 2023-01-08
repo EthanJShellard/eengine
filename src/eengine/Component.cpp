@@ -48,6 +48,16 @@ namespace eengine
 		// Stub
 	}
 
+	void Component::OnTriggerEnter(shared<RigidBody> _other) 
+	{
+		// Stub
+	}
+
+	void Component::OnTriggerExit(shared<RigidBody> _other) 
+	{
+		// Stub
+	}
+
 	bool Component::NeedsUniqueness() const
 	{
 		return false;

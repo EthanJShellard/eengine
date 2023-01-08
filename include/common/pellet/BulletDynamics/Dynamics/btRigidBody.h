@@ -21,6 +21,8 @@ subject to the following restrictions:
 #include "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 
+#include <memory>
+
 class btCollisionShape;
 class btMotionState;
 class btTypedConstraint;
@@ -49,6 +51,12 @@ enum	btRigidBodyFlags
 	BT_ENABLE_GYROSCOPIC_FORCE_IMPLICIT_BODY=8,
 	BT_ENABLE_GYROPSCOPIC_FORCE = BT_ENABLE_GYROSCOPIC_FORCE_IMPLICIT_BODY,
 };
+
+// Eengine hack
+namespace eengine 
+{
+	class RigidBody;
+}
 
 
 ///The btRigidBody is the main class for rigid body objects. It is derived from btCollisionObject, so it keeps a pointer to a btCollisionShape.
@@ -109,7 +117,8 @@ protected:
 
 
 public:
-
+	// Eengine hack
+	std::weak_ptr<eengine::RigidBody> m_eengineParent;
 
 	///The btRigidBodyConstructionInfo structure provides information to create a rigid body. Setting mass to zero creates a fixed (non-dynamic) rigid body.
 	///For dynamic objects, you can use the collision shape to approximate the local inertia tensor, otherwise use the zero vector (default argument)
@@ -186,7 +195,7 @@ public:
         { 
                 //No constraints should point to this rigidbody
 		//Remove constraints from the dynamics world before you delete the related rigidbodies. 
-                btAssert(m_constraintRefs.size()==0); 
+                //btAssert(m_constraintRefs.size()==0); 
         }
 
 protected:

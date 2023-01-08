@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <sstream>
 
+#include "components/RigidBody.h"
 #include "Entity.h"
 #include "Component.h"
 #include "Debug.h"
@@ -48,6 +49,22 @@ namespace eengine
 		for (shared<Component> c : m_components)
 		{
 			c->OnDisplay(_renderContext);
+		}
+	}
+
+	void Entity::OnTriggerEnter(shared<RigidBody> _other) 
+	{
+		for (shared<Component> c : m_components) 
+		{
+			c->OnTriggerEnter(_other);
+		}
+	}
+
+	void Entity::OnTriggerExit(shared<RigidBody> _other) 
+	{
+		for (shared<Component> c : m_components)
+		{
+			c->OnTriggerExit(_other);
 		}
 	}
 

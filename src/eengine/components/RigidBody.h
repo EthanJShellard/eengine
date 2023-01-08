@@ -17,6 +17,7 @@ namespace eengine
 		shared<btRigidBody> m_rigidBody;
 		weak<RigidBody> m_self;
 		bool m_removed;
+		bool m_isTrigger;
 		btVector3 m_posLock;
 		btVector3 m_rotLock;
 
@@ -85,5 +86,7 @@ namespace eengine
 		/// @brief Set the coefficient of friction of this RigidBody.
 		/// @param friction The new coefficient of friction.
 		void SetFriction(float friction);
+
+		void SetIsTrigger(bool _isTrigger);
 	};
 }

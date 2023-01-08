@@ -444,5 +444,39 @@ void Model::color(vec4 _color)
   }
 }
 
+void Model::SetTexture(size_t _partIndex, size_t _materialGroupIndex, Texture* texture) 
+{
+    auto itr = partsBegin();
+    size_t count = 0;
+
+    while (itr != m_parts.end()) 
+    {
+        if (count == _partIndex) 
+        {
+            auto mgItr = itr->mgs.begin();
+            size_t mgCount = 0;
+            while (mgItr != itr->mgs.end()) 
+            {
+                if (mgCount == _materialGroupIndex) 
+                {
+                    mgItr->texture = texture;
+                    return;
+                }
+                else 
+                {
+                    ++mgCount;
+                    ++mgItr;
+                }
+            }
+        }
+        else 
+        {
+            ++count;
+            ++itr;
+        }
+    }
+
+}
+
 }
 

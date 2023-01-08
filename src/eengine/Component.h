@@ -12,6 +12,7 @@ namespace eengine
 	class Input;
 	class Transform;
 	class RenderContext;
+	class RigidBody;
 
 	/// @brief The Component super-class. Inherit from this to add behavior to eengine Entity.
 	class Component : public NonCopyable
@@ -35,6 +36,14 @@ namespace eengine
 
 		/// @brief Called Just before this Component is to be removed from its parent and then likely deallocated.
 		virtual void OnRemove();
+
+		/// @brief Called when this Component's parent's collider is entered by another collider, so long as its RigidBody is set as a trigger.
+		/// @param _other The RigidBody which entered this parent's collider.
+		virtual void OnTriggerEnter(shared<RigidBody> _other);
+
+		/// @brief Called when this Component's parent's collider is exited by another collider, so long as its RigidBody is set as a trigger.
+		/// @param _other The RigidBody which exited the parent's collider
+		virtual void OnTriggerExit(shared<RigidBody> _other);
 
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;

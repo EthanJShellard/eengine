@@ -28,7 +28,8 @@ namespace eengine
 
 	RigidBody::RigidBody(shared<Collider> _collider, btScalar _mass) :
 		m_collider(_collider),
-		m_posLock(1.0f,1.0f,1.0f)
+		m_posLock(1.0f, 1.0f, 1.0f),
+		m_isTrigger(false)
 	{
 		btVector3 localInertia(0, 0, 0);
 
@@ -98,5 +99,19 @@ namespace eengine
 	void RigidBody::Activate() 
 	{
 		m_rigidBody->activate();
+	}
+
+	void RigidBody::SetIsTrigger(bool _isTrigger) 
+	{
+		if (_isTrigger && !(m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE)) 
+		{
+			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() | btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
+		}
+		else if (!_isTrigger && (m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE))
+		{
+			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() ^ btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
+		}
+		
+		m_isTrigger = _isTrigger;
 	}
 }

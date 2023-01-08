@@ -68,6 +68,7 @@ private:
   void center_parts();
 
   void LoadMaterials(const std::string _path, std::string _currentLine, std::unordered_map<std::string, std::shared_ptr<Material> >& _map);
+  void SetTexture(size_t _partIndex, size_t _materialGroupIndex, Texture* texture);
 };
 
 }

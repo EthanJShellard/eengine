@@ -17,17 +17,22 @@ namespace eengine
 	// Engine forward declarations
 	class Component;
 	class RenderContext;
+	class RigidBody;
+	class PhysicsContext;
 
 	/// @brief A game object class which contains Components. All objects in eengine consist of an Entity with Component children.
 	class Entity : private NonCopyable
 	{
 		friend class Core;
+		friend class PhysicsContext;
 	private:
 		Entity();
 
 		void Tick(float _deltaTime);
 		void LateTick(float _deltaTime);
 		void Display(shared<RenderContext> _renderContext);
+		void OnTriggerEnter(shared<RigidBody> _other);
+		void OnTriggerExit(shared<RigidBody> _other);
 
 		std::list<shared<Component>> m_components;
 		std::list<shared<Component>> m_newComponents;

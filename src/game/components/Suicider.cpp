@@ -17,25 +17,17 @@ Suicider::Suicider(int _target)
 
 void Suicider::OnTick(float _deltaTime) 
 {
-	//if (m_count == m_target)
-	//{
-	//	GetParent()->Destroy();
-	//}
-	//else 
-	//{
-	//	m_count++;
-	//	std::cout << "Hello!" << std::endl;
-	//}
+}
 
-	auto input = GetCore()->GetInput();
+void Suicider::OnTriggerEnter(shared<eengine::RigidBody> _other) 
+{
+	GetParent()->GetComponentOfType<eengine::AudioSource>()->PlayOneShot(GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/91962__billengholm-yahoo-com__ridebell.ogg"));
+	auto parentPos = _other->GetParent()->GetTransform()->GetPosition();
+	eengine::Debug::Log("Entered rigidbody with centre: (" + std::to_string(parentPos.x) + ", " + std::to_string(parentPos.y) + ", " + std::to_string(parentPos.z) + ")");
+}
 
-	if (GetInput()->GetKey(eengine::KeyCode::right))
-	{
-		GetParent()->GetComponentOfType<eengine::RigidBody>()->ApplyTorque(glm::vec3(0, 1, 0));
-	}
-
-	if (input->GetKeyDown(eengine::KeyCode::j)) 
-	{
-		GetParent()->GetTransform()->Translate(glm::vec3(0,1.0,0));
-	}
+void Suicider::OnTriggerExit(shared<eengine::RigidBody> _other) 
+{
+	auto parentPos = _other->GetParent()->GetTransform()->GetPosition();
+	eengine::Debug::Log("Exited rigidbody with centre: (" + std::to_string(parentPos.x) + ", " + std::to_string(parentPos.y) + ", " + std::to_string(parentPos.z) + ")");
 }

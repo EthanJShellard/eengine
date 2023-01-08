@@ -26,6 +26,9 @@ namespace eengine
 		// Use to interpolate between fixed timesteps
 		int m_maxSubSteps;
 
+		// Used for generating IDs
+		uint32_t m_rigidBodyCount;
+
 		PhysicsContext();
 
 		void RegisterRigidBody(shared<RigidBody> _rb);
@@ -35,6 +38,7 @@ namespace eengine
 		void UpdateFixed(float _variableTimeStep);
 
 		void UpdateTransforms();
+		void SendCollisionEvents();
 	public:
 		
 		/// @brief Set the engine physics' fixed timestep.

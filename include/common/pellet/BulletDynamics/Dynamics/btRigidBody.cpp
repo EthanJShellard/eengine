@@ -99,7 +99,7 @@ void	btRigidBody::setupRigidBody(const btRigidBody::btRigidBodyConstructionInfo&
 	m_turnVelocity.setZero();
 
 	
-
+	m_eengineParent;
 }
 
 
