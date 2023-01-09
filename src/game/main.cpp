@@ -21,12 +21,19 @@ int main(int argc, char* argv[])
         auto e2 = core->AddEntity();
         e2->GetTransform()->Translate(glm::vec3(0.8f, -1.0f, -5.0f));
         e2->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
-        auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/metal_floor/floor.obj");
-        floorRenderer->SetTilingRatio(100.0f);
+        auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/concrete_floor/floor.obj");
+        floorRenderer->SetTilingRatio(50.0f);
         auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(50.0f, 0.5f, 50.0f), 1.0f);
         rb->SetFriction(1.5f);
         rb->SetPositionAxesLocked(true, true, true);
         rb->SetRotationAxesLocked(true, true, true);
+
+        auto wall1 = core->AddEntity();
+        wall1->GetTransform()->Translate(glm::vec3(0.0f, 0.5f, 10.0f));
+        wall1->GetTransform()->SetScale(10.0f,1.0f,0.1f);
+        auto wall1Renderer = wall1->AddComponent<eengine::ModelRenderer>("/data/models/brick_wall/wall.obj");
+        auto wall1rb = wall1->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(10.0f, 1.0f, 0.1f), 0.0f);
+        wall1rb->SetIsStatic(true);
 
         auto e3 = core->AddEntity();
         e3->AddComponent<eengine::ModelRenderer>("/data/models/curuthers/curuthers.obj");
@@ -36,7 +43,7 @@ int main(int argc, char* argv[])
         e3->AddComponent<Suicider>();
 
         auto player = core->AddEntity();
-        auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CapsuleCollider>(0.1f, 0.8f), 1.0f);
+        auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CapsuleCollider>(0.2f, 0.6f), 1.0f);
         playerRB->SetPositionAxesLocked(false, false, false);
         playerRB->SetRotationAxesLocked(true, true, true);
         playerRB->SetFriction(3.0f);

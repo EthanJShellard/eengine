@@ -18,9 +18,11 @@ namespace eengine
 		shared<btRigidBody> m_rigidBody;
 		weak<RigidBody> m_self;
 		bool m_removed;
+		bool m_registered;
 		bool m_isTrigger;
 		btVector3 m_posLock;
 		btVector3 m_rotLock;
+		btScalar m_mass;
 
 		void OnBegin();
 		void OnRemove();
@@ -111,5 +113,9 @@ namespace eengine
 		/// @return Whether or not this RigidBody is kinematic.
 		/// @details Kinematic RigidBodies are not affected by forced or collisions.
 		bool GetIsKinematic() const;
+
+		void SetIsStatic(bool _isStatic);
+
+		bool GetIsStatic() const;
 	};
 }

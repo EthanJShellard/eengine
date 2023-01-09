@@ -129,10 +129,13 @@ namespace eengine
 
 	void PhysicsContext::UpdateTransforms() 
 	{
+		// It is possible to avoid some of this by using MotionState inheritance instead
+
 		for (shared<RigidBody> rb : m_rigidBodies) 
 		{
 			auto eTransform = rb->GetParent()->GetTransform();
-			auto bTransform = rb->m_rigidBody->getWorldTransform();
+			btTransform bTransform;
+			rb->m_rigidBody->getMotionState()->getWorldTransform(bTransform);
 
 			// Enforce user-made changes
 			if (eTransform->m_rotDirty || eTransform->m_posDirty) 
@@ -165,6 +168,11 @@ namespace eengine
 				rb->m_rigidBody->getMotionState()->setWorldTransform(bTransform);
 				eTransform->m_rotDirty = eTransform->m_posDirty = false;
 
+				continue;
+			}
+
+			if (rb->GetIsStatic() || rb->GetIsKinematic()) 
+			{
 				continue;
 			}
 
