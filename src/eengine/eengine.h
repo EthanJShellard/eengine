@@ -11,6 +11,7 @@
 #include "BoxCollider.h"
 #include "SphereCollider.h"
 #include "CylinderCollider.h"
+#include "CapsuleCollider.h"
 #include "Environment.h"
 #include "PhysicsContext.h"
 #include "Debug.h"

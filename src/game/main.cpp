@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
         e3->AddComponent<Suicider>();
 
         auto player = core->AddEntity();
-        auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CylinderCollider>(0.5f, 0.5f, 0.5f), 1.0f);
+        auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CapsuleCollider>(0.1f, 0.8f), 1.0f);
         playerRB->SetPositionAxesLocked(false, false, false);
         playerRB->SetRotationAxesLocked(true, true, true);
         playerRB->SetFriction(3.0f);
