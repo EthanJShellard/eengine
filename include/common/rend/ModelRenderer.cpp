@@ -13,7 +13,7 @@ namespace rend
 
 ModelRenderer::ModelRenderer(int _width, int _height) :
   Renderer(_width, _height),
-    m_tilingRatio(1.0f)
+    m_tilingRatios(1.0f)
 { }
 
 ModelRenderer::ModelRenderer(sys::Ptr<RenderTexture> _renderTexture) :
@@ -91,7 +91,7 @@ void ModelRenderer::render()
       glUniformMatrix4fv(m_shader->modelLoc(), 1, GL_FALSE,
         glm::value_ptr(model));
 
-      glUniform1f(m_shader->tilingRatioLoc(), m_tilingRatio);
+      glUniform2f(m_shader->tilingRatiosLoc(), m_tilingRatios.x, m_tilingRatios.y);
 
       for(sys::List<MaterialGroup>::Iterator mit = pit->mgs.begin();
         mit != pit->mgs.end(); ++mit)
@@ -159,9 +159,9 @@ void ModelRenderer::frame(float _frame)
   m_frame = _frame;
 }
 
-void ModelRenderer::tilingRatio(float _ratio) 
+void ModelRenderer::tilingRatio(glm::vec2 _ratios) 
 {
-    m_tilingRatio = _ratio;
+    m_tilingRatios = _ratios;
 }
 
 sys::Ptr<Part> ModelRenderer::intersect(const Ray& _ray, float& _distance) const

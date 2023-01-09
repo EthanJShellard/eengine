@@ -12,13 +12,13 @@
 namespace eengine 
 {
 	ModelRenderer::ModelRenderer() :
-		m_tilingRatio(1.0f)
+		m_tilingRatios(1.0f)
 	{
 	}
 
 	ModelRenderer::ModelRenderer(const std::string& _modelPath) :
 		m_modelPath(_modelPath),
-		m_tilingRatio(1.0f)
+		m_tilingRatios(1.0f)
 	{
 	}
 
@@ -46,19 +46,19 @@ namespace eengine
 		renderer->Renderer::model(GetParent()->GetTransform()->GetModelMatrix());
 		renderer->model(m_model->GetRendModel().get());
 		renderer->shader(m_shader->GetRendShader().get());
-		renderer->tilingRatio(m_tilingRatio);
+		renderer->tilingRatio(m_tilingRatios);
 		
 		renderer->render();
 #endif // EENGINE_USING_REND
 	}
 
-	void ModelRenderer::SetTilingRatio(float _ratio)
+	void ModelRenderer::SetTilingRatios(float _ratioX, float _ratioY)
 	{
-		m_tilingRatio = _ratio;
+		m_tilingRatios = glm::vec2(_ratioX, _ratioY);
 	}
 
-	float ModelRenderer::GetTilingRatio()
+	glm::vec2 ModelRenderer::GetTilingRatios()
 	{
-		return m_tilingRatio;
+		return m_tilingRatios;
 	}
 }

@@ -22,16 +22,16 @@ int main(int argc, char* argv[])
         e2->GetTransform()->Translate(glm::vec3(0.8f, -1.0f, -5.0f));
         e2->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
         auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/concrete_floor/floor.obj");
-        floorRenderer->SetTilingRatio(50.0f);
+        floorRenderer->SetTilingRatios(50, 50);
         auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(50.0f, 0.5f, 50.0f), 1.0f);
         rb->SetFriction(1.5f);
-        rb->SetPositionAxesLocked(true, true, true);
-        rb->SetRotationAxesLocked(true, true, true);
+        rb->SetIsStatic(true);
 
         auto wall1 = core->AddEntity();
         wall1->GetTransform()->Translate(glm::vec3(0.0f, 0.5f, 10.0f));
         wall1->GetTransform()->SetScale(10.0f,1.0f,0.1f);
         auto wall1Renderer = wall1->AddComponent<eengine::ModelRenderer>("/data/models/brick_wall/wall.obj");
+        wall1Renderer->SetTilingRatios(20.0f, 2.0f);
         auto wall1rb = wall1->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(10.0f, 1.0f, 0.1f), 0.0f);
         wall1rb->SetIsStatic(true);
 

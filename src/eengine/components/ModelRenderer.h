@@ -12,7 +12,7 @@ namespace eengine
 		shared<Model> m_model;
 		shared<Shader> m_shader;
 		std::string m_modelPath;
-		float m_tilingRatio;
+		glm::vec2 m_tilingRatios;
 		
 		void OnDisplay(shared<RenderContext> _renderContext);
 	public:
@@ -29,7 +29,7 @@ namespace eengine
 		/// @param _modelPath Path to the model that should be drawn by this renderer
 		void SetModel(const std::string& _modelPath);
 
-		void SetTilingRatio(float _ratio);
-		float GetTilingRatio();
+		void SetTilingRatios(float _ratioX, float _ratioY);
+		glm::vec2 GetTilingRatios();
 	};
 }
