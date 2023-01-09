@@ -8,6 +8,7 @@ void PlayerController::OnBegin()
 	m_rigidBody = GetParent()->GetComponentOfType<eengine::RigidBody>();
 	m_transform = GetParent()->GetTransform();
 	m_playerSpeed = 4.0f;
+	m_aerialSpeed = 2.0f;
 	m_camOffset = glm::vec3(0.0f, 0.4f, 0.0f);
 	m_viewAngleLimit = 70.0f;
 }
@@ -20,6 +21,9 @@ void PlayerController::OnTick(float _deltaTime)
 	float sensitivity = input->GetMouseSensitivity();
 
 	m_transform->Rotate(-sensitivity * delta.x, glm::vec3(0, 1, 0));
+
+	// very much imperfect but will do for now
+	bool grounded = GetCore()->GetPhysicsContext()->RayCast(m_transform->GetPosition(), glm::vec3(0, -1, 0), 0.51f).didHit;
 	
 	// Camera yaw
 	auto camTransform = GetCore()->GetMainCamera()->m_transform;
@@ -38,9 +42,11 @@ void PlayerController::OnTick(float _deltaTime)
 		camTransform->Rotate(-(sensitivity * delta.y), camTransform->Right());
 	}
 
-	glm::vec3 newVel = m_rigidBody->GetVelocity();
+	glm::vec3 oldVel = m_rigidBody->GetVelocity();
+	glm::vec3 newVel = oldVel;
 	float verticalVel = newVel.y;
 	newVel.y = 0;
+
 	if (input->GetKey(eengine::KeyCode::w))
 	{
 		newVel += (m_playerSpeed * -m_transform->Forward());
@@ -51,14 +57,26 @@ void PlayerController::OnTick(float _deltaTime)
 	}
 	if (input->GetKey(eengine::KeyCode::a))
 	{
-		newVel += (m_playerSpeed  * -m_transform->Right());
+		newVel += (m_playerSpeed * -m_transform->Right());
 	}
 	if (input->GetKey(eengine::KeyCode::d))
 	{
 		newVel += (m_playerSpeed * m_transform->Right());
 	}
 
-	if (input->GetMouse1Down()) 
+	if (glm::length(newVel) != 0)
+	{
+		newVel = glm::length(newVel) > m_playerSpeed ? glm::normalize(newVel) * m_playerSpeed : newVel;
+		newVel.y = verticalVel;
+		if (!grounded) 
+		{
+			newVel = glm::mix(oldVel, newVel, _deltaTime * m_aerialSpeed);
+		}
+		m_rigidBody->SetVelocity(newVel);
+	}
+	
+
+	if (input->GetMouse1Down())
 	{
 		auto e = GetCore()->AddEntity();
 		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.125f, 0.125f, 0.125f), 10.0f);
@@ -74,14 +92,7 @@ void PlayerController::OnTick(float _deltaTime)
 		rb->ApplyImpulse(100.0f * -camTransform->Forward(), e->GetTransform()->GetPosition() - camTransform->GetPosition());
 	}
 
-	if (glm::length(newVel) != 0) 
-	{
-		newVel = glm::length(newVel) > m_playerSpeed ? glm::normalize(newVel) * m_playerSpeed : newVel;
-		newVel.y = verticalVel;
-		m_rigidBody->SetVelocity(newVel);
-	}
-
-	if (input->GetKeyDown(eengine::KeyCode::space))
+	if (input->GetKeyDown(eengine::KeyCode::space) && grounded)
 	{
 		m_rigidBody->ApplyImpulse(glm::vec3(0, 5, 0), glm::vec3(0, -1, 0));
 	}

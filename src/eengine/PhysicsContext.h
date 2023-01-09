@@ -2,12 +2,24 @@
 #include "NonCopyable.h"
 
 #include <pellet/btBulletDynamicsCommon.h>
+#include <glm/glm.hpp>
 
 #include <list>
 
 namespace eengine 
 {
 	class RigidBody;
+
+	struct RayCastResult 
+	{
+		bool didHit = false;
+
+		glm::vec3 hitPointInWorld = glm::vec3(0);
+		glm::vec3 hitPointNormal = glm::vec3(0);
+		float distanceFraction = 1.0f;
+
+		weak<RigidBody> hitRigidBody;
+	};
 
 	class PhysicsContext : public NonCopyable
 	{
@@ -56,6 +68,13 @@ namespace eengine
 		/// @brief Get the engine physics' maximum number of substeps per physics iteration.
 		/// @return The current maximum substep count.
 		int GetMaxSubsteps() const { return m_maxSubSteps; }
+
+		/// @brief Casts a ray through the physics world, returning information about potential collsions.
+		/// @param _origin Where the ray will start.
+		/// @param _direction The direction the ray will travel in.
+		/// @param _distance The distance the ray will travel without collision before stopping.
+		/// @return A RayCastResult struct, containing information about the cast.
+		RayCastResult RayCast(const glm::vec3& _origin, const glm::vec3& _direction, float _distance) const;
 
 		~PhysicsContext();
 	};

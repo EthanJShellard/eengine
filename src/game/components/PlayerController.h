@@ -16,6 +16,7 @@ private:
 	void OnLateTick(float _deltaTime) override;
 
 	float m_playerSpeed;
+	float m_aerialSpeed;
 	glm::vec3 m_camOffset;
 	float m_viewAngleLimit;
 	shared<eengine::RigidBody> m_rigidBody;

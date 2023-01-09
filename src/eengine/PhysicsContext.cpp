@@ -256,6 +256,38 @@ namespace eengine
 		g_collisionsUpdated = false;
 	}
 
+	RayCastResult PhysicsContext::RayCast(const glm::vec3& _origin, const glm::vec3& direction, float distance) const
+	{
+		// A good next step would be to add collision masking.
+
+		btVector3 from(_origin.x, _origin.y, _origin.z);
+		glm::vec3 glmTo = _origin + (distance * glm::normalize(direction));
+		btVector3 to(glmTo.x, glmTo.y, glmTo.z);
+
+		btCollisionWorld::ClosestRayResultCallback rayCallback(from, to);
+
+		m_dynamicsWorld->rayTest(from, to, rayCallback);
+
+		RayCastResult result;
+
+		if (rayCallback.hasHit()) 
+		{
+			result.didHit = true;
+
+			const btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+			result.hitRigidBody = body->m_eengineParent;
+			result.distanceFraction = rayCallback.m_closestHitFraction;
+			result.hitPointInWorld = glm::vec3(rayCallback.m_hitPointWorld.x(), rayCallback.m_hitPointWorld.y(), rayCallback.m_hitPointWorld.z());
+			result.hitPointNormal = glm::vec3(rayCallback.m_hitNormalWorld.x(), rayCallback.m_hitNormalWorld.y(), rayCallback.m_hitNormalWorld.z());
+		}
+		else 
+		{
+			result.didHit = false;
+		}
+
+		return result;
+	}
+
 	PhysicsContext::~PhysicsContext() 
 	{
 		//remove the rigidbodies from the dynamics world
