@@ -10,6 +10,8 @@ private:
 	void OnTick(float _deltaTime) override;
 	void OnTriggerEnter(shared<eengine::RigidBody> _other) override;
 	void OnTriggerExit(shared<eengine::RigidBody> _other) override;
+	void OnCollisionEnter(shared<eengine::RigidBody> _other) override;
+	void OnCollisionExit(shared<eengine::RigidBody> _other) override;
 
 	int m_count;
 	int m_target;

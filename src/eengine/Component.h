@@ -45,6 +45,14 @@ namespace eengine
 		/// @param _other The RigidBody which exited the parent's collider
 		virtual void OnTriggerExit(shared<RigidBody> _other);
 
+		/// @brief Called when this Component's parent's collider is entered by another non-trigger collider.
+		/// @param _other The RigidBody which entered the parent's collider.
+		virtual void OnCollisionEnter(shared<RigidBody> _other);
+
+		/// @brief Called when this Component's parent's collider is exited by another non-trigger collider.
+		/// @param _other The RigidBody which exited the parent's collider.
+		virtual void OnCollisionExit(shared<RigidBody> _other);
+
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;
 		weak<Core> m_core;

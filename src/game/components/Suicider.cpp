@@ -32,3 +32,13 @@ void Suicider::OnTriggerExit(shared<eengine::RigidBody> _other)
 	auto parentPos = _other->GetParent()->GetTransform()->GetPosition();
 	eengine::Debug::Log("Exited rigidbody with centre: (" + std::to_string(parentPos.x) + ", " + std::to_string(parentPos.y) + ", " + std::to_string(parentPos.z) + ")");
 }
+
+void Suicider::OnCollisionEnter(shared<eengine::RigidBody> _other) 
+{
+	eengine::Debug::Log("Collision entered!");
+}
+
+void Suicider::OnCollisionExit(shared<eengine::RigidBody> _other) 
+{
+	eengine::Debug::Log("Collision exited!");
+}

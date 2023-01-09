@@ -68,6 +68,22 @@ namespace eengine
 		}
 	}
 
+	void Entity::OnCollisionEnter(shared<RigidBody> _other) 
+	{
+		for (shared<Component> c : m_components)
+		{
+			c->OnCollisionEnter(_other);
+		}
+	}
+
+	void Entity::OnCollisionExit(shared<RigidBody> _other)
+	{
+		for (shared<Component> c : m_components)
+		{
+			c->OnCollisionExit(_other);
+		}
+	}
+
 	shared<Core> Entity::GetCore() const 
 	{
 		return m_core.lock();

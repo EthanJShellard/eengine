@@ -9,7 +9,6 @@
 
 namespace eengine
 {
-	
 
 	struct CollisionStatus 
 	{
@@ -25,8 +24,23 @@ namespace eengine
 		bool stillColliding;
 	};
 
-	/// Keep track of currently active collisions. Need globalness to interact with NearCallback(), which cannot be a member funtion.
-	std::vector<std::tuple<shared<RigidBody>, shared<RigidBody>, btDispatcherInfo>> g_newCollisions;
+	struct CollisionInfo 
+	{
+		
+		CollisionInfo(shared<RigidBody> _rb1, shared<RigidBody> _rb2, btDispatcherInfo _info) : 
+			rb1(_rb1),
+			rb2(_rb2),
+			info(_info)
+		{
+		}
+
+		shared<RigidBody> rb1;
+		shared<RigidBody> rb2;
+		btDispatcherInfo info;
+	};
+
+	/// Keep track of currently active collisions. Need globalness to interact with NearCallback(), which cannot be a member function.
+	std::vector<CollisionInfo> g_newCollisions;
 	std::unordered_map< uint64_t, CollisionStatus > g_collisionMap;
 	bool g_collisionsUpdated = false;
 
@@ -53,7 +67,7 @@ namespace eengine
 		if (itr == g_collisionMap.end())
 		{
 			g_collisionMap.insert({ comboID, CollisionStatus(rb1, rb2, true)});
-			g_newCollisions.push_back({ rb1, rb2, _dispatchInfo });
+			g_newCollisions.push_back(CollisionInfo(rb1, rb2, _dispatchInfo));
 		}
 		else 
 		{
@@ -174,27 +188,29 @@ namespace eengine
 			return;
 		}
 
-		for (auto c : g_newCollisions) 
+		for (CollisionInfo c : g_newCollisions) 
 		{
-			shared<RigidBody> rb1, rb2;
-			btDispatcherInfo info;
-			std::tie(rb1, rb2, info) = c;
-
-			// OnTriggerEnter events
-			if (rb1->m_isTrigger ) 
+			if (c.rb1->m_isTrigger) 
 			{
-				if (rb2->m_isTrigger) 
+				if (c.rb2->m_isTrigger) 
 				{
 					// Not going to send OnTriggerEnter events when triggers enter triggers
 					return;
 				}
 
-				rb1->GetParent()->OnTriggerEnter(rb2);
+				c.rb1->GetParent()->OnTriggerEnter(c.rb2);
 			}
-
-			if (rb2->m_isTrigger) 
+			else 
 			{
-				rb2->GetParent()->OnTriggerEnter(rb1);
+				if (c.rb2->m_isTrigger) 
+				{
+					c.rb2->GetParent()->OnTriggerEnter(c.rb1);
+				}
+				else // Neither is a trigger, send collision events
+				{
+					c.rb1->GetParent()->OnCollisionEnter(c.rb2);
+					c.rb2->GetParent()->OnCollisionEnter(c.rb1);
+				}
 			}
 		}
 
@@ -204,15 +220,28 @@ namespace eengine
 		{
 			if (!itr->second.stillColliding) 
 			{
+				CollisionStatus cs = itr->second;
 				// Send exiting events
-				if (itr->second.rb1->m_isTrigger && !itr->second.rb2->m_isTrigger) 
+				if (cs.rb1->m_isTrigger) 
 				{
-					itr->second.rb1->GetParent()->OnTriggerExit(itr->second.rb2);
+					if (!cs.rb2->m_isTrigger) 
+					{
+						cs.rb1->GetParent()->OnTriggerExit(cs.rb2);
+					}
 				}
-				if (itr->second.rb2->m_isTrigger && !itr->second.rb1->m_isTrigger)
+				else 
 				{
-					itr->second.rb2->GetParent()->OnTriggerExit(itr->second.rb1);
+					if (cs.rb2->m_isTrigger) 
+					{
+						cs.rb2->GetParent()->OnTriggerExit(cs.rb1);
+					}
+					else // Neither is a trigger, send exit events
+					{
+						cs.rb1->GetParent()->OnCollisionExit(cs.rb2);
+						cs.rb2->GetParent()->OnCollisionExit(cs.rb1);
+					}
 				}
+
 				itr = g_collisionMap.erase(itr);
 			}
 			else 

@@ -33,6 +33,8 @@ namespace eengine
 		void Display(shared<RenderContext> _renderContext);
 		void OnTriggerEnter(shared<RigidBody> _other);
 		void OnTriggerExit(shared<RigidBody> _other);
+		void OnCollisionEnter(shared<RigidBody> _other);
+		void OnCollisionExit(shared<RigidBody> _other);
 
 		std::list<shared<Component>> m_components;
 		std::list<shared<Component>> m_newComponents;

@@ -58,6 +58,16 @@ namespace eengine
 		// Stub
 	}
 
+	void Component::OnCollisionEnter(shared<RigidBody> _other) 
+	{
+		// Stub
+	}
+
+	void Component::OnCollisionExit(shared<RigidBody> _other)
+	{
+		// Stub
+	}
+
 	bool Component::NeedsUniqueness() const
 	{
 		return false;
