@@ -11,12 +11,14 @@
 
 namespace eengine 
 {
-	ModelRenderer::ModelRenderer() 
+	ModelRenderer::ModelRenderer() :
+		m_tilingRatio(1.0f)
 	{
 	}
 
 	ModelRenderer::ModelRenderer(const std::string& _modelPath) :
-		m_modelPath(_modelPath)
+		m_modelPath(_modelPath),
+		m_tilingRatio(1.0f)
 	{
 	}
 
@@ -44,8 +46,19 @@ namespace eengine
 		renderer->Renderer::model(GetParent()->GetTransform()->GetModelMatrix());
 		renderer->model(m_model->GetRendModel().get());
 		renderer->shader(m_shader->GetRendShader().get());
+		renderer->tilingRatio(m_tilingRatio);
 		
 		renderer->render();
 #endif // EENGINE_USING_REND
+	}
+
+	void ModelRenderer::SetTilingRatio(float _ratio)
+	{
+		m_tilingRatio = _ratio;
+	}
+
+	float ModelRenderer::GetTilingRatio()
+	{
+		return m_tilingRatio;
 	}
 }

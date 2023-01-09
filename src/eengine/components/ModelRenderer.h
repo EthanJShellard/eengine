@@ -12,6 +12,7 @@ namespace eengine
 		shared<Model> m_model;
 		shared<Shader> m_shader;
 		std::string m_modelPath;
+		float m_tilingRatio;
 		
 		void OnDisplay(shared<RenderContext> _renderContext);
 	public:
@@ -27,5 +28,8 @@ namespace eengine
 		/// @brief Set the model that this renderer should draw.
 		/// @param _modelPath Path to the model that should be drawn by this renderer
 		void SetModel(const std::string& _modelPath);
+
+		void SetTilingRatio(float _ratio);
+		float GetTilingRatio();
 	};
 }

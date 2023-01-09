@@ -4,6 +4,7 @@ precision highp float;
 
 uniform sampler2D u_Texture;
 uniform vec4 u_Color;
+uniform float u_TilingRatio;
 
 varying vec2 v_TexCoord;
 varying vec3 v_Normal;
@@ -22,7 +23,7 @@ void main()
   vec3 diffuse = diffColor * diff;
 
   vec3 light = max(diffuse, ambient);
-  vec4 tex = texture2D(u_Texture, v_TexCoord);
+  vec4 tex = texture2D(u_Texture, u_TilingRatio * v_TexCoord);
 
   tex *= u_Color;
 

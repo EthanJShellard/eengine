@@ -12,7 +12,8 @@ namespace rend
 {
 
 ModelRenderer::ModelRenderer(int _width, int _height) :
-  Renderer(_width, _height)
+  Renderer(_width, _height),
+    m_tilingRatio(1.0f)
 { }
 
 ModelRenderer::ModelRenderer(sys::Ptr<RenderTexture> _renderTexture) :
@@ -87,22 +88,21 @@ void ModelRenderer::render()
         model = model * m_animation->model(*pit, 0);
       }
 
-      // TEXTURE CLUDGE
-      auto matItr = pit->mgs.begin();
-      if (matItr != pit->mgs.end() && matItr->texture)
-      {
-          glActiveTexture(GL_TEXTURE0);
-          glBindTexture(GL_TEXTURE_2D, matItr->texture->id());
-          glUniform1i(m_shader->texture0Loc(), 0);
-      }
-
       glUniformMatrix4fv(m_shader->modelLoc(), 1, GL_FALSE,
         glm::value_ptr(model));
+
+      glUniform1f(m_shader->tilingRatioLoc(), m_tilingRatio);
 
       for(sys::List<MaterialGroup>::Iterator mit = pit->mgs.begin();
         mit != pit->mgs.end(); ++mit)
       {
         glBindVertexArray(mit->mesh.id());
+        if (mit->texture) 
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mit->texture->id());
+            glUniform1i(m_shader->texture0Loc(), 0);
+        }
         glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mit->mesh.vertices());
       }
     }
@@ -157,6 +157,11 @@ void ModelRenderer::animation(sys::Ptr<Animation> _animation)
 void ModelRenderer::frame(float _frame)
 {
   m_frame = _frame;
+}
+
+void ModelRenderer::tilingRatio(float _ratio) 
+{
+    m_tilingRatio = _ratio;
 }
 
 sys::Ptr<Part> ModelRenderer::intersect(const Ray& _ray, float& _distance) const

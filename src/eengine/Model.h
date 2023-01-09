@@ -24,7 +24,5 @@ namespace eengine
 #endif // EENGINE_USING_REND
 
 		void Load();
-	public:
-
 	};
 }

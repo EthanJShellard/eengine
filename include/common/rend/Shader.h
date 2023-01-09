@@ -25,6 +25,7 @@ struct Shader : sys::EnablePtr
   GLint texture0Loc();
   GLint texture1Loc();
   GLint colorLoc();
+  GLint tilingRatioLoc();
 
 private:
   sys::Zero<GLuint> m_id;
@@ -34,6 +35,7 @@ private:
   sys::Zero<GLint> m_texture0Loc;
   sys::Zero<GLint> m_texture1Loc;
   sys::Zero<GLint> m_colorLoc;
+  sys::Zero<GLint> m_tilingRatioLoc;
 
   sys::String m_vertSrc;
   sys::String m_fragSrc;
