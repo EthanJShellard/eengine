@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
         auto e2 = core->AddEntity();
         e2->GetTransform()->Translate(glm::vec3(0.8f, -1.0f, -5.0f));
         e2->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
-        auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/Crate/Crate1.obj");
+        auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/metal_floor/floor.obj");
         floorRenderer->SetTilingRatio(100.0f);
         auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(50.0f, 0.5f, 50.0f), 1.0f);
         rb->SetFriction(1.5f);
