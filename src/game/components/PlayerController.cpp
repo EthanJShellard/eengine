@@ -10,7 +10,7 @@ void PlayerController::OnBegin()
 	m_playerSpeed = 4.0f;
 	m_aerialSpeed = 2.0f;
 	m_camOffset = glm::vec3(0.0f, 0.4f, 0.0f);
-	m_viewAngleLimit = 70.0f;
+	m_viewAngleLimit = 90.0f;
 }
 
 void PlayerController::OnTick(float _deltaTime) 

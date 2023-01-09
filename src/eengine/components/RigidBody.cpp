@@ -78,6 +78,13 @@ namespace eengine
 		Activate();
 	}
 
+	void RigidBody::ApplyCentralForce(const glm::vec3& _force) 
+	{
+		m_rigidBody->applyCentralForce(btVector3(_force.x, _force.y, _force.z));
+		// Activate the rigidbody to make sure it isn't sleeping
+		Activate();
+	}
+
 	void RigidBody::SetVelocity(const glm::vec3& _velocity) 
 	{
 		m_rigidBody->setLinearVelocity(btVector3(_velocity.x, _velocity.y, _velocity.z));

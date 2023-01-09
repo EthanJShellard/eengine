@@ -76,6 +76,8 @@ namespace eengine
 		/// @param _torque The torque to be applied in each axis.
 		void ApplyTorque(const glm::vec3& _torque);
 
+		void ApplyCentralForce(const glm::vec3& _force);
+
 		/// @brief Set the linear velocity of this RigidBody.
 		/// @param _velocity The new linear velocity of this RigidBody.
 		void SetVelocity(const glm::vec3& _velocity);
