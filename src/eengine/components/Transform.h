@@ -12,6 +12,7 @@ namespace eengine
 	class Transform : public Component
 	{
 		friend class PhysicsContext;
+		friend class RigidBody;
 
 	private:
 		glm::vec3 m_position;
@@ -23,8 +24,8 @@ namespace eengine
 		glm::mat4 m_translationMatrix;
 
 		bool m_dirty;
-		bool m_posDirty; // Solely for physics context to read and modify
-		bool m_rotDirty; // Solely for physics context to read and modify
+		bool m_posDirty; // Use only to inform physics context of updates to position
+		bool m_rotDirty; // Use only to inform physics context of updates to position
 	public:
 		Transform();
 

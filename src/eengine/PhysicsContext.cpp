@@ -148,7 +148,7 @@ namespace eengine
 					eTransform->SetRotation(glm::quat(newRot.w(), newRot.x(), newRot.y(), newRot.z()));
 				}
 			
-				rb->m_rigidBody->setWorldTransform(bTransform);
+				rb->m_rigidBody->getMotionState()->setWorldTransform(bTransform);
 				eTransform->m_rotDirty = eTransform->m_posDirty = false;
 
 				continue;

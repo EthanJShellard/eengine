@@ -9,6 +9,7 @@ namespace eengine
 	// Engine forward declarations
 	class Collider;
 
+	/// @brief Component representing a physics rigid body. Currently supports only single colliders.
 	class RigidBody : public Component 
 	{
 		friend class PhysicsContext;
@@ -83,10 +84,30 @@ namespace eengine
 		/// @return The linear velocity of this RigidBody.
 		glm::vec3 GetVelocity() const;
 
-		/// @brief Set the coefficient of friction of this RigidBody.
-		/// @param friction The new coefficient of friction.
-		void SetFriction(float friction);
+		/// @brief Set the friction ratio of this RigidBody.
+		/// @param friction The new friction ratio.
+		void SetFriction(float _friction);
 
+		/// @brief Get the friction ratio of this RigidBody.
+		/// @return The friction ratio of this RigidBody.
+		float GetFriction() const;
+
+		/// @brief Set whether or not this RigidBody's collider will act as a trigger.
+		/// @param _isTrigger Whether or not this RigidBody's collider will act as a trigger.
 		void SetIsTrigger(bool _isTrigger);
+
+		/// @brief Get whether or not this RigidBody's collider is set to act as a trigger.
+		/// @return Whether or not this RigidBody's collider is set to act as a trigger.
+		bool GetIsTrigger() const;
+
+		/// @brief Set whether or not this RigidBody should be kinematic.
+		/// @param _isKinematic Whether or not this RigidBody should be kinematic.
+		/// @details Kinematic RigidBodies are not affected by forced or collisions.
+		void SetIsKinematic(bool _isKinematic);
+
+		/// @brief Get whether or not this RigidBody is kinematic.
+		/// @return Whether or not this RigidBody is kinematic.
+		/// @details Kinematic RigidBodies are not affected by forced or collisions.
+		bool GetIsKinematic() const;
 	};
 }

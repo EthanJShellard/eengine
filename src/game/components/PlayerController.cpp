@@ -72,7 +72,6 @@ void PlayerController::OnTick(float _deltaTime)
 
 		rb->SetVelocity(m_rigidBody->GetVelocity());
 		rb->ApplyImpulse(100.0f * -camTransform->Forward(), e->GetTransform()->GetPosition() - camTransform->GetPosition());
-		rb->SetIsTrigger(true);
 	}
 
 	if (glm::length(newVel) != 0) 

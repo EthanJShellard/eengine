@@ -17,6 +17,7 @@ Suicider::Suicider(int _target)
 
 void Suicider::OnTick(float _deltaTime) 
 {
+	
 }
 
 void Suicider::OnTriggerEnter(shared<eengine::RigidBody> _other) 

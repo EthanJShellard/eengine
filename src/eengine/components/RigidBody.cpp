@@ -96,6 +96,11 @@ namespace eengine
 		m_rigidBody->setFriction(_friction);
 	}
 
+	float RigidBody::GetFriction() const
+	{
+		return m_rigidBody->getFriction();
+	}
+
 	void RigidBody::Activate() 
 	{
 		m_rigidBody->activate();
@@ -103,15 +108,34 @@ namespace eengine
 
 	void RigidBody::SetIsTrigger(bool _isTrigger) 
 	{
-		if (_isTrigger && !(m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE)) 
-		{
-			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() | btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
-		}
-		else if (!_isTrigger && (m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE))
+		if (_isTrigger != (m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE)) 
 		{
 			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() ^ btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
 		}
 		
 		m_isTrigger = _isTrigger;
+	}
+
+	bool RigidBody::GetIsTrigger() const
+	{
+		return m_isTrigger;
+	}
+
+	void RigidBody::SetIsKinematic(bool _isKinematic) 
+	{
+		if (_isKinematic != (m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_KINEMATIC_OBJECT)) 
+		{
+			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() ^ btCollisionObject::CollisionFlags::CF_KINEMATIC_OBJECT);
+		}
+
+		// Force initial transform update
+		auto transform = GetParent()->GetTransform();
+		transform->m_posDirty = true;
+		transform->m_rotDirty = true;
+	}
+
+	bool RigidBody::GetIsKinematic() const
+	{
+		return m_rigidBody->isKinematicObject();
 	}
 }
