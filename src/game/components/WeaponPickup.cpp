@@ -19,11 +19,6 @@ void WeaponPickup::OnBegin()
 
 void WeaponPickup::OnTick(float _deltaTime) 
 {
-	auto rb = GetParent()->GetComponentOfType<eengine::RigidBody>();
-	auto rbpos = rb->m_rigidBody->getWorldTransform().getOrigin();
-	glm::vec3 vec3Pos(rbpos.x(), rbpos.y(), rbpos.z());
-	eengine::Debug::Log("RB POS: ", vec3Pos);
-
 	m_bobProgress += _deltaTime * m_bobSpeed;
 
 	auto pos = m_transform->GetPosition();
