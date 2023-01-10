@@ -19,8 +19,8 @@ namespace eengine
 		{
 		}
 
-		shared<RigidBody> rb1;
-		shared<RigidBody> rb2;
+		weak<RigidBody> rb1;
+		weak<RigidBody> rb2;
 		bool stillColliding;
 	};
 
@@ -34,8 +34,8 @@ namespace eengine
 		{
 		}
 
-		shared<RigidBody> rb1;
-		shared<RigidBody> rb2;
+		weak<RigidBody> rb1;
+		weak<RigidBody> rb2;
 		btDispatcherInfo info;
 	};
 
@@ -110,7 +110,9 @@ namespace eengine
 	{
 		m_dynamicsWorld->removeRigidBody(_rb->m_rigidBody.get());
 		delete _rb->m_rigidBody->getMotionState();
-		m_rigidBodies.remove(_rb);
+
+		// MSalters, https://stackoverflow.com/questions/10120623/removing-item-from-list-of-weak-ptrs
+		m_rigidBodies.remove_if([_rb](std::weak_ptr<RigidBody> p) { return !(p.owner_before(_rb) || _rb.owner_before(p)); });
 	}
 
 	void PhysicsContext::Update(float _variableTimeStep) 
@@ -131,8 +133,9 @@ namespace eengine
 	{
 		// It is possible to avoid some of this by using MotionState inheritance instead
 
-		for (shared<RigidBody> rb : m_rigidBodies) 
+		for (weak<RigidBody> weak_rb : m_rigidBodies) 
 		{
+			auto rb = weak_rb.lock();
 			auto eTransform = rb->GetParent()->GetTransform();
 			btTransform bTransform;
 			rb->m_rigidBody->getMotionState()->getWorldTransform(bTransform);
@@ -198,26 +201,35 @@ namespace eengine
 
 		for (CollisionInfo c : g_newCollisions) 
 		{
-			if (c.rb1->m_isTrigger) 
+			auto rb1 = c.rb1.lock();
+			auto rb2 = c.rb2.lock();
+
+			// Either rb1 or rb2 no longer exists, skip this collision.
+			if (!rb1 || !rb2) 
 			{
-				if (c.rb2->m_isTrigger) 
+				continue;
+			}
+
+			if (rb1->m_isTrigger) 
+			{
+				if (rb2->m_isTrigger) 
 				{
 					// Not going to send OnTriggerEnter events when triggers enter triggers
 					return;
 				}
 
-				c.rb1->GetParent()->OnTriggerEnter(c.rb2);
+				rb1->GetParent()->OnTriggerEnter(rb2);
 			}
 			else 
 			{
-				if (c.rb2->m_isTrigger) 
+				if (rb2->m_isTrigger) 
 				{
-					c.rb2->GetParent()->OnTriggerEnter(c.rb1);
+					rb2->GetParent()->OnTriggerEnter(rb1);
 				}
 				else // Neither is a trigger, send collision events
 				{
-					c.rb1->GetParent()->OnCollisionEnter(c.rb2);
-					c.rb2->GetParent()->OnCollisionEnter(c.rb1);
+					rb1->GetParent()->OnCollisionEnter(rb2);
+					rb2->GetParent()->OnCollisionEnter(rb1);
 				}
 			}
 		}
@@ -229,24 +241,34 @@ namespace eengine
 			if (!itr->second.stillColliding) 
 			{
 				CollisionStatus cs = itr->second;
-				// Send exiting events
-				if (cs.rb1->m_isTrigger) 
+				auto rb1 = cs.rb1.lock();
+				auto rb2 = cs.rb2.lock();
+
+				// Either rb1 or rb2 no longer exists, skip this collision.
+				if (!rb1 || !rb2)
 				{
-					if (!cs.rb2->m_isTrigger) 
+					itr++;
+					continue;
+				}
+
+				// Send exiting events
+				if (rb1->m_isTrigger) 
+				{
+					if (!rb2->m_isTrigger) 
 					{
-						cs.rb1->GetParent()->OnTriggerExit(cs.rb2);
+						rb1->GetParent()->OnTriggerExit(rb2);
 					}
 				}
 				else 
 				{
-					if (cs.rb2->m_isTrigger) 
+					if (rb2->m_isTrigger) 
 					{
-						cs.rb2->GetParent()->OnTriggerExit(cs.rb1);
+						rb2->GetParent()->OnTriggerExit(rb1);
 					}
 					else // Neither is a trigger, send exit events
 					{
-						cs.rb1->GetParent()->OnCollisionExit(cs.rb2);
-						cs.rb2->GetParent()->OnCollisionExit(cs.rb1);
+						rb1->GetParent()->OnCollisionExit(rb2);
+						rb2->GetParent()->OnCollisionExit(rb1);
 					}
 				}
 

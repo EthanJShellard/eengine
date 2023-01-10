@@ -318,6 +318,8 @@ add_executable(game
     src/game/components/ScreamingMover.cpp
     src/game/components/PlayerController.h
     src/game/components/PlayerController.cpp
+    src/game/components/WeaponPickup.h
+    src/game/components/WeaponPickup.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF

@@ -68,6 +68,11 @@ namespace eengine
 		// Stub
 	}
 
+	void Component::OnDelete() 
+	{
+		// Stub
+	}
+
 	bool Component::NeedsUniqueness() const
 	{
 		return false;

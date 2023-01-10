@@ -54,18 +54,14 @@ namespace eengine
 		m_removed = true;
 	}
 
+	void RigidBody::OnDelete() 
+	{
+		OnRemove();
+	}
+
 	bool RigidBody::NeedsUniqueness() const
 	{
 		return true;
-	}
-
-	RigidBody::~RigidBody() 
-	{
-		// If this is being removed before engine stop
-		if (!m_removed && GetCore() != nullptr)
-		{
-			GetCore()->GetPhysicsContext()->UnregisterRigidBody(m_self.lock());
-		}
 	}
 
 	void RigidBody::ApplyImpulse(const glm::vec3& _impulse, const glm::vec3& _relativePos) 
@@ -129,7 +125,7 @@ namespace eengine
 
 	void RigidBody::SetIsTrigger(bool _isTrigger) 
 	{
-		if (_isTrigger != (m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE)) 
+		if (_isTrigger != (bool)(m_rigidBody->getCollisionFlags() & btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE)) 
 		{
 			m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() ^ btCollisionObject::CollisionFlags::CF_NO_CONTACT_RESPONSE);
 		}

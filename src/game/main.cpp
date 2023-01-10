@@ -4,6 +4,7 @@
 #include "components/Suicider.h"
 #include "components/ScreamingMover.h"
 #include "components/PlayerController.h"
+#include "components/WeaponPickup.h"
 
 shared<eengine::Entity> CreateWall(shared<eengine::Core> _core, const glm::vec3& _dimensions, const glm::vec2& _tilingMultiplier)
 {
@@ -172,11 +173,12 @@ int main(int argc, char* argv[])
         auto weaponPickup = core->AddEntity();
         weaponPickup->AddComponent<eengine::ModelRenderer>("/data/models/tank/IS4.obj");
         auto pickupTrans = weaponPickup->GetTransform();
-        pickupTrans->SetPosition(0,0,-10.0f);
+        pickupTrans->SetPosition(0.0f,0.5f,-10.0f);
         pickupTrans->SetScale(glm::vec3(0.2f));
         auto pickupRB = weaponPickup->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(0.2f), 1.0f);
         pickupRB->SetIsTrigger(true);
-        pickupRB->SetIsKinematic(true);
+        //pickupRB->SetIsKinematic(true);
+        weaponPickup->AddComponent<WeaponPickup>(0.3f, 45.0f, 45.0f);
 
         // Combat room
         auto combatRoom = CreateRoom(core, glm::vec3(15.0f,0,0), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));

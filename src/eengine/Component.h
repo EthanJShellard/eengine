@@ -53,6 +53,9 @@ namespace eengine
 		/// @param _other The RigidBody which exited the parent's collider.
 		virtual void OnCollisionExit(shared<RigidBody> _other);
 
+		/// @brief Called when the parent object is about to be deleted.
+		virtual void OnDelete();
+
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;
 		weak<Core> m_core;

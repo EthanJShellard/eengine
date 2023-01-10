@@ -32,7 +32,7 @@ namespace eengine
 		shared<btBroadphaseInterface> m_broadphaseInterface;
 		shared<btSequentialImpulseConstraintSolver> m_impulseSolver;
 
-		std::list<shared<RigidBody>> m_rigidBodies;
+		std::list<weak<RigidBody>> m_rigidBodies;
 
 		float m_fixedTimeStep;
 		// Use to interpolate between fixed timesteps

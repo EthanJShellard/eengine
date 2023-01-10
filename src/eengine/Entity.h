@@ -35,6 +35,7 @@ namespace eengine
 		void OnTriggerExit(shared<RigidBody> _other);
 		void OnCollisionEnter(shared<RigidBody> _other);
 		void OnCollisionExit(shared<RigidBody> _other);
+		void OnDelete();
 
 		std::list<shared<Component>> m_components;
 		std::list<shared<Component>> m_newComponents;

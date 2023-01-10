@@ -16,6 +16,7 @@ namespace eengine
 
 		shared<Collider> m_collider;
 		shared<btRigidBody> m_rigidBody;
+		
 		weak<RigidBody> m_self;
 		bool m_removed;
 		bool m_registered;
@@ -26,16 +27,14 @@ namespace eengine
 
 		void OnBegin();
 		void OnRemove();
+		void OnDelete();
 
 		void Activate();
 	public:
-
 		/// @brief Create a RigidBody with a collider and set mass.
 		/// @param _collider The new RigidBody's collider.
 		/// @param _mass The new RigidBody's mass.
 		RigidBody(shared<Collider> _collider, float _mass);
-
-		~RigidBody();
 
 		bool NeedsUniqueness() const;
 

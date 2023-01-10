@@ -84,6 +84,14 @@ namespace eengine
 		}
 	}
 
+	void Entity::OnDelete() 
+	{
+		for (shared<Component> c : m_components)
+		{
+			c->OnDelete();
+		}
+	}
+
 	shared<Core> Entity::GetCore() const 
 	{
 		return m_core.lock();

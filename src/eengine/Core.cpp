@@ -181,6 +181,7 @@ namespace eengine
 		{
 			if ((*itr)->IsDestroyed())
 			{
+				(*itr)->OnDelete();
 				itr = self->m_entities.erase(itr);
 			}
 			else
