@@ -79,9 +79,11 @@ void PlayerController::OnTick(float _deltaTime)
 	if (input->GetMouse1Down())
 	{
 		auto e = GetCore()->AddEntity();
-		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.125f, 0.125f, 0.125f), 10.0f);
+		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(1.0f, 1.0f, 1.0f), 10.0f);
 		e->AddComponent<eengine::ModelRenderer>("/data/models/crate/Crate1.obj");
-		e->GetTransform()->SetScale(0.125f,0.125f,0.125f);
+		glm::vec3 scale(1.0f, 1.0f, 1.0f);
+		e->GetTransform()->SetScale(scale);
+		rb->SetColliderScale(scale);
 		e->GetTransform()->SetPosition(camTransform->GetPosition() - camTransform->Forward() * 1.0f);
 		auto as = e->AddComponent<eengine::AudioSource>();
 		//as->PlayOneShot(GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/dixie_horn.ogg"));

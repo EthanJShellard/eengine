@@ -96,6 +96,10 @@ namespace eengine
 		/// @return The friction ratio of this RigidBody.
 		float GetFriction() const;
 
+		void SetColliderScale(const glm::vec3& _newScale);
+
+		glm::vec3 GetColliderScale();
+
 		/// @brief Set whether or not this RigidBody's collider will act as a trigger.
 		/// @param _isTrigger Whether or not this RigidBody's collider will act as a trigger.
 		void SetIsTrigger(bool _isTrigger);

@@ -97,7 +97,7 @@ namespace eengine
 
 	glm::vec3 RigidBody::GetVelocity() const 
 	{
-		auto vel = m_rigidBody->getLinearVelocity();
+		btVector3 vel = m_rigidBody->getLinearVelocity();
 		return glm::vec3(vel.x(), vel.y(), vel.z());
 	}
 
@@ -109,6 +109,17 @@ namespace eengine
 	float RigidBody::GetFriction() const
 	{
 		return m_rigidBody->getFriction();
+	}
+
+	void RigidBody::SetColliderScale(const glm::vec3& _newScale) 
+	{
+		m_rigidBody->getCollisionShape()->setLocalScaling(btVector3(_newScale.x, _newScale.y, _newScale.z));
+	}
+
+	glm::vec3 RigidBody::GetColliderScale()
+	{
+		btVector3 scale = m_rigidBody->getCollisionShape()->getLocalScaling();
+		return glm::vec3(scale.x(), scale.y(), scale.z());
 	}
 
 	void RigidBody::Activate() 
