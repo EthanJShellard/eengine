@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 
-#include "input.h"
+#include "Input.h"
 #include "Core.h"
 #include "Debug.h"
 

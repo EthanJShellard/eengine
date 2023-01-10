@@ -322,6 +322,8 @@ add_executable(game
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sALLOW_MEMORY_GROWTH")
+
 target_link_libraries(rend
     GL
     GLEW
