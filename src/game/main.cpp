@@ -155,32 +155,31 @@ int main(int argc, char* argv[])
     shared<eengine::Core> core = eengine::Core::Initialise(argv[0]);
 
     {
-       //auto e = core->AddEntity();
-       //e->AddComponent<eengine::QuadRenderer>()->SetColour(1.0f, 0.0f, 0.0f, 0.5f);
-       //e->GetTransform()->Translate(glm::vec3(0.8f, 0.5f, -5.0f));
-       //e->AddComponent<eengine::AudioSource>();
-       ////e->AddComponent<ScreamingMover>();
-        
-
-        auto e2 = core->AddEntity();
-        e2->GetTransform()->Translate(glm::vec3(0.8f, -0.25f, -5.0f));
-        e2->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
-        auto floorRenderer = e2->AddComponent<eengine::ModelRenderer>("/data/models/concrete_floor/floor.obj");
+        auto floor = core->AddEntity();
+        floor->GetTransform()->Translate(glm::vec3(0.8f, -0.25f, -5.0f));
+        floor->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
+        auto floorRenderer = floor->AddComponent<eengine::ModelRenderer>("/data/models/concrete_floor/floor.obj");
         floorRenderer->SetTilingRatios(50, 50);
-        auto rb = e2->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(100.0f, 0.5f, 100.0f), 1.0f);
+        auto rb = floor->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(100.0f, 0.5f, 100.0f), 1.0f);
         rb->SetFriction(1.5f);
         rb->SetIsStatic(true);
 
-        auto room1 = CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, true, false));
-        auto room2 = CreateRoom(core, glm::vec3(0,0,-10.0f), glm::vec3(10.0f, 2.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, false, true, false));
-        auto room3 = CreateRoom(core, glm::vec3(15.0f,0,0), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
+        // Starting room
+        auto startingRoom = CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, true, false));
 
-        //auto e3 = core->AddEntity();
-        //e3->AddComponent<eengine::ModelRenderer>("/data/models/curuthers/curuthers.obj");
-        //e3->GetTransform()->Translate(glm::vec3(-1.0f, 0.0f, -5.0f));
-        //e3->GetTransform()->Scale(glm::vec3(0.3f, 0.3f, 0.3f));
-        //e3->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(0.6f, 0.6f, 0.6f), 1.0f);
-        //e3->AddComponent<Suicider>();
+        // Weapon room
+        auto weaponRoom = CreateRoom(core, glm::vec3(0,0,-10.0f), glm::vec3(10.0f, 2.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, false, true, false));
+        auto weaponPickup = core->AddEntity();
+        weaponPickup->AddComponent<eengine::ModelRenderer>("/data/models/tank/IS4.obj");
+        auto pickupTrans = weaponPickup->GetTransform();
+        pickupTrans->SetPosition(0,0,-10.0f);
+        pickupTrans->SetScale(glm::vec3(0.2f));
+        auto pickupRB = weaponPickup->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(0.2f), 1.0f);
+        pickupRB->SetIsTrigger(true);
+        pickupRB->SetIsKinematic(true);
+
+        // Combat room
+        auto combatRoom = CreateRoom(core, glm::vec3(15.0f,0,0), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
 
         auto player = core->AddEntity();
         auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CapsuleCollider>(0.2f, 0.6f), 1.0f);
