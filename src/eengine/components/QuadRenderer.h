@@ -1,9 +1,7 @@
 #include "../eengine_defines.h"
 #include "../Component.h"
 
-#if EENGINE_USING_REND
 #include <rend/Mesh.h>
-#endif // EENGINE_USING_REND
 
 namespace eengine 
 {

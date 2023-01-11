@@ -86,37 +86,37 @@ namespace eengine
 		m_dirty = true;
 	}
 
-	glm::vec3  Transform::GetPosition()
+	glm::vec3  Transform::GetPosition() const
 	{
 		return m_position;
 	}
 
-	glm::vec3  Transform::GetRotation()
+	glm::vec3  Transform::GetRotation() const
 	{
 		return glm::eulerAngles(m_orientation);
 	}
 
-	glm::quat Transform::GetQuaternionRotation()
+	glm::quat Transform::GetQuaternionRotation() const
 	{
 		return m_orientation;
 	}
 
-	glm::vec3  Transform::GetScale()
+	glm::vec3  Transform::GetScale() const
 	{
 		return m_scale;
 	}
 
-	glm::vec3 Transform::Right()
+	glm::vec3 Transform::Right() const
 	{
 		return m_orientation * glm::vec3(1, 0, 0);
 	}
 
-	glm::vec3 Transform::Up()
+	glm::vec3 Transform::Up() const
 	{
 		return m_orientation * glm::vec3(0, 1, 0);
 	}
 
-	glm::vec3 Transform::Forward()
+	glm::vec3 Transform::Forward() const
 	{
 		return m_orientation * glm::vec3(0, 0, 1);
 	}

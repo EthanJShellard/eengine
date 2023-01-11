@@ -10,7 +10,10 @@ void PlayerController::OnBegin()
 	m_playerSpeed = 4.0f;
 	m_aerialSpeed = 2.0f;
 	m_camOffset = glm::vec3(0.0f, 0.4f, 0.0f);
+	m_weaponOffset = glm::vec3(0.1f, -0.15f, -0.3f);
+	m_weaponScale = glm::vec3(0.04f, 0.04f, 0.04f);
 	m_viewAngleLimit = 90.0f;
+	m_hasWeapon = false;
 }
 
 void PlayerController::OnTick(float _deltaTime) 
@@ -41,6 +44,15 @@ void PlayerController::OnTick(float _deltaTime)
 	{
 		camTransform->Rotate(-(sensitivity * delta.y), camTransform->Right());
 	}
+
+	// Transform weapon renderer
+	if (m_hasWeapon) 
+	{
+		glm::vec3 finalOffset = glm::toMat4(camTransform->GetQuaternionRotation()) * glm::vec4(m_weaponOffset, 1.0f);
+		m_weaponTransform->SetPosition(camTransform->GetPosition() + finalOffset);
+		m_weaponTransform->SetRotation(camTransform->GetQuaternionRotation());
+	}
+	
 
 	glm::vec3 oldVel = m_rigidBody->GetVelocity();
 	glm::vec3 newVel = oldVel;
@@ -110,7 +122,15 @@ void PlayerController::OnLateTick(float _deltaTime)
 	// Pin camera to this entity
 	auto mainCamTransform = GetCore()->GetMainCamera()->m_transform;
 	mainCamTransform->SetPosition(m_transform->GetPosition() + m_camOffset);
-	//mainCamTransform->SetRotation(m_transform->GetQuaternionRotation());
+}
 
-	//eengine::Debug::Log("Forward", m_transform->Forward());
+void PlayerController::GiveWeapon() 
+{
+	auto weapon = GetCore()->AddEntity();
+	m_weaponRenderer = weapon->AddComponent<eengine::ModelRenderer>("/data/models/tank/IS4.obj");
+	m_weaponTransform = weapon->GetTransform();
+	m_hasWeapon = true;
+	m_weaponRenderer->SetScale(m_weaponScale);
+	m_weaponRenderer->SetOrientation(glm::rotate(glm::mat4(1), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+
 }

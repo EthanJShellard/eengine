@@ -5,9 +5,7 @@
 #include "../RenderContext.h"
 #include "../Entity.h"
 
-#if EENGINE_USING_REND
 #include <rend/rend.h>
-#endif // EENGINE_USING_REND
 
 namespace eengine 
 {
@@ -41,15 +39,13 @@ namespace eengine
 
 	void ModelRenderer::OnDisplay(shared<RenderContext> _renderContext) 
 	{
-#if EENGINE_USING_REND
 		shared<rend::ModelRenderer> renderer = _renderContext->GetModelRenderer();
-		renderer->Renderer::model(GetParent()->GetTransform()->GetModelMatrix());
+		renderer->Renderer::model(GetParent()->GetTransform()->GetModelMatrix() * m_localTransform.GetModelMatrix());
 		renderer->model(m_model->GetRendModel().get());
 		renderer->shader(m_shader->GetRendShader().get());
 		renderer->tilingRatio(m_tilingRatios);
 		
 		renderer->render();
-#endif // EENGINE_USING_REND
 	}
 
 	void ModelRenderer::SetTilingRatios(float _ratioX, float _ratioY)
@@ -60,5 +56,35 @@ namespace eengine
 	glm::vec2 ModelRenderer::GetTilingRatios()
 	{
 		return m_tilingRatios;
+	}
+
+	void ModelRenderer::SetOffset(const glm::vec3& _offset) 
+	{
+		m_localTransform.SetPosition(_offset);
+	}
+
+	glm::vec3 ModelRenderer::GetOffset() const
+	{
+		return m_localTransform.GetPosition();
+	}
+
+	void ModelRenderer::SetOrientation(const glm::quat& _orientation) 
+	{
+		m_localTransform.SetRotation(_orientation);
+	}
+
+	glm::quat ModelRenderer::GetOrientation() const
+	{
+		return m_localTransform.GetQuaternionRotation();
+	}
+
+	void ModelRenderer::SetScale(const glm::vec3& _scale) 
+	{
+		m_localTransform.SetScale(_scale);
+	}
+	
+	glm::vec3 ModelRenderer::GetScale() const
+	{
+		return m_localTransform.GetScale();
 	}
 }

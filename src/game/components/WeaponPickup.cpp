@@ -33,6 +33,7 @@ void WeaponPickup::OnTriggerEnter(shared<eengine::RigidBody> _other)
 	auto pc = _other->GetParent()->GetComponentsOfType<PlayerController>();
 	if (pc.size()) 
 	{
+		pc.at(0)->GiveWeapon();
 		GetParent()->Destroy();
 	}
 }

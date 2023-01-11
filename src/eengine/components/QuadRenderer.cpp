@@ -43,7 +43,6 @@ namespace eengine
 
 	void QuadRenderer::OnDisplay(shared<RenderContext> _renderContext)
 	{
-#if EENGINE_USING_REND
 		shared<rend::Renderer> renderer = _renderContext->GetMeshRenderer();
 		renderer->model(GetParent()->GetTransform()->GetModelMatrix());
 		renderer->shader(m_shader->GetRendShader().get());
@@ -52,7 +51,6 @@ namespace eengine
 		renderer->texture(m_texture->GetRendTexture().get());
 			 
 		renderer->render();
-#endif // EENGINE_USING_REND
 	}
 
 	void QuadRenderer::SetColour(float _r, float _g, float _b, float _a) 

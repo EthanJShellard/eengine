@@ -22,13 +22,11 @@ namespace eengine
 		std::string m_vertPath;
 		std::string m_fragPath;
 
-#if EENGINE_USING_REND
 		shared<rend::Shader> m_rendShader;
 
 		/// @brief Get the rend representation of this Model. Only available if rend is being used.
 		/// @return A shared pointer to the rend representation of this Model.
 		shared<rend::Shader> GetRendShader();
-#endif // EENGINE_USING_REND
 
 		void Load();
 	public:

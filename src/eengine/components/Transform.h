@@ -65,31 +65,31 @@ namespace eengine
 
 		/// @brief Get the current position of this Transform.
 		/// @return The current position.
-		glm::vec3 GetPosition();
+		glm::vec3 GetPosition() const;
 
 		/// @brief Get the current rotation/orientation of this Transform as Euler angles.
 		/// @return The current rotation/orientation as Euler angles.
-		glm::vec3 GetRotation();
+		glm::vec3 GetRotation() const;
 
 		/// @brief Get the current rotation/orientation of this Transform as a quaternion.
 		/// @return The current rotation/orientation as a quaternion.
-		glm::quat GetQuaternionRotation();
+		glm::quat GetQuaternionRotation() const;
 
 		/// @brief Get the current scale of this Transform.
 		/// @return The current scale.
-		glm::vec3 GetScale();
+		glm::vec3 GetScale() const;
 
 		/// @brief Get a vector pointing right from this Transform's perspective.
 		/// @return Right with respect to this Transform.
-		glm::vec3 Right();
+		glm::vec3 Right() const;
 
 		/// @brief Get a vector pointing up from this Transform's perspective.
 		/// @return Up with respect to this Transform.
-		glm::vec3 Up();
+		glm::vec3 Up() const;
 
 		/// @brief Get a vector pointing forward from this Transform's perspective.
 		/// @return Forward with respect to this Transform.
-		glm::vec3 Forward();
+		glm::vec3 Forward() const;
 
 		/// @brief Rotate this Transform.
 		/// @param _angle Angle in degrees by which this Transform will be rotated.

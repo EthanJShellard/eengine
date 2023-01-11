@@ -2,9 +2,11 @@
 #include "../eengine_defines.h"
 #include "../Model.h"
 #include "../Shader.h"
+#include "Transform.h"
 
 namespace eengine 
 {
+
 	/// @brief A component which will render a rend::Model.
 	class ModelRenderer : public Component
 	{
@@ -13,6 +15,7 @@ namespace eengine
 		shared<Shader> m_shader;
 		std::string m_modelPath;
 		glm::vec2 m_tilingRatios;
+		Transform m_localTransform;
 		
 		void OnDisplay(shared<RenderContext> _renderContext);
 	public:
@@ -31,5 +34,14 @@ namespace eengine
 
 		void SetTilingRatios(float _ratioX, float _ratioY);
 		glm::vec2 GetTilingRatios();
+
+		void SetOffset(const glm::vec3& _offset);
+		glm::vec3 GetOffset() const;
+
+		void SetOrientation(const glm::quat& _orientation);
+		glm::quat GetOrientation() const;
+
+		void SetScale(const glm::vec3& _scale);
+		glm::vec3 GetScale() const;
 	};
 }
