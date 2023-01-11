@@ -177,6 +177,12 @@ int main(int argc, char* argv[])
         auto pickupRB = weaponPickup->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(0.2f), 1.0f);
         pickupRB->SetIsTrigger(true);
         weaponPickup->AddComponent<WeaponPickup>(0.3f, 45.0f, 45.0f);
+        auto pickupAS = weaponPickup->AddComponent<eengine::AudioSource>();
+        auto pickupVoice = core->GetResources()->Load<eengine::Sound>("/data/audio/tank/voice.ogg");
+        pickupVoice->SetDirectional(true);
+        pickupAS->SetLooping(true);
+        pickupAS->SetVolume(2.0f);
+        pickupAS->PlayOneShot(pickupVoice);
 
         // Preload explosion model
         core->GetResources()->Load<eengine::Model>("/data/models/explosion/explosion.obj");
@@ -193,15 +199,6 @@ int main(int argc, char* argv[])
         player->AddComponent<PlayerController>();
         player->AddComponent<eengine::AudioListener>();
         player->AddComponent<eengine::AudioSource>();
-
-        // Music
-        auto musicPlayer = core->AddEntity();
-        auto musicSource = musicPlayer->AddComponent<eengine::AudioSource>();
-        auto music = core->GetResources()->Load<eengine::Sound>("/data/audio/music/e1m1.ogg");
-        music->SetDirectional(false);
-        musicSource->SetLooping(true);
-        musicSource->SetVolume(0.3f);
-        musicSource->PlayOneShot(music);
 
         core->GetInput()->SetRelativeMouseMode(true);
         core->GetInput()->SetInputGrab(true);

@@ -82,7 +82,7 @@ void PlayerController::OnTick(float _deltaTime)
 			m_rocketTransform->GetParent()->Enable();
 
 			m_rocketTransform->SetPosition(m_weaponTransform->GetPosition() + (m_weaponTransform->Forward() * 0.5f));
-			m_rocketTransform->SetRotation(camTransform->GetQuaternionRotation());//glm::rotate(camTransform->GetQuaternionRotation(), glm::radians(-90.0f), camTransform->Up()));
+			m_rocketTransform->SetRotation(camTransform->GetQuaternionRotation());
 
 			m_rocketRigidBody->SetVelocity(camTransform->Forward() * m_rocketSpeed);
 
@@ -164,4 +164,13 @@ void PlayerController::GiveWeapon()
 	auto sound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/player/pick-up-item.ogg");
 	sound->SetDirectional(false);
 	m_audioSource->PlayOneShot(sound);
+
+	// Music
+	auto musicPlayer = GetCore()->AddEntity();
+	auto musicSource = musicPlayer->AddComponent<eengine::AudioSource>();
+	auto music = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/music/e1m1.ogg");
+	music->SetDirectional(false);
+	musicSource->SetLooping(true);
+	musicSource->SetVolume(0.3f);
+	musicSource->PlayOneShot(music);
 }
