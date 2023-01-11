@@ -11,13 +11,16 @@
 
 namespace eengine 
 {
-	Entity::Entity() 
+	Entity::Entity() :
+		m_enabled(true),
+		m_destroyed(false)
 	{
-		m_destroyed = false;
 	}
 
 	void Entity::Tick(float _deltaTime)
 	{
+		if (!m_enabled) return;
+
 		// Call OnBegin on newly added components
 		if (!m_newComponents.empty()) 
 		{
@@ -37,6 +40,8 @@ namespace eengine
 
 	void Entity::LateTick(float _deltaTime) 
 	{
+		if (!m_enabled) return;
+
 		// Update components
 		for (shared<Component> c : m_components)
 		{
@@ -46,6 +51,8 @@ namespace eengine
 
 	void Entity::Display(shared<RenderContext> _renderContext)
 	{
+		if (!m_enabled) return;
+
 		for (shared<Component> c : m_components)
 		{
 			c->OnDisplay(_renderContext);
@@ -110,6 +117,35 @@ namespace eengine
 	bool Entity::IsDestroyed() const
 	{
 		return m_destroyed;
+	}
+
+	void Entity::Enable()
+	{
+		m_enabled = true;
+
+		// Make sure RigidBodies are also enabled
+		auto rbs = GetComponentsOfType<RigidBody>();
+		for (shared<RigidBody> rb : rbs)
+		{
+			rb->SetIsEnabled(true);
+		}
+	}
+
+	void Entity::Disable() 
+	{
+		m_enabled = false;
+
+		// Make sure RigidBodies are also disabled
+		auto rbs = GetComponentsOfType<RigidBody>();
+		for (shared<RigidBody> rb : rbs)
+		{
+			rb->SetIsEnabled(false);
+		}
+	}
+
+	bool Entity::GetEnabled() const 
+	{
+		return m_enabled;
 	}
 
 	void Entity::RemoveComponent(shared<Component> _component) 

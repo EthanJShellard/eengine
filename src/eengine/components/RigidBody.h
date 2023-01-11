@@ -23,6 +23,8 @@ namespace eengine
 		bool m_isTrigger;
 		btVector3 m_posLock;
 		btVector3 m_rotLock;
+		glm::vec3 m_gravity;
+		bool m_gravityOverride;
 		btScalar m_mass;
 
 		void OnBegin();
@@ -30,6 +32,9 @@ namespace eengine
 		void OnDelete();
 
 		void Activate();
+
+		void TempRemoveBegin();
+		void TempRemoveEnd();
 	public:
 		/// @brief Create a RigidBody with a collider and set mass.
 		/// @param _collider The new RigidBody's collider.
@@ -95,6 +100,10 @@ namespace eengine
 		/// @return The friction ratio of this RigidBody.
 		float GetFriction() const;
 
+		void SetGravity(const glm::vec3& _gravity);
+
+		glm::vec3 GetGravity() const;
+
 		void SetColliderScale(const glm::vec3& _newScale);
 
 		glm::vec3 GetColliderScale();
@@ -120,5 +129,8 @@ namespace eengine
 		void SetIsStatic(bool _isStatic);
 
 		bool GetIsStatic() const;
+
+		void SetIsEnabled(bool _isEnabled);
+		bool GetIsEnabled() const;
 	};
 }

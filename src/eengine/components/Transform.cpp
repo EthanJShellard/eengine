@@ -118,7 +118,7 @@ namespace eengine
 
 	glm::vec3 Transform::Forward() const
 	{
-		return m_orientation * glm::vec3(0, 0, 1);
+		return m_orientation * glm::vec3(0, 0, -1);
 	}
 
 	glm::mat4 Transform::GetModelMatrix() 

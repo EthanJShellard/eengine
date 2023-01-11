@@ -312,14 +312,14 @@ add_library(eengine
 
 add_executable(game
     src/game/main.cpp
-    src/game/components/Suicider.h
-    src/game/components/Suicider.cpp
     src/game/components/ScreamingMover.h
     src/game/components/ScreamingMover.cpp
     src/game/components/PlayerController.h
     src/game/components/PlayerController.cpp
     src/game/components/WeaponPickup.h
     src/game/components/WeaponPickup.cpp
+    src/game/components/RocketController.h
+    src/game/components/RocketController.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF

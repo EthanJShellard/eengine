@@ -23,6 +23,7 @@ private:
 	glm::vec3 m_weaponOffset;
 	glm::vec3 m_weaponScale;
 	glm::vec3 m_rocketScale;
+	float m_rocketSpeed;
 	glm::vec3 m_rocketColliderScale;
 	float m_viewAngleLimit;
 	bool m_hasWeapon;
@@ -31,4 +32,6 @@ private:
 	shared<eengine::Transform> m_transform;
 	shared<eengine::ModelRenderer> m_weaponRenderer;
 	shared<eengine::Transform> m_weaponTransform;
+	shared<eengine::Transform> m_rocketTransform;
+	shared<eengine::RigidBody> m_rocketRigidBody;
 };

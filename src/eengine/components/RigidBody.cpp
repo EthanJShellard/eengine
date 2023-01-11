@@ -18,6 +18,12 @@ namespace eengine
 			// Set origin
 			glm::vec3 pos = GetParent()->GetTransform()->GetPosition();
 			m_rigidBody->getWorldTransform().setOrigin(btVector3(pos.x, pos.y, pos.z));
+
+			// Set gravity if it has been overrided
+			if (m_gravityOverride) 
+			{
+				m_rigidBody->setGravity(btVector3(m_gravity.x, m_gravity.y, m_gravity.y));
+			}
 		}
 		else 
 		{
@@ -32,7 +38,9 @@ namespace eengine
 		m_posLock(1.0f, 1.0f, 1.0f),
 		m_isTrigger(false),
 		m_registered(false),
-		m_mass(_mass)
+		m_mass(_mass),
+		m_gravity(0.0f, 0.0f, 0.0f),
+		m_gravityOverride(false)
 	{
 		btVector3 localInertia(0, 0, 0);
 
@@ -107,6 +115,25 @@ namespace eengine
 		return m_rigidBody->getFriction();
 	}
 
+	void RigidBody::SetGravity(const glm::vec3& _gravity)
+	{
+		m_rigidBody->setGravity(btVector3(_gravity.x, _gravity.y, _gravity.z));
+		m_gravityOverride = true;
+	}
+
+	glm::vec3 RigidBody::GetGravity() const
+	{
+		if (m_gravityOverride) 
+		{
+			return m_gravity;
+		}
+		else 
+		{
+			auto grav = m_rigidBody->getGravity();
+			return glm::vec3(grav.x(), grav.y(), grav.z());
+		}
+	}
+
 	void RigidBody::SetColliderScale(const glm::vec3& _newScale) 
 	{
 		m_rigidBody->getCollisionShape()->setLocalScaling(btVector3(_newScale.x, _newScale.y, _newScale.z));
@@ -121,6 +148,20 @@ namespace eengine
 	void RigidBody::Activate() 
 	{
 		m_rigidBody->activate();
+	}
+
+	void RigidBody::TempRemoveBegin() 
+	{
+		GetCore()->GetPhysicsContext()->m_dynamicsWorld->removeRigidBody(m_rigidBody.get());
+	}
+
+	void RigidBody::TempRemoveEnd() 
+	{
+		GetCore()->GetPhysicsContext()->m_dynamicsWorld->addRigidBody(m_rigidBody.get());
+		if (m_gravityOverride) 
+		{
+			m_rigidBody->setGravity(btVector3(m_gravity.x, m_gravity.y, m_gravity.y));
+		}
 	}
 
 	void RigidBody::SetIsTrigger(bool _isTrigger) 
@@ -145,11 +186,11 @@ namespace eengine
 			if (m_registered) 
 			{
 				// Have to remove from physics world before setting mass props
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->removeRigidBody(m_rigidBody.get());
+				TempRemoveBegin();
 				m_rigidBody->setMassProps(0.0f, m_rigidBody->getLocalInertia());
 				// setMassProps will set an object as static if mass is 0 so we should remove that flag
 				m_rigidBody->setCollisionFlags((m_rigidBody->getCollisionFlags() & ~btCollisionObject::CollisionFlags::CF_STATIC_OBJECT) | btCollisionObject::CollisionFlags::CF_KINEMATIC_OBJECT);
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->addRigidBody(m_rigidBody.get());
+				TempRemoveBegin();
 			}
 			else 
 			{
@@ -164,10 +205,10 @@ namespace eengine
 			if (m_registered) 
 			{
 				// Have to remove from physics world before setting mass props
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->removeRigidBody(m_rigidBody.get());
+				TempRemoveBegin();
 				m_rigidBody->setMassProps(m_mass, m_rigidBody->getLocalInertia());
 				m_rigidBody->setCollisionFlags(m_rigidBody->getCollisionFlags() & ~btCollisionObject::CollisionFlags::CF_KINEMATIC_OBJECT);
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->addRigidBody(m_rigidBody.get());
+				TempRemoveEnd();
 			}
 			else 
 			{
@@ -189,9 +230,9 @@ namespace eengine
 			if (m_registered) 
 			{
 				// Have to remove from physics world before setting mass props
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->removeRigidBody(m_rigidBody.get());
+				TempRemoveBegin();
 				m_rigidBody->setMassProps(0.0f, m_rigidBody->getLocalInertia());
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->addRigidBody(m_rigidBody.get());
+				TempRemoveEnd();
 			}
 			else 
 			{
@@ -203,9 +244,9 @@ namespace eengine
 			if (m_registered) 
 			{
 				// Have to remove from physics world before setting mass props
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->removeRigidBody(m_rigidBody.get());
+				TempRemoveBegin();
 				m_rigidBody->setMassProps(m_mass, m_rigidBody->getLocalInertia());
-				GetCore()->GetPhysicsContext()->m_dynamicsWorld->addRigidBody(m_rigidBody.get());
+				TempRemoveEnd();
 			}
 			else 
 			{
@@ -227,5 +268,15 @@ namespace eengine
 	bool RigidBody::GetIsKinematic() const
 	{
 		return m_rigidBody->isKinematicObject();
+	}
+
+	void RigidBody::SetIsEnabled(bool _isEnabled) 
+	{
+		m_rigidBody->forceActivationState(_isEnabled ? ACTIVE_TAG : DISABLE_SIMULATION);
+	}
+
+	bool RigidBody::GetIsEnabled() const
+	{
+		return m_rigidBody->getActivationState() != DISABLE_SIMULATION;
 	}
 }

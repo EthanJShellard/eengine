@@ -1,5 +1,5 @@
 #include "PlayerController.h"
-#include "Suicider.h"
+#include "RocketController.h"
 
 #include <eengine/eengine.h>
 
@@ -13,9 +13,32 @@ void PlayerController::OnBegin()
 	m_weaponOffset = glm::vec3(0.1f, -0.15f, -0.3f);
 	m_weaponScale = glm::vec3(0.04f, 0.04f, 0.04f);
 	m_rocketScale = glm::vec3(0.5f, 0.5f, 0.5f);
-	m_rocketColliderScale = glm::vec3(1.0f, 0.131f, 0.131f);
+	m_rocketSpeed = 15.0f;
+	m_rocketColliderScale = glm::vec3(0.131f, 0.131, 1.0f);
 	m_viewAngleLimit = 90.0f;
 	m_hasWeapon = false;
+
+	// Create rocket
+	auto rocket = GetCore()->AddEntity();
+	m_rocketRigidBody = rocket->AddComponent<eengine::RigidBody>
+		(
+			std::make_shared<eengine::BoxCollider>(
+				m_rocketScale.x * m_rocketColliderScale.x,
+				m_rocketScale.y * m_rocketColliderScale.y,
+				m_rocketScale.z * m_rocketColliderScale.z
+				),
+			10.0f
+			);
+	m_rocketRigidBody->SetRotationAxesLocked(true, true, true);
+	m_rocketRigidBody->SetIsTrigger(true);
+	m_rocketRigidBody->SetGravity(glm::vec3(0));
+	m_rocketTransform = rocket->GetTransform();
+	m_rocketTransform->SetScale(m_rocketScale);
+	//m_rocketTransform->Rotate(90.0f, m_rocketTransform->Right());
+	rocket->AddComponent<eengine::AudioSource>();
+	rocket->AddComponent<eengine::ModelRenderer>("/data/models/rpg/rpg.obj");
+	rocket->AddComponent<RocketController>(4.0f);
+	rocket->Disable();
 }
 
 void PlayerController::OnTick(float _deltaTime) 
@@ -36,7 +59,7 @@ void PlayerController::OnTick(float _deltaTime)
 	// Clamped camera pitch
 	float viewDot = glm::dot(camTransform->Forward(), m_transform->Forward());
 	float angleBetween = glm::degrees(std::acos(viewDot));
-	bool upperHalf = glm::dot(-camTransform->Forward(), glm::vec3(0, 1, 0)) > 0;
+	bool upperHalf = glm::dot(camTransform->Forward(), glm::vec3(0, 1, 0)) > 0;
 	if ( angleBetween + (upperHalf ? -(sensitivity * delta.y) : sensitivity * delta.y) > m_viewAngleLimit)
 	{
 		float vertRotation = upperHalf ? (m_viewAngleLimit - angleBetween) : -(m_viewAngleLimit - angleBetween);
@@ -49,34 +72,15 @@ void PlayerController::OnTick(float _deltaTime)
 
 	if (m_hasWeapon) 
 	{
-		// Transform weapon renderer
-		glm::vec3 finalOffset = glm::toMat4(camTransform->GetQuaternionRotation()) * glm::vec4(m_weaponOffset, 1.0f);
-		m_weaponTransform->SetPosition(camTransform->GetPosition() + finalOffset);
-		m_weaponTransform->SetRotation(camTransform->GetQuaternionRotation());
-
 		// Weapon firing
-		if (input->GetMouse1Down())
+		if (input->GetMouse1Down() && !m_rocketTransform->GetParent()->GetEnabled())
 		{
-			auto rocket = GetCore()->AddEntity();
+			m_rocketTransform->GetParent()->Enable();
 
-			auto rb = rocket->AddComponent<eengine::RigidBody>
-			(
-				std::make_shared<eengine::CylinderCollider>(
-					m_rocketScale.x * m_rocketColliderScale.x,
-					m_rocketScale.y * m_rocketColliderScale.y,
-					m_rocketScale.z * m_rocketColliderScale.z
-				),
-				10.0f
-			);
-
-			rocket->AddComponent<eengine::ModelRenderer>("/data/models/rpg/rpg.obj");
-			rocket->GetTransform()->SetScale(m_rocketScale);
-			rocket->GetTransform()->SetPosition(m_weaponTransform->GetPosition() - m_weaponTransform->Forward() * 0.2f);
-			auto as = rocket->AddComponent<eengine::AudioSource>();
-			as->SetVolume(1.5f);
-
-			rb->SetVelocity(m_rigidBody->GetVelocity());
-			rb->ApplyImpulse(100.0f * -camTransform->Forward(), rocket->GetTransform()->GetPosition() - camTransform->GetPosition());
+			m_rocketTransform->SetPosition(m_weaponTransform->GetPosition() + (m_weaponTransform->Forward() * 0.5f));
+			m_rocketTransform->SetRotation(camTransform->GetQuaternionRotation());//glm::rotate(camTransform->GetQuaternionRotation(), glm::radians(-90.0f), camTransform->Up()));
+			//m_rocketTransform->Rotate(-90.0f, camTransform->Right());
+			m_rocketRigidBody->SetVelocity(camTransform->Forward() * m_rocketSpeed);
 		}
 	}
 	
@@ -88,11 +92,11 @@ void PlayerController::OnTick(float _deltaTime)
 
 	if (input->GetKey(eengine::KeyCode::w))
 	{
-		newVel += (m_playerSpeed * -m_transform->Forward());
+		newVel += (m_playerSpeed * m_transform->Forward());
 	}
 	if (input->GetKey(eengine::KeyCode::s))
 	{
-		newVel += (m_playerSpeed * m_transform->Forward());
+		newVel += (m_playerSpeed * -m_transform->Forward());
 	}
 	if (input->GetKey(eengine::KeyCode::a))
 	{
@@ -130,6 +134,14 @@ void PlayerController::OnLateTick(float _deltaTime)
 	// Pin camera to this entity
 	auto mainCamTransform = GetCore()->GetMainCamera()->m_transform;
 	mainCamTransform->SetPosition(m_transform->GetPosition() + m_camOffset);
+
+	if (m_hasWeapon)
+	{
+		// Transform weapon renderer
+		glm::vec3 finalOffset = glm::toMat4(mainCamTransform->GetQuaternionRotation()) * glm::vec4(m_weaponOffset, 1.0f);
+		m_weaponTransform->SetPosition(mainCamTransform->GetPosition() + finalOffset);
+		m_weaponTransform->SetRotation(mainCamTransform->GetQuaternionRotation());
+	}
 }
 
 void PlayerController::GiveWeapon() 

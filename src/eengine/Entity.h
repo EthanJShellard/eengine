@@ -45,6 +45,7 @@ namespace eengine
 		shared<Transform> m_transform;
 
 		bool m_destroyed;
+		bool m_enabled;
 	public:
 		/// @brief Get the engine Core.
 		/// @return A shared pointer to the engine Core.
@@ -60,6 +61,10 @@ namespace eengine
 		/// @brief Check if this Entity has been flagged for destruction. This does not refer to whether this Entity is actually destroyed.
 		/// @return The state of the destruction flag.
 		bool IsDestroyed() const;
+
+		void Enable();
+		void Disable();
+		bool GetEnabled() const;
 
 		/// @brief Instantiate and add a Component to this Entity.
 		/// @tparam T The type of Component to add.
@@ -108,6 +113,9 @@ namespace eengine
 		/// @return A list of the found Components.
 		template<typename T>
 		std::vector<shared<T>> GetComponentsOfType();
+
+		template<typename T>
+		bool HasComponentOfType();
 
 		/// @brief Remove the first Component of type T on this Entity. Can throw an exception if no such Component is found.
 		/// @tparam T The type of Component to remove.
@@ -240,6 +248,20 @@ namespace eengine
 			}
 		}
 		return componentsFound;
+	}
+
+	template<typename T>
+	bool Entity::HasComponentOfType() 
+	{
+		for (shared<Component> c : m_components)
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(c);
+			if (ptr)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	template<typename T>
