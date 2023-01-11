@@ -167,6 +167,7 @@ GLuint Shader::id()
   m_texture1Loc = glGetUniformLocation(m_id, "u_Texture1");
   m_colorLoc = glGetUniformLocation(m_id, "u_Color");
   m_tilingRatiosLoc = glGetUniformLocation(m_id, "u_TilingRatios");
+  m_alphaLoc = glGetUniformLocation(m_id, "u_Alpha");
 
   return m_id;
 }
@@ -204,6 +205,11 @@ GLint Shader::colorLoc()
 GLint Shader::tilingRatiosLoc() 
 {
     return m_tilingRatiosLoc;
+}
+
+GLint Shader::alphaLoc() 
+{
+    return m_alphaLoc;
 }
 
 }

@@ -103,6 +103,8 @@ void ModelRenderer::render()
             glBindTexture(GL_TEXTURE_2D, mit->texture->id());
             glUniform1i(m_shader->texture0Loc(), 0);
         }
+        glUniform1f(m_shader->alphaLoc(), m_alpha);
+
         glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mit->mesh.vertices());
       }
     }
@@ -162,6 +164,11 @@ void ModelRenderer::frame(float _frame)
 void ModelRenderer::tilingRatio(glm::vec2 _ratios) 
 {
     m_tilingRatios = _ratios;
+}
+
+void ModelRenderer::alpha(float _alpha) 
+{
+    m_alpha = _alpha;
 }
 
 sys::Ptr<Part> ModelRenderer::intersect(const Ray& _ray, float& _distance) const

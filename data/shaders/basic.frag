@@ -5,6 +5,7 @@ precision highp float;
 uniform sampler2D u_Texture;
 uniform vec4 u_Color;
 uniform vec2 u_TilingRatios;
+uniform float u_Alpha;
 
 varying vec2 v_TexCoord;
 varying vec3 v_Normal;
@@ -27,6 +28,6 @@ void main()
 
   tex *= u_Color;
 
-  gl_FragColor = tex * vec4(light, 1);
+  gl_FragColor = tex * vec4(light, u_Alpha);
 }
 

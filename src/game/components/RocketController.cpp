@@ -18,7 +18,7 @@ void RocketController::Explode()
 	auto as = explosion->AddComponent<eengine::AudioSource>();
 	as->SetLooping(false);
 	as->PlayOneShot(m_explosionSound);
-	explosion->AddComponent<Explosion>(1.0f, 12.0f, 5.0f);
+	explosion->AddComponent<Explosion>(1.0f, 12.0f, 3.0f);
 	auto trigger = explosion->AddComponent<eengine::RigidBody>(std::make_shared<eengine::SphereCollider>(m_explosionRange), 1.0f);
 	trigger->SetIsTrigger(true);
 	trigger->SetIsStatic(true);

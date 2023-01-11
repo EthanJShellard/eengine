@@ -16,6 +16,7 @@ namespace eengine
 		std::string m_modelPath;
 		glm::vec2 m_tilingRatios;
 		Transform m_localTransform;
+		float m_alpha;
 		
 		void OnDisplay(shared<RenderContext> _renderContext);
 	public:
@@ -34,6 +35,9 @@ namespace eengine
 
 		void SetTilingRatios(float _ratioX, float _ratioY);
 		glm::vec2 GetTilingRatios();
+
+		void SetAlpha(float _newAlpha);
+		float GetAlpha();
 
 		void SetOffset(const glm::vec3& _offset);
 		glm::vec3 GetOffset() const;

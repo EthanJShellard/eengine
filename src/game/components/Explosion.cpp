@@ -4,12 +4,15 @@
 void Explosion::OnBegin() 
 {
 	// Apply forces
+	m_renderer = GetParent()->GetComponentOfType<eengine::ModelRenderer>();
 }
 
 void Explosion::OnTick(float _deltaTime) 
 {
 	m_timer += _deltaTime;
 	
+	m_renderer->SetAlpha(((m_timeToDecay - m_timer) / m_timeToDecay));
+
 	if (m_timer > m_timeToDecay) 
 	{
 		GetParent()->Destroy();

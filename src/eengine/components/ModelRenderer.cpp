@@ -10,13 +10,15 @@
 namespace eengine 
 {
 	ModelRenderer::ModelRenderer() :
-		m_tilingRatios(1.0f)
+		m_tilingRatios(1.0f),
+		m_alpha(1.0f)
 	{
 	}
 
 	ModelRenderer::ModelRenderer(const std::string& _modelPath) :
 		m_modelPath(_modelPath),
-		m_tilingRatios(1.0f)
+		m_tilingRatios(1.0f),
+		m_alpha(1.0f)
 	{
 	}
 
@@ -44,8 +46,11 @@ namespace eengine
 		renderer->model(m_model->GetRendModel().get());
 		renderer->shader(m_shader->GetRendShader().get());
 		renderer->tilingRatio(m_tilingRatios);
+		renderer->alpha(m_alpha);
 		
 		renderer->render();
+
+		renderer->alpha(1.0f);
 	}
 
 	void ModelRenderer::SetTilingRatios(float _ratioX, float _ratioY)
@@ -56,6 +61,16 @@ namespace eengine
 	glm::vec2 ModelRenderer::GetTilingRatios()
 	{
 		return m_tilingRatios;
+	}
+
+	void ModelRenderer::SetAlpha(float _newAlpha) 
+	{
+		m_alpha = _newAlpha;
+	}
+
+	float ModelRenderer::GetAlpha() 
+	{
+		return m_alpha;
 	}
 
 	void ModelRenderer::SetOffset(const glm::vec3& _offset) 

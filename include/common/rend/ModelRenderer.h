@@ -21,6 +21,7 @@ struct ModelRenderer : Renderer
   void animation(sys::Ptr<Animation> _animation);
   void frame(float _frame);
   void tilingRatio(glm::vec2 _ratios);
+  void alpha(float _alpha);
 
   sys::Ptr<Part> intersect(const Ray& _ray, float& _distance) const;
 
@@ -31,6 +32,7 @@ private:
   sys::Ptr<Animation> m_animation;
   sys::Zero<float> m_frame;
   glm::vec2 m_tilingRatios;
+  float m_alpha;
 };
 
 }
