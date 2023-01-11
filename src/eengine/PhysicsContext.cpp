@@ -59,8 +59,8 @@ namespace eengine
 		shared<RigidBody> rb2 = firstGreater ? rigidBody2->m_eengineParent.lock() : rigidBody1->m_eengineParent.lock();
 
 		// Create combo of IDs
-		uint64_t comboID = firstGreater ? idx1 << 32 : idx2 << 32;
-		comboID |= comboID ? idx2 : idx1;
+		uint64_t comboID = firstGreater ? (uint64_t)idx1 << 32 : (uint64_t)idx2 << 32;
+		comboID |= firstGreater ? (uint64_t)idx2 : (uint64_t)idx1;
 
 		// Record collisions
 		auto itr = g_collisionMap.find(comboID);
