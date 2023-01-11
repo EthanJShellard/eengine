@@ -212,25 +212,20 @@ namespace eengine
 
 			if (rb1->m_isTrigger) 
 			{
-				if (rb2->m_isTrigger) 
-				{
-					// Not going to send OnTriggerEnter events when triggers enter triggers
-					continue;
-				}
-
 				rb1->GetParent()->OnTriggerEnter(rb2);
 			}
 			else 
 			{
-				if (rb2->m_isTrigger) 
-				{
-					rb2->GetParent()->OnTriggerEnter(rb1);
-				}
-				else // Neither is a trigger, send collision events
-				{
-					rb1->GetParent()->OnCollisionEnter(rb2);
-					rb2->GetParent()->OnCollisionEnter(rb1);
-				}
+				rb1->GetParent()->OnCollisionEnter(rb2);
+			}
+
+			if (rb2->m_isTrigger)
+			{
+				rb2->GetParent()->OnTriggerEnter(rb1);
+			}
+			else
+			{
+				rb2->GetParent()->OnCollisionEnter(rb1);
 			}
 		}
 
@@ -252,24 +247,22 @@ namespace eengine
 				}
 
 				// Send exiting events
-				if (rb1->m_isTrigger) 
+				if (rb1->m_isTrigger)
 				{
-					if (!rb2->m_isTrigger) 
-					{
-						rb1->GetParent()->OnTriggerExit(rb2);
-					}
+					rb1->GetParent()->OnTriggerExit(rb2);
 				}
-				else 
+				else
 				{
-					if (rb2->m_isTrigger) 
-					{
-						rb2->GetParent()->OnTriggerExit(rb1);
-					}
-					else // Neither is a trigger, send exit events
-					{
-						rb1->GetParent()->OnCollisionExit(rb2);
-						rb2->GetParent()->OnCollisionExit(rb1);
-					}
+					rb1->GetParent()->OnCollisionExit(rb2);
+				}
+
+				if (rb2->m_isTrigger)
+				{
+					rb2->GetParent()->OnTriggerExit(rb1);
+				}
+				else
+				{
+					rb2->GetParent()->OnCollisionExit(rb1);
 				}
 
 				itr = g_collisionMap.erase(itr);

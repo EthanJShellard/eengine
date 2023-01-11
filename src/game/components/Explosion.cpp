@@ -33,9 +33,12 @@ void Explosion::OnLateTick(float _deltaTime)
 
 void Explosion::OnTriggerEnter(shared<eengine::RigidBody> _other) 
 {
-	glm::vec3 displacement = _other->GetParent()->GetTransform()->GetPosition() - GetParent()->GetTransform()->GetPosition();
-	_other->ApplyImpulse(glm::normalize(displacement) * m_force, -displacement);
-	m_updateWaited = true;
+	if (!_other->GetIsTrigger()) 
+	{
+		glm::vec3 displacement = _other->GetParent()->GetTransform()->GetPosition() - GetParent()->GetTransform()->GetPosition();
+		_other->ApplyImpulse(glm::normalize(displacement) * m_force, -displacement);
+		m_updateWaited = true;
+	}
 }
 
 Explosion::Explosion(float _range, float _force, float _decayTime) :
