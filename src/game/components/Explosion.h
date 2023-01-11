@@ -7,6 +7,7 @@ class Explosion : public eengine::Component
 	float m_force;
 	float m_timer;
 	float m_timeToDecay;
+	bool m_updateWaited;
 
 	shared<eengine::ModelRenderer> m_renderer;
 

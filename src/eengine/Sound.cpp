@@ -8,7 +8,11 @@ namespace eengine
 {
 	void Sound::Load() 
 	{
-		m_dirty = true;
+		if (!m_loadedOnce) 
+		{
+			m_loadedOnce = true;
+			m_dirty = true;
+		}
 	}
 
 	void Sound::PrepareBuffers() 
@@ -51,6 +55,8 @@ namespace eengine
 
 		// STB vorbis uses ?
 		free(alloc_buffer);
+
+		m_dirty = false;
 	}
 
 	ALuint Sound::GetID() 
@@ -82,8 +88,11 @@ namespace eengine
 
 	void Sound::SetDirectional(bool _directional) 
 	{
-		m_directional = _directional;
-		m_dirty = true;
+		if (m_directional != _directional) 
+		{
+			m_directional = _directional;
+			m_dirty = true;
+		}
 	}
 	
 	bool Sound::GetDirectional() 
@@ -96,7 +105,8 @@ namespace eengine
 		m_channels(-1),
 		m_sampleRate(-1),
 		m_dirty(false),
-		m_directional(true)
+		m_directional(true),
+		m_loadedOnce(false)
 	{	
 	}
 

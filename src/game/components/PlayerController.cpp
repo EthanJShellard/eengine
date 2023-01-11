@@ -81,7 +81,7 @@ void PlayerController::OnTick(float _deltaTime)
 		{
 			m_rocketTransform->GetParent()->Enable();
 
-			m_rocketTransform->SetPosition(m_weaponTransform->GetPosition() + (m_weaponTransform->Forward() * 0.5f));
+			m_rocketTransform->SetPosition(m_weaponTransform->GetPosition());
 			m_rocketTransform->SetRotation(camTransform->GetQuaternionRotation());
 
 			m_rocketRigidBody->SetVelocity(camTransform->Forward() * m_rocketSpeed);

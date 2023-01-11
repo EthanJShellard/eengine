@@ -18,6 +18,7 @@ namespace eengine
 
 		bool m_directional;
 		bool m_dirty;
+		bool m_loadedOnce;
 
 		void Load();
 		void PrepareBuffers();
@@ -46,6 +47,8 @@ namespace eengine
 		/// @details Sounds using directional audio cannot be buffered as stereo.
 		/// @return Whether or not this sound is set to use directional audio.
 		bool GetDirectional();
+
+
 
 		Sound();
 		~Sound();

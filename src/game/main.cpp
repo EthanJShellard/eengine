@@ -202,6 +202,12 @@ int main(int argc, char* argv[])
 
         core->GetInput()->SetRelativeMouseMode(true);
         core->GetInput()->SetInputGrab(true);
+
+        // Preload music
+        auto musicPreload = core->GetResources()->Load<eengine::Sound>("/data/audio/music/e1m1.ogg");
+        musicPreload->SetDirectional(false);
+        musicPreload->GetID();
+
     }
     
 

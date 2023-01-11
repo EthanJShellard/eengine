@@ -53,8 +53,6 @@ namespace eengine
 		uint32_t idx1 = rigidBody1->getUserIndex();
 		uint32_t idx2 = rigidBody2->getUserIndex();
 
-		bool rocketInvolved = idx1 == 31 || idx2 == 31;
-
 		// Make sure we're always combining in the same order
 		bool firstGreater = idx1 > idx2;
 		shared<RigidBody> rb1 = firstGreater ? rigidBody1->m_eengineParent.lock() : rigidBody2->m_eengineParent.lock();
@@ -73,10 +71,6 @@ namespace eengine
 		}
 		else 
 		{
-			if (rocketInvolved) 
-			{
-				Debug::Log("Still colliding");
-			}
 			itr->second.stillColliding = true;
 		}
 
