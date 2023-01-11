@@ -192,6 +192,7 @@ int main(int argc, char* argv[])
         playerRB->SetFriction(3.0f);
         player->AddComponent<PlayerController>();
         player->AddComponent<eengine::AudioListener>();
+        player->AddComponent<eengine::AudioSource>();
 
         // Music
         auto musicPlayer = core->AddEntity();

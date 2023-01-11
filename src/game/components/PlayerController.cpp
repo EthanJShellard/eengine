@@ -17,6 +17,8 @@ void PlayerController::OnBegin()
 	m_rocketColliderScale = glm::vec3(0.131f, 0.131, 1.0f);
 	m_viewAngleLimit = 90.0f;
 	m_hasWeapon = false;
+	m_audioSource = GetParent()->GetComponentOfType<eengine::AudioSource>();
+	m_audioSource->SetLooping(false);
 
 	// Create rocket
 	auto rocket = GetCore()->AddEntity();
@@ -85,6 +87,7 @@ void PlayerController::OnTick(float _deltaTime)
 			m_rocketRigidBody->SetVelocity(camTransform->Forward() * m_rocketSpeed);
 
 			m_rocketAudioSource->PlayOneShot(m_rocketBoostSound);
+			m_rocketAudioSource->SetVolume(1.5f);
 			m_rocketAudioSource->SetLooping(true);
 		}
 	}
@@ -158,4 +161,7 @@ void PlayerController::GiveWeapon()
 	m_weaponRenderer->SetScale(m_weaponScale);
 	m_weaponRenderer->SetOrientation(glm::rotate(glm::mat4(1), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 
+	auto sound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/player/pick-up-item.ogg");
+	sound->SetDirectional(false);
+	m_audioSource->PlayOneShot(sound);
 }

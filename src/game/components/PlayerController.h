@@ -30,6 +30,7 @@ private:
 
 	shared<eengine::RigidBody> m_rigidBody;
 	shared<eengine::Transform> m_transform;
+	shared<eengine::AudioSource> m_audioSource;
 	shared<eengine::ModelRenderer> m_weaponRenderer;
 	shared<eengine::Transform> m_weaponTransform;
 	shared<eengine::Transform> m_rocketTransform;
