@@ -56,6 +56,12 @@ namespace eengine
 		/// @brief Called when the parent object is about to be deleted.
 		virtual void OnDelete();
 
+		/// @brief Called when this Component's parent is enabled.
+		virtual void OnEnable();
+
+		/// @brief Called when this Component's parent is disabled.
+		virtual void OnDisable();
+
 		// Cache references to prevent having to repeatedly climb the hierarchy.
 		weak<Entity> m_parent;
 		weak<Core> m_core;

@@ -102,7 +102,7 @@ namespace eengine
 		template<typename T, typename A, typename B, typename C>
 		shared<T> AddComponent(A _a, B _b, C _c);
 
-		/// @brief Get the first Component of type T found on this Entity. Will throw if no such Component exists.
+		/// @brief Get the first Component of type T found on this Entity. Will return nullptr if no such component exists.
 		/// @tparam T The type of Component to get.
 		/// @return The Component.
 		template<typename T>
@@ -113,9 +113,6 @@ namespace eengine
 		/// @return A list of the found Components.
 		template<typename T>
 		std::vector<shared<T>> GetComponentsOfType();
-
-		template<typename T>
-		bool HasComponentOfType();
 
 		/// @brief Remove the first Component of type T on this Entity. Can throw an exception if no such Component is found.
 		/// @tparam T The type of Component to remove.
@@ -149,7 +146,6 @@ namespace eengine
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
-		m_components.push_back(share);
 		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
@@ -171,7 +167,6 @@ namespace eengine
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
-		m_components.push_back(share);
 		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
@@ -193,7 +188,6 @@ namespace eengine
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
-		m_components.push_back(share);
 		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
@@ -215,7 +209,6 @@ namespace eengine
 		share->m_parent = m_self;
 		share->m_core = m_core;
 		share->m_input = m_core.lock()->GetInput();
-		m_components.push_back(share);
 		m_newComponents.push_back(share);
 		share->OnInit();
 		return share;
@@ -232,6 +225,16 @@ namespace eengine
 				return ptr;
 			}
 		}
+
+		for (shared<Component> c : m_newComponents)
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(c);
+			if (ptr)
+			{
+				return ptr;
+			}
+		}
+
 		return nullptr;
 	}
 
@@ -247,21 +250,17 @@ namespace eengine
 				componentsFound.push_back(ptr);
 			}
 		}
-		return componentsFound;
-	}
 
-	template<typename T>
-	bool Entity::HasComponentOfType() 
-	{
-		for (shared<Component> c : m_components)
+		for (shared<Component> c : m_newComponents)
 		{
 			shared<T> ptr = std::dynamic_pointer_cast<T>(c);
 			if (ptr)
 			{
-				return true;
+				componentsFound.push_back(ptr);
 			}
 		}
-		return false;
+
+		return componentsFound;
 	}
 
 	template<typename T>
@@ -274,20 +273,24 @@ namespace eengine
 			shared<T> ptr = std::dynamic_pointer_cast<T>(*itr);
 			if (ptr) 
 			{
-				if (!m_newComponents.empty()) 
-				{
-					auto newCmp = std::find(m_newComponents.begin(), m_newComponents.end(), ptr);
-					if (newCmp != m_newComponents.end())
-					{
-						m_newComponents.erase(newCmp);
-					}
-				}
-
 				m_components.erase(itr);
 				return;
 			}
 			itr++;
 		}
+
+		itr = m_newComponents.begin();
+		while (itr != m_components.end()) 
+		{
+			shared<T> ptr = std::dynamic_pointer_cast<T>(*itr);
+			if (ptr)
+			{
+				m_newComponents.erase(itr);
+				return;
+			}
+			itr++;
+		}
+
 		throw std::exception();
 	}
 

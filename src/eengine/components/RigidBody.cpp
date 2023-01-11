@@ -19,10 +19,17 @@ namespace eengine
 			glm::vec3 pos = GetParent()->GetTransform()->GetPosition();
 			m_rigidBody->getWorldTransform().setOrigin(btVector3(pos.x, pos.y, pos.z));
 
-			// Set gravity if it has been overrided
-			if (m_gravityOverride) 
+			if (m_disabled)
 			{
-				m_rigidBody->setGravity(btVector3(m_gravity.x, m_gravity.y, m_gravity.y));
+				TempRemoveBegin();
+			}
+			else 
+			{
+				// Set gravity if it has been overrided
+				if (m_gravityOverride)
+				{
+					m_rigidBody->setGravity(btVector3(m_gravity.x, m_gravity.y, m_gravity.y));
+				}
 			}
 		}
 		else 
@@ -40,7 +47,8 @@ namespace eengine
 		m_registered(false),
 		m_mass(_mass),
 		m_gravity(0.0f, 0.0f, 0.0f),
-		m_gravityOverride(false)
+		m_gravityOverride(false),
+		m_disabled(false)
 	{
 		btVector3 localInertia(0, 0, 0);
 
@@ -65,6 +73,16 @@ namespace eengine
 	void RigidBody::OnDelete() 
 	{
 		OnRemove();
+	}
+
+	void RigidBody::OnEnable() 
+	{
+		SetIsEnabled(true);
+	}
+
+	void RigidBody::OnDisable() 
+	{
+		SetIsEnabled(false);
 	}
 
 	bool RigidBody::NeedsUniqueness() const
@@ -272,11 +290,26 @@ namespace eengine
 
 	void RigidBody::SetIsEnabled(bool _isEnabled) 
 	{
-		m_rigidBody->forceActivationState(_isEnabled ? ACTIVE_TAG : DISABLE_SIMULATION);
+		if (!_isEnabled) 
+		{
+			m_disabled = true;
+			if (m_registered)
+			{
+				TempRemoveBegin();
+			}
+		}
+		else 
+		{
+			m_disabled = false;
+			if (m_registered) 
+			{
+				TempRemoveEnd();
+			}
+		}
 	}
 
 	bool RigidBody::GetIsEnabled() const
 	{
-		return m_rigidBody->getActivationState() != DISABLE_SIMULATION;
+		return m_disabled;
 	}
 }

@@ -22,6 +22,16 @@ namespace eengine
 		alSource3f(m_id, AL_POSITION, parentPos.x, parentPos.y, parentPos.z);
 	}
 
+	void AudioSource::OnDisable() 
+	{
+		alSourcePause(m_id);
+	}
+
+	void AudioSource::OnEnable() 
+	{
+		alSourcePlay(m_id);
+	}
+
 	bool AudioSource::IsPlaying() 
 	{
 		ALenum state;

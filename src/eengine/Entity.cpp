@@ -27,6 +27,7 @@ namespace eengine
 			for (shared<Component> c : m_newComponents)
 			{
 				c->OnBegin();
+				m_components.push_back(c);
 			}
 			m_newComponents.clear();
 		}
@@ -61,6 +62,8 @@ namespace eengine
 
 	void Entity::OnTriggerEnter(shared<RigidBody> _other) 
 	{
+		if (!m_enabled) return;
+
 		for (shared<Component> c : m_components) 
 		{
 			c->OnTriggerEnter(_other);
@@ -69,6 +72,8 @@ namespace eengine
 
 	void Entity::OnTriggerExit(shared<RigidBody> _other) 
 	{
+		if (!m_enabled) return;
+
 		for (shared<Component> c : m_components)
 		{
 			c->OnTriggerExit(_other);
@@ -77,6 +82,8 @@ namespace eengine
 
 	void Entity::OnCollisionEnter(shared<RigidBody> _other) 
 	{
+		if (!m_enabled) return;
+
 		for (shared<Component> c : m_components)
 		{
 			c->OnCollisionEnter(_other);
@@ -85,6 +92,8 @@ namespace eengine
 
 	void Entity::OnCollisionExit(shared<RigidBody> _other)
 	{
+		if (!m_enabled) return;
+
 		for (shared<Component> c : m_components)
 		{
 			c->OnCollisionExit(_other);
@@ -121,25 +130,33 @@ namespace eengine
 
 	void Entity::Enable()
 	{
+		if (m_enabled) return;
 		m_enabled = true;
-
-		// Make sure RigidBodies are also enabled
-		auto rbs = GetComponentsOfType<RigidBody>();
-		for (shared<RigidBody> rb : rbs)
+		
+		for (shared<Component> c : m_newComponents)
 		{
-			rb->SetIsEnabled(true);
+			c->OnEnable();
+		}
+
+		for (shared<Component> c : m_components)
+		{
+			c->OnEnable();
 		}
 	}
 
 	void Entity::Disable() 
 	{
+		if (!m_enabled) return;
 		m_enabled = false;
 
-		// Make sure RigidBodies are also disabled
-		auto rbs = GetComponentsOfType<RigidBody>();
-		for (shared<RigidBody> rb : rbs)
+		for (shared<Component> c : m_newComponents)
 		{
-			rb->SetIsEnabled(false);
+			c->OnDisable();
+		}
+
+		for (shared<Component> c : m_components)
+		{
+			c->OnDisable();
 		}
 	}
 

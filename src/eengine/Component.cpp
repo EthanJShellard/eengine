@@ -73,6 +73,16 @@ namespace eengine
 		// Stub
 	}
 
+	void Component::OnEnable() 
+	{
+		// Stub
+	}
+
+	void Component::OnDisable() 
+	{
+		// Stub
+	}
+
 	bool Component::NeedsUniqueness() const
 	{
 		return false;

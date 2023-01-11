@@ -49,9 +49,11 @@ namespace eengine
 		// Get RigidBodies
 		btRigidBody* rigidBody1 = (btRigidBody*)(_collisionPair.m_pProxy0->m_clientObject);
 		btRigidBody* rigidBody2 = (btRigidBody*)(_collisionPair.m_pProxy1->m_clientObject);
-		
+
 		uint32_t idx1 = rigidBody1->getUserIndex();
 		uint32_t idx2 = rigidBody2->getUserIndex();
+
+		bool rocketInvolved = idx1 == 31 || idx2 == 31;
 
 		// Make sure we're always combining in the same order
 		bool firstGreater = idx1 > idx2;
@@ -71,6 +73,10 @@ namespace eengine
 		}
 		else 
 		{
+			if (rocketInvolved) 
+			{
+				Debug::Log("Still colliding");
+			}
 			itr->second.stillColliding = true;
 		}
 
@@ -215,7 +221,7 @@ namespace eengine
 				if (rb2->m_isTrigger) 
 				{
 					// Not going to send OnTriggerEnter events when triggers enter triggers
-					return;
+					continue;
 				}
 
 				rb1->GetParent()->OnTriggerEnter(rb2);

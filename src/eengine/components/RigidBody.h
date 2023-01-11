@@ -26,10 +26,13 @@ namespace eengine
 		glm::vec3 m_gravity;
 		bool m_gravityOverride;
 		btScalar m_mass;
+		bool m_disabled;
 
 		void OnBegin();
 		void OnRemove();
 		void OnDelete();
+		void OnDisable();
+		void OnEnable();
 
 		void Activate();
 
