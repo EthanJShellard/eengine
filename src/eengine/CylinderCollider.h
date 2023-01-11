@@ -5,6 +5,6 @@ namespace eengine
 	class CylinderCollider : public Collider 
 	{
 	public:
-		CylinderCollider(float _halfWidth, float _halfHeight, float _halfDepth);
+		CylinderCollider(float _width, float _height, float _depth);
 	};
 }

@@ -22,6 +22,8 @@ private:
 	glm::vec3 m_camOffset;
 	glm::vec3 m_weaponOffset;
 	glm::vec3 m_weaponScale;
+	glm::vec3 m_rocketScale;
+	glm::vec3 m_rocketColliderScale;
 	float m_viewAngleLimit;
 	bool m_hasWeapon;
 

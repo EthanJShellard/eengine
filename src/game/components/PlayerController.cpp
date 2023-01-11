@@ -12,6 +12,8 @@ void PlayerController::OnBegin()
 	m_camOffset = glm::vec3(0.0f, 0.4f, 0.0f);
 	m_weaponOffset = glm::vec3(0.1f, -0.15f, -0.3f);
 	m_weaponScale = glm::vec3(0.04f, 0.04f, 0.04f);
+	m_rocketScale = glm::vec3(0.5f, 0.5f, 0.5f);
+	m_rocketColliderScale = glm::vec3(1.0f, 0.131f, 0.131f);
 	m_viewAngleLimit = 90.0f;
 	m_hasWeapon = false;
 }
@@ -45,12 +47,37 @@ void PlayerController::OnTick(float _deltaTime)
 		camTransform->Rotate(-(sensitivity * delta.y), camTransform->Right());
 	}
 
-	// Transform weapon renderer
 	if (m_hasWeapon) 
 	{
+		// Transform weapon renderer
 		glm::vec3 finalOffset = glm::toMat4(camTransform->GetQuaternionRotation()) * glm::vec4(m_weaponOffset, 1.0f);
 		m_weaponTransform->SetPosition(camTransform->GetPosition() + finalOffset);
 		m_weaponTransform->SetRotation(camTransform->GetQuaternionRotation());
+
+		// Weapon firing
+		if (input->GetMouse1Down())
+		{
+			auto rocket = GetCore()->AddEntity();
+
+			auto rb = rocket->AddComponent<eengine::RigidBody>
+			(
+				std::make_shared<eengine::CylinderCollider>(
+					m_rocketScale.x * m_rocketColliderScale.x,
+					m_rocketScale.y * m_rocketColliderScale.y,
+					m_rocketScale.z * m_rocketColliderScale.z
+				),
+				10.0f
+			);
+
+			rocket->AddComponent<eengine::ModelRenderer>("/data/models/rpg/rpg.obj");
+			rocket->GetTransform()->SetScale(m_rocketScale);
+			rocket->GetTransform()->SetPosition(m_weaponTransform->GetPosition() - m_weaponTransform->Forward() * 0.2f);
+			auto as = rocket->AddComponent<eengine::AudioSource>();
+			as->SetVolume(1.5f);
+
+			rb->SetVelocity(m_rigidBody->GetVelocity());
+			rb->ApplyImpulse(100.0f * -camTransform->Forward(), rocket->GetTransform()->GetPosition() - camTransform->GetPosition());
+		}
 	}
 	
 
@@ -85,25 +112,6 @@ void PlayerController::OnTick(float _deltaTime)
 			newVel = glm::mix(oldVel, newVel, _deltaTime * m_aerialSpeed);
 		}
 		m_rigidBody->SetVelocity(newVel);
-	}
-	
-
-	if (input->GetMouse1Down())
-	{
-		auto e = GetCore()->AddEntity();
-		auto rb = e->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(1.0f, 1.0f, 1.0f), 10.0f);
-		e->AddComponent<eengine::ModelRenderer>("/data/models/crate/Crate1.obj");
-		glm::vec3 scale(1.0f, 1.0f, 1.0f);
-		e->GetTransform()->SetScale(scale);
-		rb->SetColliderScale(scale);
-		e->GetTransform()->SetPosition(camTransform->GetPosition() - camTransform->Forward() * 1.0f);
-		auto as = e->AddComponent<eengine::AudioSource>();
-		//as->PlayOneShot(GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/dixie_horn.ogg"));
-		as->SetVolume(1.5f);
-		e->AddComponent<Suicider>();
-
-		rb->SetVelocity(m_rigidBody->GetVelocity());
-		rb->ApplyImpulse(100.0f * -camTransform->Forward(), e->GetTransform()->GetPosition() - camTransform->GetPosition());
 	}
 
 	if (input->GetKeyDown(eengine::KeyCode::space) && grounded)
