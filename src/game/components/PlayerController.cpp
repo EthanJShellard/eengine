@@ -34,11 +34,13 @@ void PlayerController::OnBegin()
 	m_rocketRigidBody->SetGravity(glm::vec3(0));
 	m_rocketTransform = rocket->GetTransform();
 	m_rocketTransform->SetScale(m_rocketScale);
-	//m_rocketTransform->Rotate(90.0f, m_rocketTransform->Right());
-	rocket->AddComponent<eengine::AudioSource>();
+	m_rocketAudioSource = rocket->AddComponent<eengine::AudioSource>();
 	rocket->AddComponent<eengine::ModelRenderer>("/data/models/rpg/rpg.obj");
 	rocket->AddComponent<RocketController>(4.0f);
 	rocket->Disable();
+
+	m_rocketBoostSound = GetCore()->GetResources()->Load<eengine::Sound>("/data/audio/rocket/boost.ogg");
+	m_rocketBoostSound->SetDirectional(true);
 }
 
 void PlayerController::OnTick(float _deltaTime) 
@@ -79,8 +81,11 @@ void PlayerController::OnTick(float _deltaTime)
 
 			m_rocketTransform->SetPosition(m_weaponTransform->GetPosition() + (m_weaponTransform->Forward() * 0.5f));
 			m_rocketTransform->SetRotation(camTransform->GetQuaternionRotation());//glm::rotate(camTransform->GetQuaternionRotation(), glm::radians(-90.0f), camTransform->Up()));
-			//m_rocketTransform->Rotate(-90.0f, camTransform->Right());
+
 			m_rocketRigidBody->SetVelocity(camTransform->Forward() * m_rocketSpeed);
+
+			m_rocketAudioSource->PlayOneShot(m_rocketBoostSound);
+			m_rocketAudioSource->SetLooping(true);
 		}
 	}
 	

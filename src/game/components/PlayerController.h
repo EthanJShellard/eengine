@@ -34,4 +34,6 @@ private:
 	shared<eengine::Transform> m_weaponTransform;
 	shared<eengine::Transform> m_rocketTransform;
 	shared<eengine::RigidBody> m_rocketRigidBody;
+	shared<eengine::AudioSource> m_rocketAudioSource;
+	shared<eengine::Sound> m_rocketBoostSound;
 };
