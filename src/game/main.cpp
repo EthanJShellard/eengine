@@ -110,7 +110,7 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
     }
 
     // West wall
-    if (_doorPositions.y)
+    if (_doorPositions.w)
     {
         float wallLength = (_dimensions.z - _doorWidth) / 2.0f;
         auto leftWall = CreateWall(_core, glm::vec3(wallLength, _dimensions.y, halfThickness), _wallTilingMultiplier);
@@ -165,7 +165,7 @@ int main(int argc, char* argv[])
         rb->SetIsStatic(true);
 
         // Starting room
-        auto startingRoom = CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, true, false));
+        auto startingRoom = CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, false, false));
 
         // Weapon room
         auto weaponRoom = CreateRoom(core, glm::vec3(0,0,-10.0f), glm::vec3(10.0f, 2.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, false, true, false));
