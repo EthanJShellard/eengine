@@ -184,6 +184,7 @@ int main(int argc, char* argv[])
         // Combat room
         auto combatRoom = CreateRoom(core, glm::vec3(15.0f,0,0), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
 
+        // Player
         auto player = core->AddEntity();
         auto playerRB = player->AddComponent<eengine::RigidBody>(std::make_shared<eengine::CapsuleCollider>(0.2f, 0.6f), 1.0f);
         playerRB->SetPositionAxesLocked(false, false, false);
@@ -191,6 +192,15 @@ int main(int argc, char* argv[])
         playerRB->SetFriction(3.0f);
         player->AddComponent<PlayerController>();
         player->AddComponent<eengine::AudioListener>();
+
+        // Music
+        auto musicPlayer = core->AddEntity();
+        auto musicSource = musicPlayer->AddComponent<eengine::AudioSource>();
+        auto music = core->GetResources()->Load<eengine::Sound>("/data/audio/music/e1m1.ogg");
+        music->SetDirectional(false);
+        musicSource->SetLooping(true);
+        musicSource->SetVolume(0.3f);
+        musicSource->PlayOneShot(music);
 
         core->GetInput()->SetRelativeMouseMode(true);
         core->GetInput()->SetInputGrab(true);
