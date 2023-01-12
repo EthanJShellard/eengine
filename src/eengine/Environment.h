@@ -20,6 +20,8 @@ namespace eengine
 		std::string m_projectWorkingDirectory;
 
 		Environment();
+
+		/// @brief Called at the beginning of each frame to prepare environment data.
 		void OnFrameStart();
 	public:
 		/// @brief Get the time between the start of this frame and the start of the last frame.

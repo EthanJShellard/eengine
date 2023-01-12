@@ -28,13 +28,35 @@ namespace eengine
 	private:
 		Entity();
 
+		/// @brief Update all components,
+		/// @param _deltaTime The time in seconds since the last frame.
 		void Tick(float _deltaTime);
+
+		/// @brief Update all components after engine physics has been updated.
+		/// @param _deltaTime The time in seconds since the last frame.
 		void LateTick(float _deltaTime);
+
+		/// @brief Render all renderable components.
+		/// @param _renderContext The engine render context.
 		void Display(shared<RenderContext> _renderContext);
+
+		/// @brief Called when a collider enters this Entity's trigger.
+		/// @param _other The RigidBody of the collider which entered the trigger.
 		void OnTriggerEnter(shared<RigidBody> _other);
+
+		/// @brief Called when a collider exits this Entity's trigger.
+		/// @param _other The RigidBody of the collider which exited the trigger.
 		void OnTriggerExit(shared<RigidBody> _other);
+
+		/// @brief Called when a collider enters this Entity's collider.
+		/// @param _other The RigidBody of the collider which entered the collider.
 		void OnCollisionEnter(shared<RigidBody> _other);
+
+		/// @brief Called when a collider exits this Entity's collider.
+		/// @param _other The RigidBody of the collider which exited the collider.
 		void OnCollisionExit(shared<RigidBody> _other);
+
+		/// @brief Called just before the entity is about to be removed from the scene. This should cause deletion of the Entity, if no strong references remain.
 		void OnDelete();
 
 		std::list<shared<Component>> m_components;
@@ -62,8 +84,16 @@ namespace eengine
 		/// @return The state of the destruction flag.
 		bool IsDestroyed() const;
 
+		/// @brief Enable this Entity, allowing updates and events for its components.
+		/// @details Will call OnEnable() on all child components.
 		void Enable();
+
+		/// @brief Disable this Entity, disallowing updates and events for its components.
+		/// @details Will call OnDisable() on all child components.
 		void Disable();
+
+		/// @brief Get whether or not this Entity has been disabled.
+		/// @return Whether or not this Entity has been disabled.
 		bool GetEnabled() const;
 
 		/// @brief Instantiate and add a Component to this Entity.

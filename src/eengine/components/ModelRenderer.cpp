@@ -58,7 +58,7 @@ namespace eengine
 		m_tilingRatios = glm::vec2(_ratioX, _ratioY);
 	}
 
-	glm::vec2 ModelRenderer::GetTilingRatios()
+	glm::vec2 ModelRenderer::GetTilingRatios() const
 	{
 		return m_tilingRatios;
 	}
@@ -68,17 +68,17 @@ namespace eengine
 		m_alpha = _newAlpha;
 	}
 
-	float ModelRenderer::GetAlpha() 
+	float ModelRenderer::GetAlpha() const
 	{
 		return m_alpha;
 	}
 
-	void ModelRenderer::SetOffset(const glm::vec3& _offset) 
+	void ModelRenderer::SetPosition(const glm::vec3& _offset) 
 	{
 		m_localTransform.SetPosition(_offset);
 	}
 
-	glm::vec3 ModelRenderer::GetOffset() const
+	glm::vec3 ModelRenderer::GetPosition() const
 	{
 		return m_localTransform.GetPosition();
 	}

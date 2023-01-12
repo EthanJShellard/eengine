@@ -11,6 +11,7 @@ namespace eengine
 	// Engine forward declarations
 	class RigidBody;
 
+	/// @brief Collider super-class.
 	class Collider : public NonCopyable 
 	{
 		friend class RigidBody;

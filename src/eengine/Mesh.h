@@ -18,6 +18,7 @@ namespace eengine
 		/// @return A shared pointer to the rend representation of this Mesh.
 		shared<rend::Mesh> GetRendMesh();
 
+		/// @brief Load the mesh from the Resource path.
 		void Load();
 
 	public:

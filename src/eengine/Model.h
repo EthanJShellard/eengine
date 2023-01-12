@@ -19,6 +19,7 @@ namespace eengine
 		/// @return A shared pointer to the rend representation of this model.
 		shared<rend::Model> GetRendModel();
 
+		/// @brief Load the Model from the Resource path.
 		void Load();
 	};
 }
