@@ -312,8 +312,6 @@ add_library(eengine
 
 add_executable(game
     src/game/main.cpp
-    src/game/components/ScreamingMover.h
-    src/game/components/ScreamingMover.cpp
     src/game/components/PlayerController.h
     src/game/components/PlayerController.cpp
     src/game/components/WeaponPickup.h

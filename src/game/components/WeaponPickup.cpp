@@ -30,10 +30,10 @@ void WeaponPickup::OnTick(float _deltaTime)
 
 void WeaponPickup::OnTriggerEnter(shared<eengine::RigidBody> _other) 
 {
-	auto pc = _other->GetParent()->GetComponentsOfType<PlayerController>();
-	if (pc.size()) 
+	auto pc = _other->GetParent()->GetComponentOfType<PlayerController>();
+	if (pc) 
 	{
-		pc.at(0)->GiveWeapon();
+		pc->GiveWeapon();
 		GetParent()->Destroy();
 	}
 }
