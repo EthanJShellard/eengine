@@ -4,6 +4,7 @@
 #include "components/ScreamingMover.h"
 #include "components/PlayerController.h"
 #include "components/WeaponPickup.h"
+#include "components/DoorCrate.h"
 
 shared<eengine::Entity> CreateWall(shared<eengine::Core> _core, const glm::vec3& _dimensions, const glm::vec2& _tilingMultiplier)
 {
@@ -149,12 +150,15 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
     return walls;
 }
 
+
+
 int main(int argc, char* argv[])
 {
  
     shared<eengine::Core> core = eengine::Core::Initialise(argv[0]);
 
     {
+        // Floor
         auto floor = core->AddEntity();
         floor->GetTransform()->Translate(glm::vec3(0.8f, -0.25f, -5.0f));
         floor->GetTransform()->SetScale(50.0f, 0.5, 50.0f);
@@ -188,7 +192,23 @@ int main(int argc, char* argv[])
         core->GetResources()->Load<eengine::Model>("/data/models/explosion/explosion.obj");
 
         // Combat room
-        auto combatRoom = CreateRoom(core, glm::vec3(15.0f,0,0), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
+        auto combatRoom = CreateRoom(core, glm::vec3(15.0f, 0.0f, 0.0f), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
+        auto combatRoomSplitter1 = core->AddEntity();
+
+        // Room divider
+        combatRoomSplitter1->AddComponent<eengine::ModelRenderer>("/data/models/concrete_floor/floor.obj")->SetTilingRatios(30.0f, 7.5f);
+        auto splitter1RB = combatRoomSplitter1->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(1.0f, 7.5f, 30.0f), 1.0f);
+        splitter1RB->SetIsStatic(true);
+        combatRoomSplitter1->GetTransform()->Translate(glm::vec3(15.0f, 0.0f, 0.0f));
+        combatRoomSplitter1->GetTransform()->SetScale(1.0f, 7.5f, 30.0f);
+
+        // Door blocking crate
+        auto doorCrate = core->AddEntity();
+        doorCrate->AddComponent<eengine::RigidBody>(std::make_shared<eengine::BoxCollider>(2.0f, 2.0f, 2.0f), 2.0f)->SetIsStatic(true);
+        doorCrate->AddComponent<eengine::ModelRenderer>("/data/models/crate/crate1.obj");
+        doorCrate->GetTransform()->SetScale(2.0f, 2.0f, 2.0f);
+        doorCrate->GetTransform()->Translate(glm::vec3(6.0f, 1.0f, 0.0f));
+        doorCrate->AddComponent<DoorCrate>();
 
         // Player
         auto player = core->AddEntity();

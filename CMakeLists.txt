@@ -322,6 +322,8 @@ add_executable(game
     src/game/components/RocketController.cpp
     src/game/components/Explosion.h
     src/game/components/Explosion.cpp
+    src/game/components/DoorCrate.h
+    src/game/components/DoorCrate.cpp
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten") # IF
