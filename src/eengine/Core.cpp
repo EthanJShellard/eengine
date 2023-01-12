@@ -85,6 +85,8 @@ namespace eengine
 			throw std::exception();
 		}
 
+		SDL_GL_SetSwapInterval(0);
+
 		Debug::Log("Done!");
 		// Done initialising SDL
 
