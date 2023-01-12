@@ -17,17 +17,9 @@ shared<eengine::Entity> CreateWall(shared<eengine::Core> _core, const glm::vec3&
     return wall;
 }
 
-/// @brief 
-/// @param _core 
-/// @param centre 
-/// @param _dimensions 
-/// @param _wallTilingMultiplier 
-/// @param doorWidth 
-/// @param doorPositions North (-z), East (+x), South (+z) and West (-x)
-/// @return 
-std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, const glm::vec3& _centre, const glm::vec3& _dimensions, float _wallThickness, const glm::vec2& _wallTilingMultiplier, float _doorWidth, float _doorHeight, const glm::bvec4& _doorPositions) 
+// doorPositions: North (-z), East (+x), South (+z) and West (-x)
+void CreateRoom(shared<eengine::Core> _core, const glm::vec3& _centre, const glm::vec3& _dimensions, float _wallThickness, const glm::vec2& _wallTilingMultiplier, float _doorWidth, float _doorHeight, const glm::bvec4& _doorPositions) 
 {
-    std::vector<shared<eengine::Entity>> walls;
     float halfHeight = _dimensions.y / 2.0f;
     float halfThickness = _wallThickness / 2.0f;
 
@@ -39,21 +31,17 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         auto rightWall = CreateWall(_core, glm::vec3(wallLength, _dimensions.y, halfThickness), _wallTilingMultiplier);
         leftWall->GetTransform()->Translate(_centre + glm::vec3((- wallLength - _doorWidth) / 2.0f, halfHeight, -_dimensions.z / 2.0f));
         rightWall->GetTransform()->Translate(_centre + glm::vec3((wallLength + _doorWidth) / 2.0f, halfHeight, -_dimensions.z / 2.0f));
-        walls.push_back(leftWall);
-        walls.push_back(rightWall);
 
         if (_doorHeight < _dimensions.y) 
         {
             auto doorTopper = CreateWall(_core, glm::vec3(_doorWidth, _dimensions.y - _doorHeight , halfThickness), _wallTilingMultiplier);
             doorTopper->GetTransform()->Translate(_centre + glm::vec3(0.0f, _doorHeight + ((_dimensions.y - _doorHeight) / 2.0f), -_dimensions.z / 2.0f));
-            walls.push_back(doorTopper);
         }
     }
     else
     {
         auto northWall = CreateWall(_core, glm::vec3(_dimensions.x, _dimensions.y, halfThickness), _wallTilingMultiplier);
         northWall->GetTransform()->Translate(_centre + glm::vec3(0.0f, halfHeight, -_dimensions.z / 2.0f));
-        walls.push_back(northWall);
     }
 
     // East wall
@@ -66,15 +54,12 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         rightWall->GetTransform()->Translate(_centre + glm::vec3(_dimensions.x / 2.0f, halfHeight, (wallLength + _doorWidth) / 2.0f));
         leftWall->GetTransform()->Rotate(90.0f, glm::vec3(0,1,0));
         rightWall->GetTransform()->Rotate(90.0f, glm::vec3(0,1,0));
-        walls.push_back(leftWall);
-        walls.push_back(rightWall);
 
         if (_doorHeight < _dimensions.y)
         {
             auto doorTopper = CreateWall(_core, glm::vec3(_doorWidth, _dimensions.y - _doorHeight, halfThickness), _wallTilingMultiplier);
             doorTopper->GetTransform()->Translate(_centre + glm::vec3(_dimensions.x / 2.0f, _doorHeight + ((_dimensions.y - _doorHeight) / 2.0f), 0.0f));
             doorTopper->GetTransform()->Rotate(90.0f, glm::vec3(0,1,0));
-            walls.push_back(doorTopper);
         }
     }
     else
@@ -82,7 +67,6 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         auto eastWall = CreateWall(_core, glm::vec3(_dimensions.z, _dimensions.y, halfThickness), _wallTilingMultiplier);
         eastWall->GetTransform()->Translate(_centre + glm::vec3(_dimensions.x / 2.0f, halfHeight, 0.0f));
         eastWall->GetTransform()->Rotate(90.0f, glm::vec3(0, 1, 0));
-        walls.push_back(eastWall);
     }
 
     // South Wall
@@ -93,21 +77,17 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         auto rightWall = CreateWall(_core, glm::vec3(wallLength, _dimensions.y, halfThickness), _wallTilingMultiplier);
         leftWall->GetTransform()->Translate(_centre + glm::vec3((-wallLength - _doorWidth) / 2.0f, halfHeight, _dimensions.z / 2.0f));
         rightWall->GetTransform()->Translate(_centre + glm::vec3((wallLength + _doorWidth) / 2.0f, halfHeight, _dimensions.z / 2.0f));
-        walls.push_back(leftWall);
-        walls.push_back(rightWall);
 
         if (_doorHeight < _dimensions.y)
         {
             auto doorTopper = CreateWall(_core, glm::vec3(_doorWidth, _dimensions.y - _doorHeight, halfThickness), _wallTilingMultiplier);
             doorTopper->GetTransform()->Translate(_centre + glm::vec3(0.0f, _doorHeight + ((_dimensions.y - _doorHeight) / 2.0f), _dimensions.z / 2.0f));
-            walls.push_back(doorTopper);
         }
     }
     else
     {
         auto southWall = CreateWall(_core, glm::vec3(_dimensions.x, _dimensions.y, halfThickness), _wallTilingMultiplier);
         southWall->GetTransform()->Translate(_centre + glm::vec3(0.0f, halfHeight, _dimensions.z / 2.0f));
-        walls.push_back(southWall);
     }
 
     // West wall
@@ -120,15 +100,12 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         rightWall->GetTransform()->Translate(_centre + glm::vec3(-_dimensions.x / 2.0f, halfHeight, (wallLength + _doorWidth) / 2.0f));
         leftWall->GetTransform()->Rotate(90.0f, glm::vec3(0, 1, 0));
         rightWall->GetTransform()->Rotate(90.0f, glm::vec3(0, 1, 0));
-        walls.push_back(leftWall);
-        walls.push_back(rightWall);
 
         if (_doorHeight < _dimensions.y)
         {
             auto doorTopper = CreateWall(_core, glm::vec3(_doorWidth, _dimensions.y - _doorHeight, halfThickness), _wallTilingMultiplier);
             doorTopper->GetTransform()->Translate(_centre + glm::vec3(-_dimensions.x / 2.0f, _doorHeight + ((_dimensions.y - _doorHeight) / 2.0f), 0.0f));
             doorTopper->GetTransform()->Rotate(90.0f, glm::vec3(0, 1, 0));
-            walls.push_back(doorTopper);
         }
     }
     else
@@ -136,7 +113,6 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
         auto eastWall = CreateWall(_core, glm::vec3(_dimensions.z, _dimensions.y, halfThickness), _wallTilingMultiplier);
         eastWall->GetTransform()->Translate(_centre + glm::vec3(-_dimensions.x / 2.0f, halfHeight, 0.0f));
         eastWall->GetTransform()->Rotate(90.0f, glm::vec3(0, 1, 0));
-        walls.push_back(eastWall);
     }
 
     // Ceiling
@@ -147,7 +123,6 @@ std::vector<shared<eengine::Entity>> CreateRoom(shared<eengine::Core> _core, con
     ceiling->GetTransform()->SetPosition(_centre + glm::vec3(0.0f, _dimensions.y + halfThickness, 0.0f));
     ceiling->GetTransform()->SetScale(_dimensions.x, _wallThickness, _dimensions.z);
 
-    return walls;
 }
 
 
@@ -169,10 +144,10 @@ int main(int argc, char* argv[])
         rb->SetIsStatic(true);
 
         // Starting room
-        auto startingRoom = CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, false, false));
+        CreateRoom(core, glm::vec3(0,0,0), glm::vec3(10.0f, 3.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(true, true, false, false));
 
         // Weapon room
-        auto weaponRoom = CreateRoom(core, glm::vec3(0,0,-10.0f), glm::vec3(10.0f, 2.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, false, true, false));
+        CreateRoom(core, glm::vec3(0,0,-10.0f), glm::vec3(10.0f, 2.0f, 10.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, false, true, false));
         auto weaponPickup = core->AddEntity();
         weaponPickup->AddComponent<eengine::ModelRenderer>("/data/models/tank/IS4.obj");
         auto pickupTrans = weaponPickup->GetTransform();
@@ -192,7 +167,7 @@ int main(int argc, char* argv[])
         core->GetResources()->Load<eengine::Model>("/data/models/explosion/explosion.obj");
 
         // Combat room
-        auto combatRoom = CreateRoom(core, glm::vec3(15.0f, 0.0f, 0.0f), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
+        CreateRoom(core, glm::vec3(15.0f, 0.0f, 0.0f), glm::vec3(20.0f, 15.0f, 30.0f), 0.1f, glm::vec2(2.0f), 1.0f, 2.0f, glm::bvec4(false, true, false, true));
         auto combatRoomSplitter1 = core->AddEntity();
 
         // Room divider
@@ -220,18 +195,16 @@ int main(int argc, char* argv[])
         player->AddComponent<eengine::AudioListener>();
         player->AddComponent<eengine::AudioSource>();
 
-        core->GetInput()->SetRelativeMouseMode(true);
-        core->GetInput()->SetInputGrab(true);
 
         // Preload music
         auto musicPreload = core->GetResources()->Load<eengine::Sound>("/data/audio/music/e1m1.ogg");
         musicPreload->SetDirectional(false);
         musicPreload->GetID();
 
+        // Set up input
+        core->GetInput()->SetRelativeMouseMode(true);
+        core->GetInput()->SetInputGrab(true);
     }
-    
-
-    //core->AddEntity()->AddComponent<Suicider>(30);
 
     core->Start();
 
