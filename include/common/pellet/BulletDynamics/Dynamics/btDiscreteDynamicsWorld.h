@@ -55,6 +55,7 @@ protected:
 	//for variable timesteps
 	btScalar	m_localTime;
 	btScalar	m_fixedTimeStep;
+
 	//for variable timesteps
 
 	bool	m_ownsIslandManager;
@@ -100,6 +101,8 @@ protected:
 
 public:
 
+	// eengine flag hack
+	bool	m_steppedInternalSimulation;
 
 	BT_DECLARE_ALIGNED_ALLOCATOR();
 

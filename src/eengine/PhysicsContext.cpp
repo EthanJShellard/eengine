@@ -42,7 +42,6 @@ namespace eengine
 	/// Keep track of currently active collisions. Need globalness to interact with NearCallback(), which cannot be a member function.
 	std::vector<CollisionInfo> g_newCollisions;
 	std::unordered_map< uint64_t, CollisionStatus > g_collisionMap;
-	bool g_collisionsUpdated = false;
 
 	void NearCallback(btBroadphasePair& _collisionPair, btCollisionDispatcher& _dispatcher, const btDispatcherInfo& _dispatchInfo)
 	{
@@ -73,8 +72,6 @@ namespace eengine
 		{
 			itr->second.stillColliding = true;
 		}
-
-		g_collisionsUpdated = true;
 
 		_dispatcher.defaultNearCallback(_collisionPair, _dispatcher, _dispatchInfo);
 	}
@@ -194,10 +191,13 @@ namespace eengine
 	void PhysicsContext::SendCollisionEvents() 
 	{
 		// Only do these if we've updated collisions.
-		if (!g_collisionsUpdated) 
+		if (!m_dynamicsWorld->m_steppedInternalSimulation) 
 		{
 			return;
 		}
+		
+		// Reset flag
+		m_dynamicsWorld->m_steppedInternalSimulation = false;
 
 		for (CollisionInfo c : g_newCollisions) 
 		{
@@ -276,7 +276,6 @@ namespace eengine
 		} // Collision map loop
 
 		g_newCollisions.clear();
-		g_collisionsUpdated = false;
 	}
 
 	RayCastResult PhysicsContext::RayCast(const glm::vec3& _origin, const glm::vec3& direction, float distance) const

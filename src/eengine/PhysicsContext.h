@@ -37,7 +37,6 @@ namespace eengine
 		float m_fixedTimeStep;
 		// Use to interpolate between fixed timesteps
 		int m_maxSubSteps;
-
 		// Used for generating IDs
 		uint32_t m_rigidBodyCount;
 

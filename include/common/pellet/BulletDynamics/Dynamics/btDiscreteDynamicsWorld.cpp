@@ -211,7 +211,8 @@ m_fixedTimeStep(0),
 m_synchronizeAllMotionStates(false),
 m_applySpeculativeContactRestitution(false),
 m_profileTimings(0),
-m_latencyMotionStateInterpolation(true)
+m_latencyMotionStateInterpolation(true),
+m_steppedInternalSimulation(false)
 
 {
 	if (!m_constraintSolver)
@@ -456,6 +457,8 @@ int	btDiscreteDynamicsWorld::stepSimulation( btScalar timeStep,int maxSubSteps, 
 			internalSingleStepSimulation(fixedTimeStep);
 			synchronizeMotionStates();
 		}
+
+		m_steppedInternalSimulation = true;
 
 	} else
 	{
