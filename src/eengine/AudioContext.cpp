@@ -12,8 +12,6 @@ namespace eengine
 		if (!m_device) 
 		{
 			throw std::runtime_error("Unable to open audio device...");
-			//m_context = alcCreateContext(m_device, nullptr);
-			//alcMakeContextCurrent(m_context);
 		}
 
 		m_context = alcCreateContext(m_device, NULL);

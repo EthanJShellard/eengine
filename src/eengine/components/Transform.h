@@ -31,7 +31,7 @@ namespace eengine
 
 		/// @brief Set the position of this Transform.
 		/// @param _newPos The new position of this Transform.
-		void SetPosition(glm::vec3 _newPos);
+		void SetPosition(const glm::vec3& _newPos);
 
 		/// @brief Set the position of this transform.
 		/// @param _x The new x axis position.
@@ -41,7 +41,7 @@ namespace eengine
 
 		/// @brief Set the rotation/orientation of this Transform.
 		/// @param _newRot The new rotation in Euler angles.
-		void SetRotation(glm::vec3 _newRot);
+		void SetRotation(const glm::vec3& _newRot);
 
 		/// @brief Set the rotation/orientation of this Transform with Euler angles.
 		/// @param _x The new x axis rotation.
@@ -51,11 +51,11 @@ namespace eengine
 
 		/// @brief Set the rotation/orientation of this Transform with a quaternion.
 		/// @param _newRot The new quaternion orientation.
-		void SetRotation(glm::quat _newRot);
+		void SetRotation(const glm::quat& _newRot);
 
 		/// @brief Set the scale of this Transform.
 		/// @param _newScale The new scale.
-		void SetScale(glm::vec3 _newScale);
+		void SetScale(const glm::vec3& _newScale);
 
 		/// @brief Set the scale of this Transform.
 		/// @param _x The new x axis scale.
@@ -94,15 +94,15 @@ namespace eengine
 		/// @brief Rotate this Transform.
 		/// @param _angle Angle in degrees by which this Transform will be rotated.
 		/// @param _axis Axis around which this rotation will take place.
-		void Rotate(float _angle, glm::vec3 _axis);
+		void Rotate(float _angle, const glm::vec3& _axis);
 
 		/// @brief Translate this Transform.
 		/// @param _move How far the Transform will translate in each axis.
-		void Translate(glm::vec3 _move);
+		void Translate(const glm::vec3& _move);
 
 		/// @brief Scale this Transform.
 		/// @param _scaleFactors Factors by which this Transform's scale will be multiplied along the corresponding axes.
-		void Scale(glm::vec3 _scaleFactors);
+		void Scale(const glm::vec3& _scaleFactors);
 
 		/// @brief Get a model matrix representing the combined transformations affecting this Transform.
 		/// @details This matrix will be computed and cached only once for each time the Transform's internal state is dirtied.

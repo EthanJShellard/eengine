@@ -157,7 +157,7 @@ namespace eengine
 		m_rigidBody->getCollisionShape()->setLocalScaling(btVector3(_newScale.x, _newScale.y, _newScale.z));
 	}
 
-	glm::vec3 RigidBody::GetColliderScale()
+	glm::vec3 RigidBody::GetColliderScale() const
 	{
 		btVector3 scale = m_rigidBody->getCollisionShape()->getLocalScaling();
 		return glm::vec3(scale.x(), scale.y(), scale.z());

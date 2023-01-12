@@ -7,6 +7,7 @@
 
 namespace eengine 
 {
+	/// @brief eengine wrapped for sound Resources.
 	class Sound : public Resource 
 	{
 		friend class Resources;
@@ -47,8 +48,6 @@ namespace eengine
 		/// @details Sounds using directional audio cannot be buffered as stereo.
 		/// @return Whether or not this sound is set to use directional audio.
 		bool GetDirectional();
-
-
 
 		Sound();
 		~Sound();

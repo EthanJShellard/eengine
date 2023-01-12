@@ -24,7 +24,10 @@ namespace eengine
 
 	public:
 		QuadRenderer();
+
+		/// @brief Called by the engine when this component is first initialised. Do not call this unless you are certain of what you are doing.
 		void OnInit();
+
 		/// @brief Set the colour of the quad.
 		/// @param _r The red channel.
 		/// @param _g The green channel.

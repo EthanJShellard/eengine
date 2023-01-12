@@ -16,6 +16,7 @@ namespace eengine
 		void OnTick(float _deltaTime);
 
 	public:
+		/// @brief Called by the engine when this component is first initialised. Do not call this unless you are certain of what you are doing. 
 		void OnInit();
 	};
 }

@@ -18,12 +18,12 @@ namespace eengine
 		m_deltaTime = secs.count();
 	}
 
-	float Environment::GetDeltaTime() 
+	float Environment::GetDeltaTime() const
 	{
 		return m_deltaTime;
 	}
 
-	std::string Environment::GetProjectWorkingDirectory() 
+	std::string Environment::GetProjectWorkingDirectory() const
 	{
 		return m_projectWorkingDirectory;
 	}

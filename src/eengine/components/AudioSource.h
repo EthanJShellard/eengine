@@ -26,6 +26,7 @@ namespace eengine
 		void OnEnable();
 
 	public:
+		/// @brief Called by the engine when this component is first initialised. Do not call this unless you are certain of what you are doing.
 		void OnInit();
 
 		/// @brief Get whether or not this source is currently playing any audio.

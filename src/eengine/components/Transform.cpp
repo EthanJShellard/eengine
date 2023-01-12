@@ -16,7 +16,7 @@ namespace eengine
 	{
 	}
 
-	void Transform::SetPosition(glm::vec3 _newPos) 
+	void Transform::SetPosition(const glm::vec3& _newPos) 
 	{
 		m_position = _newPos;
 		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position);
@@ -30,7 +30,7 @@ namespace eengine
 		m_dirty = m_posDirty = true;
 	}
 
-	void  Transform::SetRotation(glm::vec3 _newRot)
+	void  Transform::SetRotation(const glm::vec3& _newRot)
 	{
 		m_orientation = glm::quat(_newRot);
 		m_rotationMatrix = glm::toMat4(m_orientation);
@@ -44,14 +44,14 @@ namespace eengine
 		m_dirty = m_rotDirty = true;
 	}
 
-	void Transform::SetRotation(glm::quat _newRot)
+	void Transform::SetRotation(const glm::quat& _newRot)
 	{
 		m_orientation = _newRot;
 		m_rotationMatrix = glm::toMat4(m_orientation);
 		m_dirty = m_rotDirty = true;
 	}
 
-	void  Transform::SetScale(glm::vec3 _newScale)
+	void  Transform::SetScale(const glm::vec3& _newScale)
 	{
 		m_scale = _newScale;
 		m_scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);
@@ -65,21 +65,21 @@ namespace eengine
 		m_dirty = true;
 	}
 
-	void  Transform::Rotate(float _angle, glm::vec3 _axis)
+	void  Transform::Rotate(float _angle, const glm::vec3& _axis)
 	{
 		m_orientation = glm::angleAxis(glm::radians(_angle), _axis) * m_orientation;
 		m_rotationMatrix = glm::toMat4(m_orientation);
 		m_dirty = m_rotDirty = true;
 	}
 
-	void  Transform::Translate(glm::vec3 _move)
+	void  Transform::Translate(const glm::vec3& _move)
 	{
 		m_position += _move;
 		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position);
 		m_dirty = m_posDirty = true;
 	}
 
-	void Transform::Scale(glm::vec3 _scaleFactors) 
+	void Transform::Scale(const glm::vec3& _scaleFactors) 
 	{
 		m_scale *= _scaleFactors;
 		m_scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);

@@ -28,11 +28,11 @@ namespace eengine
 		btScalar m_mass;
 		bool m_disabled;
 
-		void OnBegin();
-		void OnRemove();
-		void OnDelete();
-		void OnDisable();
-		void OnEnable();
+		void OnBegin() override;
+		void OnRemove() override;
+		void OnDelete() override;
+		void OnDisable() override;
+		void OnEnable() override;
 
 		void Activate();
 
@@ -85,6 +85,8 @@ namespace eengine
 		/// @param _torque The torque to be applied in each axis.
 		void ApplyTorque(const glm::vec3& _torque);
 
+		/// @brief Apply a central force to this RigidBody.
+		/// @param _force The force to be applied.
 		void ApplyCentralForce(const glm::vec3& _force);
 
 		/// @brief Set the linear velocity of this RigidBody.
@@ -103,13 +105,21 @@ namespace eengine
 		/// @return The friction ratio of this RigidBody.
 		float GetFriction() const;
 
+		/// @brief Set a gravity override for this RigidBody.
+		/// @param _gravity The gravity override.
 		void SetGravity(const glm::vec3& _gravity);
 
+		/// @brief Get the current gravitational acceleration of this object.
+		/// @return The gravitational acceleration. 
 		glm::vec3 GetGravity() const;
 
+		/// @brief Set scale factors for this RigidBody's collider's dimensions.
+		/// @param _newScale The scale factors.
 		void SetColliderScale(const glm::vec3& _newScale);
 
-		glm::vec3 GetColliderScale();
+		/// @brief Get the scale factors for this RigidBody's collider's dimensions.
+		/// @return The scale factors.
+		glm::vec3 GetColliderScale() const;
 
 		/// @brief Set whether or not this RigidBody's collider will act as a trigger.
 		/// @param _isTrigger Whether or not this RigidBody's collider will act as a trigger.
@@ -129,11 +139,24 @@ namespace eengine
 		/// @details Kinematic RigidBodies are not affected by forced or collisions.
 		bool GetIsKinematic() const;
 
+		/// @brief Set whether or not this RigidBody should be Static.
+		/// @param _isStatic Whether or not this RigidBody should be static.
+		/// @details Static RigidBodies are not affected by forces or collisions and do not move.
 		void SetIsStatic(bool _isStatic);
 
+		/// @brief Set whether or not this RigidBody should be Static.
+		/// @return Whether or not this RigidBody should be Static.
+		/// @details Static RigidBodies are not affected by forces or collisions and do not move.
 		bool GetIsStatic() const;
 
+		/// @brief Set whether or not this RigidBody is enabled.
+		/// @param _isEnabled Whether or not this RigidBody should be enabled.
+		/// @details Disabled RigidBodies are removed from the physics environment until they are reenabled.
 		void SetIsEnabled(bool _isEnabled);
+
+		/// @brief Get whether or not this RigidBody is enabled.
+		/// @return Whether or not this RigidBody is enabled.
+		/// @details Disabled RigidBodies are removed from the physics environment until they are reenabled.
 		bool GetIsEnabled() const;
 	};
 }
