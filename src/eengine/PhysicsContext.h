@@ -10,6 +10,7 @@ namespace eengine
 {
 	class RigidBody;
 
+	/// @brief A struct describing the result of a physics ray cast.
 	struct RayCastResult 
 	{
 		bool didHit = false;
@@ -21,6 +22,7 @@ namespace eengine
 		weak<RigidBody> hitRigidBody;
 	};
 
+	/// @brief A class which manages and encapsulates the engine physics context.
 	class PhysicsContext : public NonCopyable
 	{
 		friend class Core;

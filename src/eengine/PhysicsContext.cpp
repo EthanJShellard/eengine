@@ -9,7 +9,7 @@
 
 namespace eengine
 {
-
+	/// @brief Struct describing the status of a collision.
 	struct CollisionStatus 
 	{
 		CollisionStatus(shared<RigidBody> _rb1, shared<RigidBody> _rb2, bool _colliding) :
@@ -24,6 +24,7 @@ namespace eengine
 		bool stillColliding;
 	};
 
+	/// @brief Struct describing a collision.
 	struct CollisionInfo 
 	{
 		

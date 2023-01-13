@@ -2,6 +2,7 @@
 
 namespace eengine 
 {
+	/// @brief A sphere-shaped collider which can be attached to a RigidBody.
 	class SphereCollider : public Collider 
 	{
 	public:
